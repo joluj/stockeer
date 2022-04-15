@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@stockeer/gui/item-overview": ["libs/gui/item-overview/src/index.ts"],
       "@stockeer/gui/titlebar": ["libs/gui/titlebar/src/index.ts"]
     }
   },
