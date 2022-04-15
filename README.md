@@ -30,7 +30,7 @@ import docJson from '/dist/compodoc/gui-titlebar/documentation.json';
 
 setCompodocJson(docJson);
 ```
-6. Add Root Styles to the component storybook config in `libs/gui/titlebar` to `build-storybook->options`
+6. Add Root Styles to the component storybook config in `libs/gui/titlebar/project.json` to `build-storybook->options`
 ```json
 "assets": [
   {
@@ -46,4 +46,7 @@ setCompodocJson(docJson);
 ],
 "styles": ["apps/app/src/styles.scss"],
 ```
-7. Start compodoc and then storybook. Just copy the intellij runtime configs :D
+7. Add `exports: [<component-name>Component]` to the `@NgModule`-annotation.
+
+8. Add `IonicModule.forRoot()` to the imports of `moduleMetadata` in `<component-name>.component.stories.ts`.
+9. Start compodoc and then storybook. Just copy the intellij runtime configs :D
