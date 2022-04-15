@@ -2,7 +2,7 @@ name: CI
 on: [ push ]
 jobs:
   All:
-    name: CI
+    name: Main
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -28,7 +28,7 @@ jobs:
         run: yarn build
 
   PR:
-    name: CI
+    name: Pull Request
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     steps:
@@ -47,8 +47,8 @@ jobs:
 
       # Actual Steps
       - name: Run Linter
-        run: yarn nx affected --target=lint --base=main --head=HEAD
+        run: yarn nx affected --target=lint --base=origin/main --head=HEAD
       - name: Run Tests
-        run: yarn nx affected --target=test --base=main --head=HEAD
+        run: yarn nx affected --target=test --base=origin/main --head=HEAD
       - name: Run Builds
-        run: yarn nx affected --target=build --base=main --head=HEAD
+        run: yarn nx affected --target=build --base=origin/main --head=HEAD
