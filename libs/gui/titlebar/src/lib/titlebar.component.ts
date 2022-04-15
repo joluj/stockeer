@@ -1,12 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'stockeer-titlebar',
   templateUrl: './titlebar.component.html',
   styleUrls: ['./titlebar.component.scss'],
 })
-export class TitlebarComponent implements OnInit {
-
+export class TitlebarComponent {
   @Input()
   title: string;
 
@@ -17,13 +16,11 @@ export class TitlebarComponent implements OnInit {
     // Make sure to initialize the variables in the constructor
     // Reason: https://github.com/storybookjs/storybook/issues/17004
     // TLDR: storybook bug
-    this.title = "Test";
+    this.title = 'Test';
     this.myClick = new EventEmitter();
   }
 
-  ngOnInit(): void {}
-
   triggerTitlebarClick() {
-    this.myClick.emit("Hello from dumb component");
+    this.myClick.emit('Hello from dumb component');
   }
 }
