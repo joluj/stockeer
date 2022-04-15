@@ -1,0 +1,84 @@
+{
+  "projectType": "library",
+  "root": "libs/gui/titlebar",
+  "sourceRoot": "libs/gui/titlebar/src",
+  "prefix": "stockeer",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/gui/titlebar"],
+      "options": {
+        "jestConfig": "libs/gui/titlebar/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/gui/titlebar/src/**/*.ts",
+          "libs/gui/titlebar/src/**/*.html"
+        ]
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/angular",
+        "port": 4400,
+        "config": {
+          "configFolder": "libs/gui/titlebar/.storybook"
+        },
+        "projectBuildConfig": "gui-titlebar:build-storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/angular",
+        "outputPath": "dist/storybook/gui-titlebar",
+        "config": {
+          "configFolder": "libs/gui/titlebar/.storybook"
+        },
+        "assets": [
+          {
+            "glob": "**",
+            "input": "apps/app/src/assets",
+            "output": "./assets"
+          },
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
+        ],
+        "styles": ["apps/app/src/styles.scss"],
+        "projectBuildConfig": "gui-titlebar:build-storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "compodoc": {
+      "executor": "@twittwer/compodoc:compodoc",
+      "options": {
+        "tsConfig": "libs/gui/titlebar/tsconfig.lib.json",
+        "outputPath": "dist/compodoc/gui-titlebar"
+      },
+      "configurations": {
+        "json": {
+          "exportFormat": "json"
+        }
+      }
+    }
+  },
+  "tags": []
+}
