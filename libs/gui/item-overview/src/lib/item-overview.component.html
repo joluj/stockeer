@@ -1,3 +1,13 @@
-<ion-toolbar color="primary">
-  <ion-title>Hey</ion-title>
-</ion-toolbar>
+<ion-list>
+  <ion-list-header>Items</ion-list-header>
+
+  <li *ngFor="let item of items; index as i">
+    <ion-item>
+      <ion-icon slot="start" name="fast-food-outline"></ion-icon>
+      <ion-label>{{ item }}</ion-label>
+      <ion-button color="primary" (click)="onDeleteClick()"
+        ><ion-icon name="trash-outline"></ion-icon
+      ></ion-button>
+    </ion-item>
+  </li>
+</ion-list>
