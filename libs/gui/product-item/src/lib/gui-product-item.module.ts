@@ -8,4 +8,4 @@ import { IonicModule } from '@ionic/angular';
   declarations: [ProductItemComponent],
   exports: [ProductItemComponent],
 })
-export class GuiProductItemModule {}
+export class ProductItemModule {}

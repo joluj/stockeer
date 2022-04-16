@@ -9,4 +9,4 @@ import { GuiProductItemModule } from '@stockeer/gui/product-item';
   declarations: [ProductOverviewComponent],
   exports: [ProductOverviewComponent],
 })
-export class GuiProductOverviewModule {}
+export class ProductOverviewModule {}
