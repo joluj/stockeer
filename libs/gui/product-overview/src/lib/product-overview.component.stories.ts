@@ -1,13 +1,14 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { ProductOverviewComponent } from './product-overview.component';
 import { IonicModule } from '@ionic/angular';
+import { ProductItemModule } from '@stockeer/gui/product-item';
 
 export default {
-  title: 'ItemOverviewComponent',
+  title: 'ProductOverviewComponent',
   component: ProductOverviewComponent,
   decorators: [
     moduleMetadata({
-      imports: [IonicModule.forRoot()],
+      imports: [IonicModule.forRoot(), ProductItemModule],
     }),
   ],
 } as Meta<ProductOverviewComponent>;
@@ -19,4 +20,17 @@ const Template: Story<ProductOverviewComponent> = (
 });
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  products: [
+    {
+      id: '0',
+      name: 'Banana',
+      bestBeforeDate: '2022-04-16',
+    },
+    {
+      id: '1',
+      name: 'Schnitzel',
+      bestBeforeDate: '2022-04-16',
+    },
+  ],
+};

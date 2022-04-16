@@ -8,18 +8,16 @@ import { Product } from '@stockeer/shared';
 })
 export class ProductItemComponent {
   @Input()
-  product: Product;
+  product: Product | null;
 
   @Output()
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onDelete: EventEmitter<void>;
+  /**
+   * Emits an empty event when the delete-button is clicked.
+   */
+  delete: EventEmitter<void>;
 
   constructor() {
-    this.product = {
-      id: '0',
-      name: 'Banana',
-      bestBeforeDate: '2022-04-16',
-    };
-    this.onDelete = new EventEmitter();
+    this.product = null;
+    this.delete = new EventEmitter();
   }
 }

@@ -12,18 +12,12 @@ export class ProductOverviewComponent {
 
   @Output()
   /**
-    * Emits the id of the product clicked on
-    */
+   * Emits the id of the product clicked on
+   */
   delete: EventEmitter<string>;
 
   constructor() {
-    this.products = [
-      {
-        id: '0',
-        name: 'Banana',
-        bestBeforeDate: '2022-04-16',
-      },
-    ];
-    this.onDelete = new EventEmitter();
+    this.products = [];
+    this.delete = new EventEmitter();
   }
 }

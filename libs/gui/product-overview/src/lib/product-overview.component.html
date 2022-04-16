@@ -4,7 +4,7 @@
   <li *ngFor="let product of products; index as i">
     <stockeer-product-item
       [product]="product"
-      (onDelete)="onDelete.emit(i)"
+      (delete)="delete.emit(i.toString())"
     ></stockeer-product-item>
   </li>
 </ion-list>

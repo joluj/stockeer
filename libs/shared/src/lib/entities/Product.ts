@@ -1,8 +1,9 @@
 export interface Product {
   id: string;
   name: string;
+
   /**
-   * ISO string representation of a Date.
+   * best before date as ISO string representation of a Date.
    *
    * @example:
    *  myProduct.date = new Date().toISOString();

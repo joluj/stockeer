@@ -2,9 +2,9 @@
   <ion-icon slot="start" name="fast-food-outline"></ion-icon>
   <ion-label>
     <h2>{{ product.name }}</h2>
-    <h3>{{ product.bestBeforeDate.toDateString() }}</h3>
+    <h3>{{ product.bestBeforeDate }}</h3>
   </ion-label>
-  <ion-button color="primary" (click)="onDelete.emit()"
+  <ion-button color="primary" (click)="delete.emit()"
     ><ion-icon name="trash-outline"></ion-icon
   ></ion-button>
 </ion-item>

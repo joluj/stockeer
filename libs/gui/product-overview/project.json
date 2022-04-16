@@ -25,7 +25,7 @@
       "executor": "@twittwer/compodoc:compodoc",
       "options": {
         "tsConfig": "libs/gui/product-overview/tsconfig.lib.json",
-        "outputPath": "dist/compodoc/gui-item-overview"
+        "outputPath": "dist/compodoc/gui-product-overview"
       },
       "configurations": {
         "json": {
@@ -54,7 +54,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "uiFramework": "@storybook/angular",
-        "outputPath": "dist/storybook/gui-item-overview",
+        "outputPath": "dist/storybook/gui-product-overview",
         "config": {
           "configFolder": "libs/gui/product-overview/.storybook"
         },
