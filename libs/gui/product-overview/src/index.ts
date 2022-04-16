@@ -1,1 +1,1 @@
-export * from './lib/gui-product-overview.module';
+export * from './lib/product-overview.module';
