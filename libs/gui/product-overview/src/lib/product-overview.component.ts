@@ -11,7 +11,10 @@ export class ProductOverviewComponent {
   products: Product[];
 
   @Output()
-  delete: EventEmitter<string>; // emits id
+  /**
+    * Emits the id of the product clicked on
+    */
+  delete: EventEmitter<string>;
 
   constructor() {
     this.products = [
