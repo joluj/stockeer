@@ -1,5 +1,12 @@
 export interface Product {
   id: number;
   name: string;
-  bestBeforeDate: Date;
+  /**
+   * ISO string representation of a Date.
+   *
+    * @example: 
+    *  myProduct.date = new Date().toISOString();
+    * "2022-04-16T11:07:55.879Z"
+   */
+  bestBeforeDate: string;
 }
