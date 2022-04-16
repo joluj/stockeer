@@ -1,11 +1,11 @@
 <ion-list>
   <ion-list-header>Items</ion-list-header>
 
-  <li *ngFor="let item of items; index as i">
+  <li *ngFor="let product of products; index as i">
     <ion-item>
       <ion-icon slot="start" name="fast-food-outline"></ion-icon>
-      <ion-label>{{ item }}</ion-label>
-      <ion-button color="primary" (click)="onDeleteClick()"
+      <ion-label>{{ product.name }}</ion-label>
+      <ion-button color="primary" (click)="onDelete.emit(i)"
         ><ion-icon name="trash-outline"></ion-icon
       ></ion-button>
     </ion-item>

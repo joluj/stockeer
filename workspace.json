@@ -4,6 +4,7 @@
     "app": "apps/app",
     "app-e2e": "apps/app-e2e",
     "gui-item-overview": "libs/gui/item-overview",
-    "gui-titlebar": "libs/gui/titlebar"
+    "gui-titlebar": "libs/gui/titlebar",
+    "shared": "libs/shared"
   }
 }

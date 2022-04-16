@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Product } from '../../../../shared/src/lib/entities/Product';
 
 @Component({
   selector: 'stockeer-item-overview',
@@ -7,17 +8,20 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ItemOverviewComponent {
   @Input()
-  items: string[];
+  products: Product[];
 
   @Output()
-  delete: EventEmitter<boolean>;
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  onDelete: EventEmitter<number>;
 
   constructor() {
-    this.items = ['Mango', 'Johannes'];
-    this.delete = new EventEmitter();
-  }
-
-  onDeleteClick() {
-    this.delete.emit(true);
+    this.products = [
+      {
+        id: 0,
+        name: 'Banana',
+        bestBeforeDate: new Date(2022, 10, 2),
+      },
+    ];
+    this.onDelete = new EventEmitter();
   }
 }

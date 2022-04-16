@@ -19,6 +19,4 @@ const Template: Story<ItemOverviewComponent> = (
 });
 
 export const Primary = Template.bind({});
-Primary.args = {
-  title: '',
-};
+Primary.args = {};
