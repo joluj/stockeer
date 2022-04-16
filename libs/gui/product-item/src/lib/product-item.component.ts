@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Product } from "../../../../shared/src/lib/entities/Product";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Product } from '@stockeer/shared';
 
 @Component({
   selector: 'stockeer-product-item',
@@ -8,17 +8,18 @@ import { Product } from "../../../../shared/src/lib/entities/Product";
 })
 export class ProductItemComponent {
   @Input()
-  product: Product
+  product: Product;
 
   @Output()
-  onDelete: EventEmitter<Event>
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  onDelete: EventEmitter<Event>;
 
   constructor() {
     this.product = {
       id: 0,
       name: 'Banana',
       bestBeforeDate: new Date(2022, 10, 2),
-    }
-    this.onDelete = new EventEmitter()
+    };
+    this.onDelete = new EventEmitter();
   }
 }
