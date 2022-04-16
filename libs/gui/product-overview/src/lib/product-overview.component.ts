@@ -17,9 +17,9 @@ export class ProductOverviewComponent {
   constructor() {
     this.products = [
       {
-        id: 0,
+        id: '0',
         name: 'Banana',
-        bestBeforeDate: new Date(2022, 10, 2),
+        bestBeforeDate: '2022-04-16',
       },
     ];
     this.onDelete = new EventEmitter();
