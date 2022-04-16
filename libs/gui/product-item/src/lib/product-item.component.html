@@ -4,7 +4,7 @@
     <h2>{{ product.name }}</h2>
     <h3>{{ product.bestBeforeDate.toDateString() }}</h3>
   </ion-label>
-  <ion-button color="primary" (click)="onDelete.emit($event)"
+  <ion-button color="primary" (click)="onDelete.emit()"
     ><ion-icon name="trash-outline"></ion-icon
   ></ion-button>
 </ion-item>

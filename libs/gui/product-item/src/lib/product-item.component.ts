@@ -12,7 +12,7 @@ export class ProductItemComponent {
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onDelete: EventEmitter<Event>;
+  onDelete: EventEmitter<void>;
 
   constructor() {
     this.product = {
