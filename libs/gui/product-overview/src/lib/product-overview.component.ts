@@ -11,7 +11,6 @@ export class ProductOverviewComponent {
   products: Product[];
 
   @Output()
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   delete: EventEmitter<string>; // emits id
 
   constructor() {
