@@ -14,36 +14,11 @@ yarn add -D --exact @nrwl/nest @nrwl/angular @nrwl/storybook @storybook/addon-es
 yarn nx generate @nxtend/ionic-angular:application --name=app # template: blank
 ```
 
-## Create Module
+## Create UI Module
 
-1. Generate module / lib (gui is folder, titlebar is module name). You might want to rename the module name from gui-titlebar to just titlebar <br>
-  `yarn nx generate @nrwl/angular:library --name=gui/titlebar`
-2. Create component <br>`yarn nx generate @nrwl/angular:component --name=titlebar --project=gui-titlebar --flat`
-3. Add compodoc (required for Controls and Actions tabs in storybook)<br>
-  `yarn nx g @twittwer/compodoc:config gui-titlebar`
-4. Add storybook config <br>
-  `yarn nx g @nrwl/angular:storybook-configuration --no-configureCypress --no-generateCypressSpecs --no-interactive gui-titlebar`
-5. Edit preview.js and add:
-```typescript
-import { setCompodocJson } from '@storybook/addon-docs/angular';
-import docJson from '/dist/compodoc/gui-titlebar/documentation.json';
-
-setCompodocJson(docJson);
+1. Use the workspace generator. Folder Name is optional.
+```shell
+yarn nx workspace-generator module <moduleName> <folderName>
+# example
+yarn nx workspace-generator module titlebar gui
 ```
-6. Add Root Styles to the component storybook config in `libs/gui/titlebar` to `build-storybook->options`
-```json
-"assets": [
-  {
-    "glob": "**",
-    "input": "apps/app/src/assets",
-    "output": "./assets"
-  },
-  {
-    "glob": "**/*.svg",
-    "input": "node_modules/ionicons/dist/ionicons/svg",
-    "output": "./svg"
-  }
-],
-"styles": ["apps/app/src/styles.scss"],
-```
-7. Start compodoc and then storybook. Just copy the intellij runtime configs :D
