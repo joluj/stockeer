@@ -1,1 +1,10 @@
-<p>product-item works!</p>
+<ion-item>
+  <ion-icon slot="start" name="fast-food-outline"></ion-icon>
+  <ion-label>
+    <h2>{{ product.name }}</h2>
+    <h3>{{ product.bestBeforeDate.toDateString() }}</h3>
+  </ion-label>
+  <ion-button color="primary" (click)="onDelete.emit($event)"
+    ><ion-icon name="trash-outline"></ion-icon
+  ></ion-button>
+</ion-item>
