@@ -4,6 +4,8 @@ import {
   Tree,
   updateJson,
   readProjectConfiguration,
+  generateFiles,
+  joinPathFragments,
 } from '@nrwl/devkit';
 import {
   libraryGenerator,
@@ -104,6 +106,13 @@ export default async function (
     path.join(projectPath, '.storybook', 'preview.js')
   );
   updateProjectJson(tree, path.join(projectPath, 'project.json'));
+
+  generateFiles(
+    tree, // the virtual file system
+    joinPathFragments(__dirname, './files'), // path to the file templates
+    joinPathFragments('./.run'), // destination path of the files
+    { libName: projectName } // config object to replace variable in file templates
+  );
 
   await formatFiles(tree);
 
