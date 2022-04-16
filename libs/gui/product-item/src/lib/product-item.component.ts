@@ -8,7 +8,7 @@ import { Product } from '@stockeer/shared';
 })
 export class ProductItemComponent {
   @Input()
-  product: Product | null;
+  product: Product;
 
   @Output()
   /**
@@ -17,7 +17,11 @@ export class ProductItemComponent {
   delete: EventEmitter<void>;
 
   constructor() {
-    this.product = null;
+    this.product = {
+      id: '0',
+      name: 'Banana',
+      bestBeforeDate: '2022-04-16',
+    };
     this.delete = new EventEmitter();
   }
 }
