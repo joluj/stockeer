@@ -3,7 +3,7 @@
   "projects": {
     "app": "apps/app",
     "app-e2e": "apps/app-e2e",
-    "gui-item-overview": "libs/gui/item-overview",
+    "gui-product-overview": "libs/gui/product-overview",
     "gui-titlebar": "libs/gui/titlebar",
     "shared": "libs/shared"
   }

@@ -1,14 +1,14 @@
 {
   "projectType": "library",
-  "root": "libs/gui/item-overview",
-  "sourceRoot": "libs/gui/item-overview/src",
+  "root": "libs/gui/product-overview",
+  "sourceRoot": "libs/gui/product-overview/src",
   "prefix": "stockeer",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/gui/item-overview"],
+      "outputs": ["coverage/libs/gui/product-overview"],
       "options": {
-        "jestConfig": "libs/gui/item-overview/jest.config.js",
+        "jestConfig": "libs/gui/product-overview/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -16,15 +16,15 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "libs/gui/item-overview/src/**/*.ts",
-          "libs/gui/item-overview/src/**/*.html"
+          "libs/gui/product-overview/src/**/*.ts",
+          "libs/gui/product-overview/src/**/*.html"
         ]
       }
     },
     "compodoc": {
       "executor": "@twittwer/compodoc:compodoc",
       "options": {
-        "tsConfig": "libs/gui/item-overview/tsconfig.lib.json",
+        "tsConfig": "libs/gui/product-overview/tsconfig.lib.json",
         "outputPath": "dist/compodoc/gui-item-overview"
       },
       "configurations": {
@@ -39,9 +39,9 @@
         "uiFramework": "@storybook/angular",
         "port": 4400,
         "config": {
-          "configFolder": "libs/gui/item-overview/.storybook"
+          "configFolder": "libs/gui/product-overview/.storybook"
         },
-        "projectBuildConfig": "gui-item-overview:build-storybook"
+        "projectBuildConfig": "gui-product-overview:build-storybook"
       },
       "configurations": {
         "ci": {
@@ -56,7 +56,7 @@
         "uiFramework": "@storybook/angular",
         "outputPath": "dist/storybook/gui-item-overview",
         "config": {
-          "configFolder": "libs/gui/item-overview/.storybook"
+          "configFolder": "libs/gui/product-overview/.storybook"
         },
         "assets": [
           {
@@ -71,7 +71,7 @@
           }
         ],
         "styles": ["apps/app/src/styles.scss"],
-        "projectBuildConfig": "gui-item-overview:build-storybook"
+        "projectBuildConfig": "gui-product-overview:build-storybook"
       },
       "configurations": {
         "ci": {

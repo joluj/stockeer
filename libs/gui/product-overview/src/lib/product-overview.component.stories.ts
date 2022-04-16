@@ -1,19 +1,19 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
-import { ItemOverviewComponent } from './item-overview.component';
+import { ProductOverviewComponent } from './product-overview.component';
 import { IonicModule } from '@ionic/angular';
 
 export default {
   title: 'ItemOverviewComponent',
-  component: ItemOverviewComponent,
+  component: ProductOverviewComponent,
   decorators: [
     moduleMetadata({
       imports: [IonicModule.forRoot()],
     }),
   ],
-} as Meta<ItemOverviewComponent>;
+} as Meta<ProductOverviewComponent>;
 
-const Template: Story<ItemOverviewComponent> = (
-  args: ItemOverviewComponent
+const Template: Story<ProductOverviewComponent> = (
+  args: ProductOverviewComponent
 ) => ({
   props: args,
 });

@@ -3,10 +3,10 @@ import { Product } from '../../../../shared/src/lib/entities/Product';
 
 @Component({
   selector: 'stockeer-item-overview',
-  templateUrl: './item-overview.component.html',
-  styleUrls: ['./item-overview.component.scss'],
+  templateUrl: './product-overview.component.html',
+  styleUrls: ['./product-overview.component.scss'],
 })
-export class ItemOverviewComponent {
+export class ProductOverviewComponent {
   @Input()
   products: Product[];
 
