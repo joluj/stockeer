@@ -1,20 +1,20 @@
 {
-  "root": "libs/shared",
-  "sourceRoot": "libs/shared/src",
+  "root": "libs/entities",
+  "sourceRoot": "libs/entities/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/**/*.ts"]
+        "lintFilePatterns": ["libs/entities/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/shared"],
+      "outputs": ["coverage/libs/entities"],
       "options": {
-        "jestConfig": "libs/shared/jest.config.js",
+        "jestConfig": "libs/entities/jest.config.js",
         "passWithNoTests": true
       }
     }
