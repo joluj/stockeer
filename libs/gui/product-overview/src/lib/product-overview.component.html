@@ -1,10 +1,10 @@
 <ion-list>
   <ion-list-header>Items</ion-list-header>
 
-  <li *ngFor="let product of products; index as i">
+  <li *ngFor="let product of products">
     <stockeer-product-item
       [product]="product"
-      (delete)="delete.emit(i.toString())"
+      (delete)="delete.emit(product.id)"
     ></stockeer-product-item>
   </li>
 </ion-list>

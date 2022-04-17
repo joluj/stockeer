@@ -10,10 +10,10 @@ export class ProductOverviewComponent {
   @Input()
   products: Product[];
 
-  @Output()
   /**
-   * Emits the id of the product clicked on
+   * Emits the id of the product clicked on.
    */
+  @Output()
   delete: EventEmitter<string>;
 
   constructor() {
