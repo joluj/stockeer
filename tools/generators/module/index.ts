@@ -99,7 +99,6 @@ export default async function (
 
   const projectPath = readProjectConfiguration(tree, projectName).root;
 
-  // const projectPath = path.join("libs", schema.folder, "")
   editStorybookPreviewJs(
     tree,
     projectName,

@@ -1,3 +1,8 @@
+/*
+Partly copied from https://github.com/nrwl/nx/tree/master/packages/angular/src/generators/component.
+Implementing an own angular component generator is tracking in #11
+ */
+
 import { joinPathFragments, logger, names, readJson, Tree } from '@nrwl/devkit';
 import { wrapAngularDevkitSchematic } from '@nrwl/devkit/ngcli-adapter';
 import {
@@ -35,7 +40,7 @@ interface Schema {
   export?: boolean;
 }
 
-export async function componentGenerator(tree: Tree, schema: Schema) {
+export async function angularComponentGenerator(tree: Tree, schema: Schema) {
   checkPathUnderProjectRoot(tree, schema);
 
   const angularComponentSchematic = wrapAngularDevkitSchematic(
@@ -144,4 +149,4 @@ function exportComponent(tree: Tree, schema: Schema) {
   tree.write(projectEntryPoint, updateEntryPointContent);
 }
 
-export default componentGenerator;
+export default angularComponentGenerator;
