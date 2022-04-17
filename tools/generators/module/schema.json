@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "module",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Library/Module name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "folder": {
+      "type": "string",
+      "description": "Folder name (e.g. gui)",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      }
+    }
+  },
+  "required": ["name"]
+}
