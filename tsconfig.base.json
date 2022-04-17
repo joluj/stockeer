@@ -19,7 +19,8 @@
       "@stockeer/gui/product-overview": [
         "libs/gui/product-overview/src/index.ts"
       ],
-      "@stockeer/gui/titlebar": ["libs/gui/titlebar/src/index.ts"]
+      "@stockeer/gui/titlebar": ["libs/gui/titlebar/src/index.ts"],
+      "@stockeer/entities": ["libs/entities/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
