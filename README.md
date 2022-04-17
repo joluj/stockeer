@@ -22,3 +22,5 @@ yarn nx workspace-generator module <moduleName> <folderName>
 # example
 yarn nx workspace-generator module titlebar gui
 ```
+
+2. Usually: Add `IonicModule.forRoot()` to the imports of `moduleMetadata` in `<component-name>.component.stories.ts`.
