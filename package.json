@@ -20,8 +20,6 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
-    "@capacitor/core": "^3.2.5",
-    "@ionic/angular": "^5.8.3",
     "eslint-plugin-prettier": "^4.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
