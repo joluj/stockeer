@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AppStoreModule } from '@stockeer/store';
+import { AppStoreModule } from '..';
 
 describe('StoreModule', () => {
   beforeEach(async () => {

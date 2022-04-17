@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ensureStoragesLoaded, loadStoragesSuccess } from './storage.actions';
-import { exhaustMap, of } from 'rxjs';
+import { catchError, EMPTY, exhaustMap, map } from 'rxjs';
+import { StorageService } from '@stockeer/services';
 
 @Injectable()
 export class StorageEffects {
@@ -9,11 +10,18 @@ export class StorageEffects {
     this.actions$.pipe(
       ofType(ensureStoragesLoaded),
       exhaustMap(() => {
-        // TODO call service
-        return of(loadStoragesSuccess({ storages: [] }));
+        return this.service.load().pipe(
+          map((storages) => loadStoragesSuccess({ storages })),
+          catchError(() => {
+            return EMPTY;
+          })
+        );
       })
     )
   );
 
-  constructor(protected readonly actions$: Actions) {}
+  constructor(
+    protected readonly actions$: Actions,
+    protected readonly service: StorageService
+  ) {}
 }

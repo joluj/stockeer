@@ -1,4 +1,4 @@
-import { AppState } from '@stockeer/store';
+import { AppState } from '..';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { StorageState } from './storage.state';
 import { storageAdapter } from './storages.reducer';

@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { loadProductsSuccess } from './products.actions';
-import { ensureStoragesLoaded } from '../storage';
-import { exhaustMap, of } from 'rxjs';
+import { ensureProductsLoaded, loadProductsSuccess } from './products.actions';
+import { catchError, EMPTY, exhaustMap, map } from 'rxjs';
+import { ProductService } from '@stockeer/services';
 
 @Injectable()
 export class ProductsEffects {
   readonly ensureLoaded$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ensureStoragesLoaded),
+      ofType(ensureProductsLoaded),
       exhaustMap(() => {
-        // TODO call service
-        return of(loadProductsSuccess({ products: [] }));
+        return this.service.load().pipe(
+          map((products) => loadProductsSuccess({ products })),
+          catchError(() => {
+            return EMPTY;
+          })
+        );
       })
     )
   );
 
-  constructor(private readonly actions$: Actions) {}
+  constructor(
+    private readonly actions$: Actions,
+    protected readonly service: ProductService
+  ) {}
 }

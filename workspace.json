@@ -8,6 +8,7 @@
     "gui-product-item": "libs/gui/product-item",
     "gui-product-overview": "libs/gui/product-overview",
     "gui-titlebar": "libs/gui/titlebar",
+    "services": "libs/services",
     "store": "libs/store"
   }
 }

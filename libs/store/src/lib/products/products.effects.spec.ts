@@ -1,12 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import {
   AppState,
   ensureProductsLoaded,
   getProducts,
   StoreModuleImports,
-} from '@stockeer/store';
+} from '..';
+import { ProductService } from '@stockeer/services';
+import { IProduct } from '@stockeer/dtos';
+
+const mockList: IProduct[] = [
+  {
+    id: 'test-product-id-1',
+    name: 'test-product-name-1',
+  },
+  {
+    id: 'test-product-id-2',
+    name: 'test-product-name-2',
+  },
+];
 
 describe('ProductsEffects', () => {
   let store: Store<AppState>;
@@ -22,10 +35,13 @@ describe('ProductsEffects', () => {
     store = TestBed.inject(Store);
   });
 
-  it('should work', async () => {
+  it('should initialize', async () => {
+    const service = TestBed.inject(ProductService);
+    jest.spyOn(service, 'load').mockReturnValue(of(mockList));
+
     store.dispatch(ensureProductsLoaded());
 
     const actual = await select(getProducts);
-    expect(actual).toHaveLength(0);
+    expect(actual).toHaveLength(2);
   });
 });
