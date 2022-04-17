@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '@stockeer/shared';
+import { Product } from '@stockeer/entities';
 
 @Component({
   selector: 'stockeer-product-item',
