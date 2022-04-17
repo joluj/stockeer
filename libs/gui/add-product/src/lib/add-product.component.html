@@ -1,0 +1,23 @@
+<div class="content">
+  <ion-list>
+    <ion-item>
+      <ion-icon slot="start" name="fast-food-outline"></ion-icon>
+      <ion-input
+        placeholder="Product"
+        type="text"
+        [(ngModel)]="productName"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="time-outline"></ion-icon>
+      <ion-datetime
+        placeholder="Expiry Date"
+        [(ngModel)]="expiryDate"
+      ></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+  <div class="bottom-right">
+    <ion-button color="primary" (click)="emitProduct()">Add</ion-button>
+  </div>
+</div>

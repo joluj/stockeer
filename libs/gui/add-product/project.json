@@ -1,0 +1,84 @@
+{
+  "projectType": "library",
+  "root": "libs/gui/add-product",
+  "sourceRoot": "libs/gui/add-product/src",
+  "prefix": "stockeer",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/gui/add-product"],
+      "options": {
+        "jestConfig": "libs/gui/add-product/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/gui/add-product/src/**/*.ts",
+          "libs/gui/add-product/src/**/*.html"
+        ]
+      }
+    },
+    "compodoc": {
+      "executor": "@twittwer/compodoc:compodoc",
+      "options": {
+        "tsConfig": "libs/gui/add-product/tsconfig.lib.json",
+        "outputPath": "dist/compodoc/gui-add-product"
+      },
+      "configurations": {
+        "json": {
+          "exportFormat": "json"
+        }
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/angular",
+        "port": 4400,
+        "config": {
+          "configFolder": "libs/gui/add-product/.storybook"
+        },
+        "projectBuildConfig": "gui-add-product:build-storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/angular",
+        "outputPath": "dist/storybook/gui-add-product",
+        "config": {
+          "configFolder": "libs/gui/add-product/.storybook"
+        },
+        "projectBuildConfig": "gui-add-product:build-storybook",
+        "assets": [
+          {
+            "glob": "**",
+            "input": "apps/app/src/assets",
+            "output": "./assets"
+          },
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
+        ],
+        "styles": ["apps/app/src/styles.scss"]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

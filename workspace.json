@@ -4,6 +4,7 @@
     "app": "apps/app",
     "app-e2e": "apps/app-e2e",
     "entities": "libs/entities",
+    "gui-add-product": "libs/gui/add-product",
     "gui-product-item": "libs/gui/product-item",
     "gui-product-overview": "libs/gui/product-overview",
     "gui-titlebar": "libs/gui/titlebar"
