@@ -3,9 +3,12 @@
   "projects": {
     "app": "apps/app",
     "app-e2e": "apps/app-e2e",
+    "dtos": "libs/dtos",
     "entities": "libs/entities",
     "gui-product-item": "libs/gui/product-item",
     "gui-product-overview": "libs/gui/product-overview",
-    "gui-titlebar": "libs/gui/titlebar"
+    "gui-titlebar": "libs/gui/titlebar",
+    "services": "libs/services",
+    "store": "libs/store"
   }
 }

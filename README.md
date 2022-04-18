@@ -24,3 +24,9 @@ yarn nx workspace-generator module titlebar gui
 ```
 
 2. Usually: Add `IonicModule.forRoot()` to the imports of `moduleMetadata` in `<component-name>.component.stories.ts`.
+
+## General Rules
+
+Here are some general rules for development.
+
+- [Stores](./libs/store/README.md)
