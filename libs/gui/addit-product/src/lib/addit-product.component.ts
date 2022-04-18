@@ -40,19 +40,18 @@ export class AdditProductComponent {
    * input {@link product} (edit case).
    */
   @Output()
-  addEditEmitter: EventEmitter<ProductOptionalId>;
+  additEmitter: EventEmitter<ProductOptionalId>;
 
   /**
    * A {@link FormGroup} representing {@link product}.
    */
   productForm: FormGroup<GroupResolverFormBuilder<ProductForm>>;
 
-  // Used to access the values of the Unit-enum.
-  Unit;
+  Unit; // Used to access the values of the Unit-enum.
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.add = true;
-    this.addEditEmitter = new EventEmitter();
+    this.additEmitter = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
       name: [this.product?.name, Validators.required],
       expiryDate: this.product?.expiryDate,
@@ -73,7 +72,7 @@ export class AdditProductComponent {
     };
 
     // In the edit case, also emit the id.
-    this.addEditEmitter.emit(
+    this.additEmitter.emit(
       this.product
         ? { id: this.product.id, ...productWithoutId }
         : productWithoutId
