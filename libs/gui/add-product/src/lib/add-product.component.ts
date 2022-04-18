@@ -1,7 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product, Unit } from '@stockeer/entities';
+import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
+import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
+import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 
 export type ProductOptionalId = Omit<Product, 'id'> & { id?: string };
+
+interface ProductForm {
+  name: (string | ((control: AbstractControl) => ValidationErrors))[];
+  expiryDate: string;
+  amount: number;
+  unit: Unit;
+}
 
 @Component({
   selector: 'stockeer-add-product',
@@ -32,17 +42,35 @@ export class AddProductComponent {
   @Output()
   addEditEmitter: EventEmitter<ProductOptionalId>;
 
-  constructor() {
+  productForm: FormGroup<GroupResolverFormBuilder<ProductForm>>;
+  Unit;
+
+  constructor(private readonly formBuilder: FormBuilder) {
     this.add = true;
     this.addEditEmitter = new EventEmitter();
-    this.product = this.product ?? {
-      name: '',
-      expiryDate: '',
-      quantity: { amount: 1, unit: Unit.PIECE },
-    };
+    this.productForm = this.formBuilder.group<ProductForm>({
+      name: [this.product?.name, Validators.required],
+      expiryDate: this.product?.expiryDate,
+      amount: this.product?.quantity.amount,
+      unit: this.product?.quantity.unit ?? Unit.PIECE,
+    });
+    this.Unit = Unit;
   }
 
   emitProduct() {
-    this.addEditEmitter.emit({ ...this.product });
+    const productWithoutId = {
+      name: this.productForm.controls.name.value,
+      expiryDate: this.productForm.controls.expiryDate.value,
+      quantity: {
+        amount: this.productForm.controls.amount.value ?? 1,
+        unit: this.productForm.controls.unit.value,
+      },
+    };
+
+    this.addEditEmitter.emit(
+      this.product
+        ? { id: this.product.id, ...productWithoutId }
+        : productWithoutId
+    );
   }
 }

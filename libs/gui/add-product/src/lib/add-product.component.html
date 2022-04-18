@@ -5,14 +5,14 @@
       <ion-input
         placeholder="Product"
         type="text"
-        [(ngModel)]="product.name"
+        [formControl]="productForm.controls.name"
       ></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon slot="start" name="time-outline"></ion-icon>
       <ion-datetime
         placeholder="Expiry Date"
-        [(ngModel)]="product.expiryDate"
+        [formControl]="productForm.controls.expiryDate"
       ></ion-datetime>
     </ion-item>
     <ion-item>
@@ -20,14 +20,24 @@
       <ion-input
         placeholder="Quantity"
         type="number"
-        [(ngModel)]="product.quantity.amount"
+        [formControl]="productForm.controls.amount"
       ></ion-input>
+      <ion-select interface="popover" [formControl]="productForm.controls.unit">
+        <li *ngFor="let unit of Unit | keyvalue">
+          <ion-select-option value="{{ unit.value }}">{{
+            unit.value.toLowerCase()
+          }}</ion-select-option>
+        </li>
+      </ion-select>
     </ion-item>
   </ion-list>
 
   <div class="bottom-right">
-    <ion-button color="primary" (click)="emitProduct()">
-      {{ add ? 'Add' : 'Edit' }}
+    <ion-button
+      color="primary"
+      (click)="productForm.controls.name.value && emitProduct()"
+    >
+      {{ add ? 'Add' : 'Apply' }}
     </ion-button>
   </div>
 </div>
