@@ -15,10 +15,10 @@ interface ProductForm {
 
 @Component({
   selector: 'stockeer-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.scss'],
+  templateUrl: './addit-product.component.html',
+  styleUrls: ['./addit-product.component.scss'],
 })
-export class AddProductComponent {
+export class AdditProductComponent {
   /**
    * Specifies if this component acts as an add-component,
    * or as an edit-component.

@@ -1,24 +1,26 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
-import { AddProductComponent } from './add-product.component';
+import { AdditProductComponent } from './addit-product.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export default {
-  title: 'AddProductComponent',
-  component: AddProductComponent,
+  title: 'AdditProductComponent',
+  component: AdditProductComponent,
   decorators: [
     moduleMetadata({
       imports: [IonicModule.forRoot(), FormsModule, ReactiveFormsModule],
     }),
   ],
-} as Meta<AddProductComponent>;
+} as Meta<AdditProductComponent>;
 
-const Template: Story<AddProductComponent> = (args: AddProductComponent) => ({
+const Template: Story<AdditProductComponent> = (
+  args: AdditProductComponent
+) => ({
   props: args,
 });
 
 export const Primary = Template.bind({});
 Primary.args = {
-  add: false,
+  add: true,
   product: null,
 };

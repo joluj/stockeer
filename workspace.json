@@ -5,7 +5,7 @@
     "app-e2e": "apps/app-e2e",
     "dtos": "libs/dtos",
     "entities": "libs/entities",
-    "gui-add-product": "libs/gui/add-product",
+    "gui-addit-product": "libs/gui/addit-product",
     "gui-product-item": "libs/gui/product-item",
     "gui-product-overview": "libs/gui/product-overview",
     "gui-titlebar": "libs/gui/titlebar",

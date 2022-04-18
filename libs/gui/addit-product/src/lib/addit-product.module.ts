@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddProductComponent } from './add-product.component';
+import { AdditProductComponent } from './addit-product.component';
 import { IonicModule } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [CommonModule, IonicModule, ReactiveFormsModule],
-  declarations: [AddProductComponent],
-  exports: [AddProductComponent],
+  declarations: [AdditProductComponent],
+  exports: [AdditProductComponent],
 })
-export class AddProductModule {}
+export class AdditProductModule {}

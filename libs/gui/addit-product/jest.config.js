@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'gui-add-product',
+  displayName: 'gui-addit-product',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/gui/add-product',
+  coverageDirectory: '../../../coverage/libs/gui/addit-product',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

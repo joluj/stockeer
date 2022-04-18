@@ -1,14 +1,14 @@
 {
   "projectType": "library",
-  "root": "libs/gui/add-product",
-  "sourceRoot": "libs/gui/add-product/src",
+  "root": "libs/gui/addit-product",
+  "sourceRoot": "libs/gui/addit-product/src",
   "prefix": "stockeer",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/gui/add-product"],
+      "outputs": ["coverage/libs/gui/addit-product"],
       "options": {
-        "jestConfig": "libs/gui/add-product/jest.config.js",
+        "jestConfig": "libs/gui/addit-product/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -16,16 +16,16 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "libs/gui/add-product/src/**/*.ts",
-          "libs/gui/add-product/src/**/*.html"
+          "libs/gui/addit-product/src/**/*.ts",
+          "libs/gui/addit-product/src/**/*.html"
         ]
       }
     },
     "compodoc": {
       "executor": "@twittwer/compodoc:compodoc",
       "options": {
-        "tsConfig": "libs/gui/add-product/tsconfig.lib.json",
-        "outputPath": "dist/compodoc/gui-add-product"
+        "tsConfig": "libs/gui/addit-product/tsconfig.lib.json",
+        "outputPath": "dist/compodoc/gui-addit-product"
       },
       "configurations": {
         "json": {
@@ -39,9 +39,9 @@
         "uiFramework": "@storybook/angular",
         "port": 4400,
         "config": {
-          "configFolder": "libs/gui/add-product/.storybook"
+          "configFolder": "libs/gui/addit-product/.storybook"
         },
-        "projectBuildConfig": "gui-add-product:build-storybook"
+        "projectBuildConfig": "gui-addit-product:build-storybook"
       },
       "configurations": {
         "ci": {
@@ -54,11 +54,11 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "uiFramework": "@storybook/angular",
-        "outputPath": "dist/storybook/gui-add-product",
+        "outputPath": "dist/storybook/gui-addit-product",
         "config": {
-          "configFolder": "libs/gui/add-product/.storybook"
+          "configFolder": "libs/gui/addit-product/.storybook"
         },
-        "projectBuildConfig": "gui-add-product:build-storybook",
+        "projectBuildConfig": "gui-addit-product:build-storybook",
         "assets": [
           {
             "glob": "**",
