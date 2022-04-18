@@ -19,9 +19,5 @@ const Template: Story<AddProductComponent> = (args: AddProductComponent) => ({
 
 export const Primary = Template.bind({});
 Primary.args = {
-  product: {
-    id: '1',
-    name: 'Apple',
-    bestBeforeDate: '2022-08-11',
-  },
+  product: null,
 };

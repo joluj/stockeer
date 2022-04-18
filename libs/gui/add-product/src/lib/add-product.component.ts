@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Product } from '@stockeer/entities';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Product, Unit } from '@stockeer/entities';
+
+export type ProductOptionalId = Omit<Product, 'id'> & { id?: string };
 
 @Component({
   selector: 'stockeer-add-product',
@@ -8,27 +10,39 @@ import { Product } from '@stockeer/entities';
 })
 export class AddProductComponent {
   /**
+   * Specifies if this component acts as an add-component,
+   * or as an edit-component.
+   */
+  @Input()
+  add: boolean;
+
+  /**
+   * If {@link add} is true, this product is null, otherwise
+   * it contains the product that may be edited.
+   */
+  @Input()
+  product?: ProductOptionalId;
+
+  /**
    * Emits the product created from the input-values.
+   * If {@link add} is true, the id is not specified (add case).
+   * Otherwise, the product emitted holds the id of the
+   * input {@link product} (edit case).
    */
   @Output()
-  add: EventEmitter<Product>;
-
-  productName: string;
-  expiryDate: string;
+  addEditEmitter: EventEmitter<ProductOptionalId>;
 
   constructor() {
-    this.add = new EventEmitter();
-    this.productName = '';
-    this.expiryDate = '';
+    this.add = true;
+    this.addEditEmitter = new EventEmitter();
+    this.product = this.product ?? {
+      name: '',
+      expiryDate: '',
+      quantity: { amount: 1, unit: Unit.PIECE },
+    };
   }
 
   emitProduct() {
-    const productToEmit: Product = {
-      id: '1',
-      name: this.productName,
-      expiryDate: this.expiryDate,
-    };
-
-    this.add.emit(productToEmit);
+    this.addEditEmitter.emit({ ...this.product });
   }
 }

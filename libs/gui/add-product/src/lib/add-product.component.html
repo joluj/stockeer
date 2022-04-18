@@ -5,14 +5,14 @@
       <ion-input
         placeholder="Product"
         type="text"
-        [(ngModel)]="productName"
+        [(ngModel)]="product.name"
       ></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon slot="start" name="time-outline"></ion-icon>
       <ion-datetime
         placeholder="Expiry Date"
-        [(ngModel)]="expiryDate"
+        [(ngModel)]="product.expiryDate"
       ></ion-datetime>
     </ion-item>
   </ion-list>

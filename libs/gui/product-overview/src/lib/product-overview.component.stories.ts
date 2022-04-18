@@ -2,6 +2,7 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { ProductOverviewComponent } from './product-overview.component';
 import { IonicModule } from '@ionic/angular';
 import { ProductItemModule } from '@stockeer/gui/product-item';
+import { Unit } from '@stockeer/entities';
 
 export default {
   title: 'ProductOverviewComponent',
@@ -25,12 +26,14 @@ Primary.args = {
     {
       id: '0',
       name: 'Banana',
-      bestBeforeDate: '2022-04-16',
+      expiryDate: '2022-04-16',
+      quantity: { amount: 4, unit: Unit.PIECE },
     },
     {
       id: '1',
       name: 'Schnitzel',
-      bestBeforeDate: '2022-04-16',
+      expiryDate: '2022-04-16',
+      quantity: { amount: 2, unit: Unit.PIECE },
     },
   ],
 };
