@@ -42,7 +42,12 @@ export class AddProductComponent {
   @Output()
   addEditEmitter: EventEmitter<ProductOptionalId>;
 
+  /**
+   * A {@link FormGroup} representing {@link product}.
+   */
   productForm: FormGroup<GroupResolverFormBuilder<ProductForm>>;
+
+  // Used to access the values of the Unit-enum.
   Unit;
 
   constructor(private readonly formBuilder: FormBuilder) {
@@ -67,6 +72,7 @@ export class AddProductComponent {
       },
     };
 
+    // In the edit case, also emit the id.
     this.addEditEmitter.emit(
       this.product
         ? { id: this.product.id, ...productWithoutId }
