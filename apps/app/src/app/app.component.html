@@ -1,3 +1,30 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+
+  <ul *ngIf="storages$ | async; let storages">
+    <li>
+      <ion-button (click)="triggerAddStorage()">Add Storage</ion-button>
+    </li>
+
+    <li *ngFor="let storage of storages">
+      {{ storage.name }}
+      <ion-button (click)="triggerAddProduct(storage.id)">
+        Add Product
+      </ion-button>
+      <ion-button (click)="triggerRemoveStorage(storage.id)">
+        <ion-icon name="trash"> </ion-icon>
+      </ion-button>
+
+      <ul>
+        <li *ngFor="let product of storage.products">
+          {{ product.name }}
+          <ion-button (click)="triggerRemoveProduct(product.id, storage.id)">
+            <ion-icon name="trash"> </ion-icon>
+          </ion-button>
+        </li>
+      </ul>
+    </li>
+
+    <li *ngIf="storages.length === 0">No Storages</li>
+  </ul>
 </ion-app>
