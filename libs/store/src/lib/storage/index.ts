@@ -1,2 +1,11 @@
 export * from './storage.state';
-export { ensureStoragesLoaded } from './storage.actions';
+export {
+  getStorages,
+  getStoragesState,
+  getSelectedStorage,
+} from './storages.selectors';
+export {
+  addStorage,
+  ensureStoragesLoaded,
+  removeStorage,
+} from './storage.actions';

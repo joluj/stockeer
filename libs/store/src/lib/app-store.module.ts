@@ -22,5 +22,6 @@ export const StoreModuleImports: (
 
 @NgModule({
   imports: [...StoreModuleImports],
+  exports: [],
 })
 export class AppStoreModule {}

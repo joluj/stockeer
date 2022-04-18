@@ -4,6 +4,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as ProductsActions from './products.actions';
 import { IProduct } from '@stockeer/dtos';
 import { ProductState } from '.';
+import { addProductSuccess, removeProductSuccess } from './products.actions';
 
 export const productsAdapter: EntityAdapter<IProduct> =
   createEntityAdapter<IProduct>();
@@ -20,5 +21,11 @@ export const productsReducer = createReducer(
   on(ProductsActions.selectProduct, (state, { productId }) => ({
     ...state,
     selected: productId,
-  }))
+  })),
+  on(addProductSuccess, (state, { product }) => {
+    return productsAdapter.setOne(product, state);
+  }),
+  on(removeProductSuccess, (state, { productId }) => {
+    return productsAdapter.removeOne(productId, state);
+  })
 );

@@ -2258,6 +2258,13 @@
     jsonc-parser "3.0.0"
     pluralize "8.0.0"
 
+"@ngneat/reactive-forms@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@ngneat/reactive-forms/-/reactive-forms-4.1.0.tgz#29f4a00a4ce7f9299f621a0193aee7aead23c332"
+  integrity sha512-4uovdd5gzYaqOwGBYsJVmwDzQEyuyqsovO+G3MRx1Dylkh3FTUBs58xQ+65yOliSHXDRph3DeFE8VxSm4vnhug==
+  dependencies:
+    tslib "^2.3.0"
+
 "@ngrx/component-store@~13.0.0":
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-13.0.2.tgz#fd254a2000851a213ee3c0ba76164055c370939e"
@@ -4114,6 +4121,11 @@
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
   integrity sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==
+
+"@types/uuid@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
+  integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
 
 "@types/webpack-env@^1.16.0":
   version "1.16.4"
