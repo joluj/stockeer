@@ -1,0 +1,11 @@
+.content {
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-right {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -3,13 +3,14 @@ import { productsAdapter } from './products.reducer';
 import { AppState } from '../app.state';
 import { ProductState } from './products.state';
 import { IProduct } from '@stockeer/dtos';
-import { Product } from '@stockeer/entities';
+import { Product, Unit } from '@stockeer/entities';
 
 export function toProductEntity(product: IProduct): Product {
   return {
     id: product.id,
     name: product.name,
-    bestBeforeDate: '',
+    expiryDate: '',
+    quantity: { amount: 1, unit: Unit.PIECE },
   };
 }
 
