@@ -13,7 +13,7 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column('text', { unique: true })
   username: string;
 
   @Column({
