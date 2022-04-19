@@ -1,4 +1,4 @@
-import { UserRole } from '@stockeer/dtos';
+import { UserRole } from './UserRole';
 
 export interface IJwtPayload {
   /**
