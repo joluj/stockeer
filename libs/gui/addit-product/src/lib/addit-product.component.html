@@ -33,11 +33,8 @@
   </ion-list>
 
   <div class="bottom-right">
-    <ion-button
-      color="primary"
-      (click)="productForm.controls.name.value && emitProduct()"
-    >
-      {{ add ? 'Add' : 'Apply' }}
+    <ion-button color="primary" (click)="validateAndEmitProduct()">
+      {{ isAdd ? 'Add' : 'Apply' }}
     </ion-button>
   </div>
 </div>

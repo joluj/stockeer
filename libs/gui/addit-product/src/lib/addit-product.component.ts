@@ -20,14 +20,7 @@ interface ProductForm {
 })
 export class AdditProductComponent {
   /**
-   * Specifies if this component acts as an add-component,
-   * or as an edit-component.
-   */
-  @Input()
-  add: boolean;
-
-  /**
-   * If {@link add} is true, this product is null, otherwise
+   * If {@link isAdd} is true, this product is null, otherwise
    * it contains the product that may be edited.
    */
   @Input()
@@ -35,23 +28,25 @@ export class AdditProductComponent {
 
   /**
    * Emits the product created from the input-values.
-   * If {@link add} is true, the id is not specified (add case).
+   * If {@link isAdd} is true, the id is not specified (add case).
    * Otherwise, the product emitted holds the id of the
    * input {@link product} (edit case).
    */
   @Output()
-  additEmitter: EventEmitter<ProductOptionalId>;
+  save: EventEmitter<ProductOptionalId>;
 
   /**
    * A {@link FormGroup} representing {@link product}.
    */
   productForm: FormGroup<GroupResolverFormBuilder<ProductForm>>;
 
-  Unit; // Used to access the values of the Unit-enum.
+  /**
+   * Used to access the values of the Unit-enum.
+   */
+  Unit: typeof Unit;
 
   constructor(private readonly formBuilder: FormBuilder) {
-    this.add = true;
-    this.additEmitter = new EventEmitter();
+    this.save = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
       name: [this.product?.name, Validators.required],
       expiryDate: this.product?.expiryDate,
@@ -61,18 +56,33 @@ export class AdditProductComponent {
     this.Unit = Unit;
   }
 
-  emitProduct() {
+  /**
+   * Specifies if this component acts as an add-component,
+   * or as an edit-component.
+   */
+  get isAdd(): boolean {
+    return this.product != null;
+  }
+
+  validateAndEmitProduct() {
+    this.productForm.markAllAsTouched();
+    if (!this.productForm.valid) {
+      return;
+    }
+
+    const form = this.productForm.value;
+
     const productWithoutId = {
-      name: this.productForm.controls.name.value,
-      expiryDate: this.productForm.controls.expiryDate.value,
+      name: form.name,
+      expiryDate: form.expiryDate,
       quantity: {
-        amount: this.productForm.controls.amount.value ?? 1,
-        unit: this.productForm.controls.unit.value,
+        amount: form.amount ?? 1,
+        unit: form.unit,
       },
     };
 
     // In the edit case, also emit the id.
-    this.additEmitter.emit(
+    this.save.emit(
       this.product
         ? { id: this.product.id, ...productWithoutId }
         : productWithoutId

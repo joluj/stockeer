@@ -21,6 +21,5 @@ const Template: Story<AdditProductComponent> = (
 
 export const Primary = Template.bind({});
 Primary.args = {
-  add: true,
   product: null,
 };
