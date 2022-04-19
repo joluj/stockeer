@@ -1,13 +1,13 @@
 import { AuthService } from './auth.service';
-import { UserRole } from '@malen-app/dtos';
-import { UserEntity } from '@malen-app/entities';
 import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { userRepositoryFactory } from '../../testing/mocks/repositories';
 import * as bcrypt from 'bcrypt';
 import { environment } from '../../environments/environment';
 import { JwtModule } from '@nestjs/jwt';
+import { UserRole } from '@stockeer/dtos';
+import { UserEntity } from '@stockeer/entities';
+import { userRepositoryFactory } from '../testing/mocks/repositories';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -24,7 +24,7 @@ describe('AuthService', () => {
       ),
       role: UserRole.USER,
       creationTime: new Date(),
-      email: 'mail@mail.com',
+      editedTime: new Date(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -49,10 +49,7 @@ describe('AuthService', () => {
     const findOne: (FindOneOptions) => Promise<UserEntity | undefined> = (
       options
     ) => {
-      if (
-        options?.where?.username === validUser.username ||
-        options?.where?.email == validUser.email
-      ) {
+      if (options?.where?.username === validUser.username) {
         return Promise.resolve(validUser);
       }
       return Promise.resolve(undefined);
@@ -69,11 +66,9 @@ describe('AuthService', () => {
     });
     it('should not validate successful', async () => {
       expect(await authService.validateUser(validUser.username, 'aaa')).toBe(
-        undefined
+        null
       );
-      expect(await authService.validateUser('test', 'password')).toBe(
-        undefined
-      );
+      expect(await authService.validateUser('test', 'password')).toBe(null);
     });
   });
 });
