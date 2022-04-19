@@ -30,3 +30,15 @@ yarn nx workspace-generator module titlebar gui
 Here are some general rules for development.
 
 - [Stores](./libs/store/README.md)
+
+## Database Information
+
+Interaction with the Database is handled by TypeORM. The Database scheme is created by migrations, which have to be generated.
+The file ormconfig.env configures the connection string to the database and contains the path to the migration files / entity definitions.
+The initial migration has been created using `yarn run typeorm:migration:generate -n InitDB`. What happens is that a script looks up the entities and
+the current state of the specified database. It then generates sql commands that would sync the state of the database to the current state of the entity definitions.
+For example: 
+- Database contains relation User
+- Entity folder contains User AND Product
+-> Migration will see that the Database differs from the specified entities and generate sql commands that will create the Product relation.
+- The migrations that have to be run will be specified in the DatabaseModule!

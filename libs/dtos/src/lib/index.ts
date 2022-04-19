@@ -1,2 +1,2 @@
-export * from './IProduct';
-export * from './IStorage';
+export * from './classes';
+export * from './interfaces';
