@@ -1,4 +1,4 @@
-import { IUser, UserRole } from '../interfaces';
+import { IUser, UserRole } from '@stockeer/types';
 import { IsDate, IsEnum, IsInt, IsString, ValidateIf } from 'class-validator';
 import { Type } from 'class-transformer';
 

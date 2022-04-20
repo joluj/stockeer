@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product, Unit } from '@stockeer/entities';
 import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { IProduct, Unit } from '@stockeer/types';
 
-export type ProductOptionalId = Omit<Product, 'id'> & { id?: string };
+export type ProductOptionalId = Omit<IProduct, 'id' | 'storageId'> & {
+  id?: string;
+  storageId?: string;
+};
 
 interface ProductForm {
   name: (string | ((control: AbstractControl) => ValidationErrors))[];

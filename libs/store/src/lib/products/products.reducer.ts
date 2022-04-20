@@ -2,9 +2,10 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
 import * as ProductsActions from './products.actions';
-import { IProduct } from '@stockeer/dtos';
-import { ProductState } from '.';
 import { addProductSuccess, removeProductSuccess } from './products.actions';
+
+import { ProductState } from '.';
+import { IProduct } from '@stockeer/types';
 
 export const productsAdapter: EntityAdapter<IProduct> =
   createEntityAdapter<IProduct>();

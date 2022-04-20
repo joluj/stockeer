@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IProduct } from '@stockeer/dtos';
+import { IProduct } from '@stockeer/types';
 
 function prefix(name: string) {
   return `[Products] ${name}`;

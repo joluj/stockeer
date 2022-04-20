@@ -14,8 +14,9 @@ import {
 } from '..';
 import { ensureStoragesLoaded, getStorages } from '.';
 import { ProductService, StorageService } from '@stockeer/services';
-import { IProduct, IStorage } from '@stockeer/dtos';
+
 import { getStoragesDict } from './storages.selectors';
+import { IProduct, IStorage, Unit } from '@stockeer/types';
 
 const mockList: IStorage[] = [
   {
@@ -34,14 +35,23 @@ const mockListProducts: IProduct[] = [
   {
     id: 'test-product-id-1',
     name: 'test-product-name-1',
+    expiryDate: '01-01-2022',
+    quantity: { amount: 1, unit: Unit.PIECE },
+    storageId: 'test-storage-id-1',
   },
   {
     id: 'test-product-id-2',
     name: 'test-product-name-2',
+    expiryDate: '01-01-2022',
+    quantity: { amount: 1, unit: Unit.PIECE },
+    storageId: 'test-storage-id-1',
   },
   {
     id: 'test-product-id-3',
     name: 'test-product-name-3',
+    expiryDate: '01-01-2022',
+    quantity: { amount: 1, unit: Unit.PIECE },
+    storageId: 'test-storage-id-2',
   },
 ];
 

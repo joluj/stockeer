@@ -1,5 +1,5 @@
 import { createEntityAdapter } from '@ngrx/entity';
-import { IStorage } from '@stockeer/dtos';
+
 import { on } from '@ngrx/store';
 import { StorageState } from './storage.state';
 import {
@@ -9,6 +9,7 @@ import {
   setStorageSuccess,
 } from './storage.actions';
 import { createImmerReducer } from 'ngrx-immer/store';
+import { IStorage } from '@stockeer/types';
 
 export const storageAdapter = createEntityAdapter<IStorage>();
 

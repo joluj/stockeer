@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IStorage } from '@stockeer/dtos';
+import { IStorage } from '@stockeer/types';
 
 function prefix(name: string) {
   return `[Storages] ${name}`;

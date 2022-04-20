@@ -1,5 +1,5 @@
 import { IsInt, IsString } from 'class-validator';
-import { IErrorResponse } from '../interfaces';
+import { IErrorResponse } from '@stockeer/types';
 
 export class ErrorResponseDto implements IErrorResponse {
   @IsInt()
