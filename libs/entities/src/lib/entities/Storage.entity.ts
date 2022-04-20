@@ -5,8 +5,8 @@ import {
   PrimaryGeneratedColumn,
   RelationId,
 } from 'typeorm';
-import { ProductEntity } from '@stockeer/entities';
 import { StorageDto } from '@stockeer/dtos';
+import { ProductEntity } from './Product.entity';
 
 @Entity()
 export class StorageEntity {
