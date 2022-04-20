@@ -1,5 +1,8 @@
 import { UserRole } from './UserRole';
 
+/**
+ * Data that is contained in a JWT created by the backend.
+ */
 export interface IJwtPayload {
   /**
    * UserId

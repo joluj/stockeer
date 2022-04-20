@@ -8,16 +8,22 @@ import {
   StoreModuleImports,
 } from '..';
 import { ProductService } from '@stockeer/services';
-import { IProduct } from '@stockeer/dtos';
+import { IProduct, Unit } from '@stockeer/types';
 
 const mockList: IProduct[] = [
   {
     id: 'test-product-id-1',
     name: 'test-product-name-1',
+    expiryDate: '01-01-2022',
+    quantity: { amount: 1, unit: Unit.PIECE },
+    storageId: 'test-storage-id-1',
   },
   {
     id: 'test-product-id-2',
     name: 'test-product-name-2',
+    expiryDate: '02-01-2022',
+    quantity: { amount: 1, unit: Unit.PIECE },
+    storageId: 'test-storage-id-1',
   },
 ];
 

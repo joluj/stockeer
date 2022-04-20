@@ -1,7 +1,8 @@
 import { getProducts, getSelectedProduct } from '.';
-import { IProduct } from '@stockeer/dtos';
+
 import { AppState } from '../app.state';
 import { initialState, productsAdapter } from './products.reducer';
+import { IProduct } from '@stockeer/types';
 
 describe('Products Selectors', () => {
   const createProductsEntity = (id: string, name = '') =>

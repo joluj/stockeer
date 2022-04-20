@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IStorage } from '@stockeer/dtos';
+import { IStorage } from '@stockeer/types';
 
 @Injectable({
   providedIn: 'root',

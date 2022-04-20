@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '@stockeer/entities';
+import { IProduct } from '@stockeer/types';
 
 @Component({
   selector: 'stockeer-item-overview',
@@ -8,7 +8,7 @@ import { Product } from '@stockeer/entities';
 })
 export class ProductOverviewComponent {
   @Input()
-  products: Product[];
+  products: IProduct[];
 
   /**
    * Emits the id of the product clicked on.

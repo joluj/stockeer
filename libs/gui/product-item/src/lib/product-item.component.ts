@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product, Unit } from '@stockeer/entities';
+import { IProduct, Unit } from '@stockeer/types';
 
 @Component({
   selector: 'stockeer-product-item',
@@ -8,7 +8,7 @@ import { Product, Unit } from '@stockeer/entities';
 })
 export class ProductItemComponent {
   @Input()
-  product: Product;
+  product: IProduct;
 
   /**
    * Emits an empty event when the delete-button is clicked.
@@ -22,6 +22,7 @@ export class ProductItemComponent {
       name: 'Banana',
       expiryDate: '2022-04-16',
       quantity: { amount: 1, unit: Unit.PIECE },
+      storageId: '0',
     };
     this.delete = new EventEmitter();
   }

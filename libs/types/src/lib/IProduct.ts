@@ -1,3 +1,5 @@
+import { Mutable } from 'utility-types';
+
 export enum Unit {
   PIECE = 'PIECE',
   KG = 'KG',
@@ -7,9 +9,9 @@ export enum Unit {
 /**
  * Defines an amount given in the specified unit.
  */
-export type Quantity = { amount: number; unit: Unit };
+export type IQuantity = { amount: number; unit: Unit };
 
-export interface Product {
+export interface IProduct {
   id: string;
   name: string;
 
@@ -25,5 +27,9 @@ export interface Product {
   /**
    * Indicates which quantity of this product is available.
    */
-  quantity: Quantity;
+  quantity: IQuantity;
+
+  storageId: string;
 }
+
+export type IProductMutable = Mutable<IProduct>;

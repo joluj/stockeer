@@ -5,8 +5,9 @@ import {
 } from '@nestjs/common';
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
 import { IncomingMessage } from 'http';
-import { JwtPayloadDto, UserRole } from '@stockeer/dtos';
+import { JwtPayloadDto } from '@stockeer/dtos';
 import { runtimeValidationPipe } from './shared/pipes';
+import { UserRole } from '@stockeer/types';
 
 export const ROLES_KEY = 'roles';
 /**

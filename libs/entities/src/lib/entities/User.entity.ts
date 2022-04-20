@@ -5,8 +5,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IUser, UserDto, UserRole } from '@stockeer/dtos';
 import { plainToInstance } from 'class-transformer';
+import { IUser, UserRole } from '@stockeer/types';
+import { UserDto } from '@stockeer/dtos';
 
 @Entity()
 export class UserEntity {

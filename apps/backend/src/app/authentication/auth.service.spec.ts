@@ -5,9 +5,9 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { environment } from '../../environments/environment';
 import { JwtModule } from '@nestjs/jwt';
-import { UserRole } from '@stockeer/dtos';
 import { UserEntity } from '@stockeer/entities';
 import { userRepositoryFactory } from '../testing/mocks/repositories';
+import { UserRole } from '@stockeer/types';
 
 describe('AuthService', () => {
   let authService: AuthService;

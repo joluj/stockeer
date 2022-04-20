@@ -1,5 +1,5 @@
 import { IsEnum, IsInt, IsString } from 'class-validator';
-import { IJwtPayload, UserRole } from '../interfaces';
+import { IJwtPayload, UserRole } from '@stockeer/types';
 
 export class JwtPayloadDto implements IJwtPayload {
   @IsInt()

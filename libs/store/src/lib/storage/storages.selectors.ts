@@ -2,9 +2,9 @@ import { AppState, getProductsDict, toProductEntity } from '..';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { StorageState } from './storage.state';
 import { storageAdapter } from './storages.reducer';
-import { IProduct, IStorage } from '@stockeer/dtos';
 import { Dictionary } from '@ngrx/entity';
-import { Storage } from '@stockeer/entities';
+import { IProduct, IStorage } from '@stockeer/types';
+import { StorageEntity } from '@stockeer/entities';
 
 function isNotNull<T>(element: T | null | undefined): element is T {
   return element !== null && element !== undefined;
@@ -13,10 +13,11 @@ function isNotNull<T>(element: T | null | undefined): element is T {
 export function toStorageEntity(
   storage: IStorage,
   products: Dictionary<IProduct>
-): Storage {
+): StorageEntity {
   return {
     id: storage.id,
     name: storage.name,
+    productIds: storage.products.slice(),
     products: storage.products
       .map((id) => products[id])
       .filter(isNotNull)
@@ -40,7 +41,7 @@ export const getStoragesDict = createSelector(
 export const getStorages = createSelector(
   getStoragesState,
   getProductsDict,
-  (state, products): Storage[] => {
+  (state, products): StorageEntity[] => {
     const all = selectAll(state);
     return all.map((storage) => toStorageEntity(storage, products));
   }
@@ -49,7 +50,7 @@ export const getStorages = createSelector(
 export const getSelectedStorage = createSelector(
   getStoragesState,
   getProductsDict,
-  (state, products): Storage | null => {
+  (state, products): StorageEntity | null => {
     if (state.selected) {
       const storage = state.entities[state.selected];
       if (!storage) return null;

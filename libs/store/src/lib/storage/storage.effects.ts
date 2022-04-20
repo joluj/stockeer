@@ -20,7 +20,7 @@ import {
   addProductSuccess,
   removeProductSuccess,
 } from '../products/products.actions';
-import { IProduct, IStorage } from '@stockeer/dtos';
+import { IProduct, IStorage, Unit } from '@stockeer/types';
 
 @Injectable()
 export class StorageEffects {
@@ -76,7 +76,14 @@ export class StorageEffects {
         const storage = entities[action.storageId];
         if (!storage) return EMPTY;
 
-        const newProduct: IProduct = { id: uuid(), name: action.name };
+        //TODO: Expiry und Quantity korrekt setzen
+        const newProduct: IProduct = {
+          id: uuid(),
+          name: action.name,
+          storageId: action.storageId,
+          quantity: { amount: 1, unit: Unit.PIECE },
+          expiryDate: '01-01-2022',
+        };
 
         const newStorage: IStorage = {
           ...storage,

@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { IJwtResponse } from '../interfaces';
+import { IJwtResponse } from '@stockeer/types';
 
 export class JwtResponseDto implements IJwtResponse {
   @IsString()
