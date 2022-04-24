@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
@@ -21,7 +21,7 @@ interface ProductForm {
   templateUrl: './addit-product.component.html',
   styleUrls: ['./addit-product.component.scss'],
 })
-export class AdditProductComponent {
+export class AdditProductComponent implements OnInit {
   /**
    * If {@link isAdd} is true, this product is null, otherwise
    * it contains the product that may be edited.
@@ -50,6 +50,9 @@ export class AdditProductComponent {
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.save = new EventEmitter();
+  }
+
+  ngOnInit() {
     this.productForm = this.formBuilder.group<ProductForm>({
       name: [this.product?.name, Validators.required],
       expiryDate: this.product?.expiryDate,
@@ -64,7 +67,7 @@ export class AdditProductComponent {
    * or as an edit-component.
    */
   get isAdd(): boolean {
-    return this.product != null;
+    return this.product == null;
   }
 
   validateAndEmitProduct() {
