@@ -26,13 +26,12 @@ export class AdditProductComponent {
 
   @Input()
   set product(value: ProductOptionalId | undefined) {
-    this.productForm = this.formBuilder.group<ProductForm>({
-      name: [value?.name, Validators.required],
-      expiryDate: value?.expiryDate,
-      amount: value?.quantity.amount,
-      unit: value?.quantity.unit ?? Unit.PIECE,
-    });
-    this.isAdd = value == null;
+    this.productInstance = value;
+
+    this.productForm.controls.name.setValue(value?.name);
+    this.productForm.controls.expiryDate.setValue(value?.expiryDate);
+    this.productForm.controls.amount.setValue(value?.quantity.amount);
+    this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
   }
 
   /**
@@ -62,22 +61,22 @@ export class AdditProductComponent {
    */
   Unit: typeof Unit;
 
-  add: boolean;
-
-  private set isAdd(value: boolean) {
-    this.add = value;
-  }
-
   /**
    * Specifies if this component acts as an add-component,
    * or as an edit-component.
    */
   get isAdd(): boolean {
-    return this.add;
+    return this.product == null;
   }
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.save = new EventEmitter();
+    this.productForm = this.formBuilder.group<ProductForm>({
+      name: [null, Validators.required],
+      expiryDate: null,
+      amount: null,
+      unit: Unit.PIECE,
+    });
     this.Unit = Unit;
   }
 
