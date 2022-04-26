@@ -22,12 +22,15 @@ interface ProductForm {
   styleUrls: ['./addit-product.component.scss'],
 })
 export class AdditProductComponent {
-  /**
-   * If {@link isAdd} is true, this product is null, otherwise
-   * it contains the product that may be edited.
-   */
   @Input()
-  product?: ProductOptionalId;
+  set product(value: ProductOptionalId | undefined) {
+    this.productForm.controls.name.setValue(value?.name);
+    this.productForm.controls.expiryDate.setValue(value?.expiryDate);
+    this.productForm.controls.amount.setValue(value?.quantity.amount);
+    this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
+
+    this.isAdd = value == null;
+  }
 
   /**
    * Emits the product created from the input-values.
@@ -48,23 +51,21 @@ export class AdditProductComponent {
    */
   Unit: typeof Unit;
 
-  constructor(private readonly formBuilder: FormBuilder) {
-    this.save = new EventEmitter();
-    this.productForm = this.formBuilder.group<ProductForm>({
-      name: [this.product?.name, Validators.required],
-      expiryDate: this.product?.expiryDate,
-      amount: this.product?.quantity.amount,
-      unit: this.product?.quantity.unit ?? Unit.PIECE,
-    });
-    this.Unit = Unit;
-  }
-
   /**
    * Specifies if this component acts as an add-component,
    * or as an edit-component.
    */
-  get isAdd(): boolean {
-    return this.product != null;
+  isAdd: boolean;
+
+  constructor(private readonly formBuilder: FormBuilder) {
+    this.save = new EventEmitter();
+    this.productForm = this.formBuilder.group<ProductForm>({
+      name: [null, Validators.required],
+      expiryDate: null,
+      amount: null,
+      unit: Unit.PIECE,
+    });
+    this.Unit = Unit;
   }
 
   validateAndEmitProduct() {

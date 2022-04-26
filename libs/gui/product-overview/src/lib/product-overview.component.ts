@@ -7,8 +7,16 @@ import { IProduct } from '@stockeer/types';
   styleUrls: ['./product-overview.component.scss'],
 })
 export class ProductOverviewComponent {
+  private productsInstance?: IProduct[];
+
   @Input()
-  products: IProduct[];
+  set products(value: IProduct[]) {
+    this.productsInstance = value;
+  }
+
+  get products(): IProduct[] {
+    return this.productsInstance ?? [];
+  }
 
   /**
    * Emits the id of the product clicked on.
@@ -17,7 +25,6 @@ export class ProductOverviewComponent {
   delete: EventEmitter<string>;
 
   constructor() {
-    this.products = [];
     this.delete = new EventEmitter();
   }
 }

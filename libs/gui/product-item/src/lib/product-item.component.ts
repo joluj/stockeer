@@ -7,8 +7,24 @@ import { IProduct, Unit } from '@stockeer/types';
   styleUrls: ['./product-item.component.scss'],
 })
 export class ProductItemComponent {
+  private productInstance?: IProduct;
+
   @Input()
-  product: IProduct;
+  set product(value: IProduct) {
+    this.productInstance = value;
+  }
+
+  get product(): IProduct {
+    return (
+      this.productInstance ?? {
+        id: '0',
+        name: 'Product',
+        expiryDate: '2022-04-16',
+        quantity: { amount: 1, unit: Unit.PIECE },
+        storageId: '0',
+      }
+    );
+  }
 
   /**
    * Emits an empty event when the delete-button is clicked.
@@ -17,13 +33,6 @@ export class ProductItemComponent {
   delete: EventEmitter<void>;
 
   constructor() {
-    this.product = {
-      id: '0',
-      name: 'Banana',
-      expiryDate: '2022-04-16',
-      quantity: { amount: 1, unit: Unit.PIECE },
-      storageId: '0',
-    };
     this.delete = new EventEmitter();
   }
 }
