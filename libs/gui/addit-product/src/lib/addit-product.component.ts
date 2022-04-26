@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
@@ -21,13 +21,27 @@ interface ProductForm {
   templateUrl: './addit-product.component.html',
   styleUrls: ['./addit-product.component.scss'],
 })
-export class AdditProductComponent implements OnInit {
+export class AdditProductComponent {
+  productInstance?: ProductOptionalId;
+
+  @Input()
+  set product(value: ProductOptionalId | undefined) {
+    this.productForm = this.formBuilder.group<ProductForm>({
+      name: [value?.name, Validators.required],
+      expiryDate: value?.expiryDate,
+      amount: value?.quantity.amount,
+      unit: value?.quantity.unit ?? Unit.PIECE,
+    });
+    this.isAdd = value == null;
+  }
+
   /**
    * If {@link isAdd} is true, this product is null, otherwise
    * it contains the product that may be edited.
    */
-  @Input()
-  product?: ProductOptionalId;
+  get product(): ProductOptionalId | undefined {
+    return this.productInstance;
+  }
 
   /**
    * Emits the product created from the input-values.
@@ -48,18 +62,10 @@ export class AdditProductComponent implements OnInit {
    */
   Unit: typeof Unit;
 
-  constructor(private readonly formBuilder: FormBuilder) {
-    this.save = new EventEmitter();
-  }
+  add: boolean;
 
-  ngOnInit() {
-    this.productForm = this.formBuilder.group<ProductForm>({
-      name: [this.product?.name, Validators.required],
-      expiryDate: this.product?.expiryDate,
-      amount: this.product?.quantity.amount,
-      unit: this.product?.quantity.unit ?? Unit.PIECE,
-    });
-    this.Unit = Unit;
+  private set isAdd(value: boolean) {
+    this.add = value;
   }
 
   /**
@@ -67,7 +73,12 @@ export class AdditProductComponent implements OnInit {
    * or as an edit-component.
    */
   get isAdd(): boolean {
-    return this.product == null;
+    return this.add;
+  }
+
+  constructor(private readonly formBuilder: FormBuilder) {
+    this.save = new EventEmitter();
+    this.Unit = Unit;
   }
 
   validateAndEmitProduct() {

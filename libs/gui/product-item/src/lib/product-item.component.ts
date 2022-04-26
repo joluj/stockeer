@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct, Unit } from '@stockeer/types';
 
 @Component({
@@ -6,9 +6,25 @@ import { IProduct, Unit } from '@stockeer/types';
   templateUrl: './product-item.component.html',
   styleUrls: ['./product-item.component.scss'],
 })
-export class ProductItemComponent implements OnInit {
+export class ProductItemComponent {
+  productInstance?: IProduct;
+
   @Input()
-  product?: IProduct;
+  set product(value: IProduct) {
+    this.productInstance = value;
+  }
+
+  get product(): IProduct {
+    return (
+      this.productInstance ?? {
+        id: '0',
+        name: 'Product',
+        expiryDate: '2022-04-16',
+        quantity: { amount: 1, unit: Unit.PIECE },
+        storageId: '0',
+      }
+    );
+  }
 
   /**
    * Emits an empty event when the delete-button is clicked.
@@ -18,15 +34,5 @@ export class ProductItemComponent implements OnInit {
 
   constructor() {
     this.delete = new EventEmitter();
-  }
-
-  ngOnInit(): void {
-    this.product = this.product ?? {
-      id: '0',
-      name: 'Product',
-      expiryDate: '2022-04-16',
-      quantity: { amount: 1, unit: Unit.PIECE },
-      storageId: '0',
-    };
   }
 }

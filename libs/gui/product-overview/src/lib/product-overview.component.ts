@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from '@stockeer/types';
 
 @Component({
@@ -6,9 +6,17 @@ import { IProduct } from '@stockeer/types';
   templateUrl: './product-overview.component.html',
   styleUrls: ['./product-overview.component.scss'],
 })
-export class ProductOverviewComponent implements OnInit {
+export class ProductOverviewComponent {
+  productsInstance?: IProduct[];
+
   @Input()
-  products?: IProduct[];
+  set products(value: IProduct[]) {
+    this.productsInstance = value;
+  }
+
+  get products(): IProduct[] {
+    return this.productsInstance ?? [];
+  }
 
   /**
    * Emits the id of the product clicked on.
@@ -18,9 +26,5 @@ export class ProductOverviewComponent implements OnInit {
 
   constructor() {
     this.delete = new EventEmitter();
-  }
-
-  ngOnInit(): void {
-    this.products = this.products ?? [];
   }
 }
