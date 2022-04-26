@@ -22,7 +22,7 @@ interface ProductForm {
   styleUrls: ['./addit-product.component.scss'],
 })
 export class AdditProductComponent {
-  productInstance?: ProductOptionalId;
+  private productInstance?: ProductOptionalId;
 
   @Input()
   set product(value: ProductOptionalId | undefined) {

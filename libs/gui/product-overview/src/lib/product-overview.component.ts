@@ -7,7 +7,7 @@ import { IProduct } from '@stockeer/types';
   styleUrls: ['./product-overview.component.scss'],
 })
 export class ProductOverviewComponent {
-  productsInstance?: IProduct[];
+  private productsInstance?: IProduct[];
 
   @Input()
   set products(value: IProduct[]) {
