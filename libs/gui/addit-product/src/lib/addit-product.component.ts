@@ -22,24 +22,14 @@ interface ProductForm {
   styleUrls: ['./addit-product.component.scss'],
 })
 export class AdditProductComponent {
-  private productInstance?: ProductOptionalId;
-
   @Input()
   set product(value: ProductOptionalId | undefined) {
-    this.productInstance = value;
-
     this.productForm.controls.name.setValue(value?.name);
     this.productForm.controls.expiryDate.setValue(value?.expiryDate);
     this.productForm.controls.amount.setValue(value?.quantity.amount);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
-  }
 
-  /**
-   * If {@link isAdd} is true, this product is null, otherwise
-   * it contains the product that may be edited.
-   */
-  get product(): ProductOptionalId | undefined {
-    return this.productInstance;
+    this.isAdd = value == null;
   }
 
   /**
@@ -65,9 +55,7 @@ export class AdditProductComponent {
    * Specifies if this component acts as an add-component,
    * or as an edit-component.
    */
-  get isAdd(): boolean {
-    return this.product == null;
-  }
+  isAdd: boolean;
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.save = new EventEmitter();
