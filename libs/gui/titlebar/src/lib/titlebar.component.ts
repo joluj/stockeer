@@ -16,7 +16,7 @@ export class TitlebarComponent {
     // Make sure to initialize the variables in the constructor
     // Reason: https://github.com/storybookjs/storybook/issues/17004
     // TLDR: storybook bug
-    this.title = 'Test';
+    this.title = 'Stockeer';
     this.myClick = new EventEmitter();
   }
 
