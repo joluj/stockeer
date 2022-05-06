@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '@stockeer/store';
 
 @Component({
-  selector: 'stockeer-item-overview',
+  selector: 'stockeer-product-overview',
   templateUrl: './product-overview.component.html',
   styleUrls: ['./product-overview.component.scss'],
 })

@@ -7,6 +7,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'home',
+    loadChildren: () => import('./item-overview/module').then((m) => m.Module),
+  },
 ];
 
 @NgModule({
