@@ -22,17 +22,6 @@
               }
             ]
           }
-        ],
-        "no-restricted-imports": [
-          "error",
-          {
-            "paths": [
-              {
-                "name": "@stockeer/entities",
-                "message": "Don't use entities in frontend projects."
-              }
-            ]
-          }
         ]
       }
     },
