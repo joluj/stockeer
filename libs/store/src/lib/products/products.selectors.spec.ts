@@ -2,14 +2,14 @@ import { getProducts, getSelectedProduct } from '.';
 
 import { AppState } from '../app.state';
 import { initialState, productsAdapter } from './products.reducer';
-import { IProduct } from '@stockeer/types';
+import { Product } from '../types';
 
 describe('Products Selectors', () => {
   const createProductsEntity = (id: string, name = '') =>
     ({
       id,
       name: name || `name-${id}`,
-    } as IProduct);
+    } as Product);
 
   let state: AppState;
 

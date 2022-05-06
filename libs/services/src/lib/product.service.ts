@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IProduct } from '@stockeer/types';
+import { ProductDto } from '@stockeer/dtos';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  load(): Observable<IProduct[]> {
+  load(): Observable<ProductDto[]> {
     return of([]);
   }
 }

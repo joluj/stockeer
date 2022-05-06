@@ -8,9 +8,10 @@ import {
   StoreModuleImports,
 } from '..';
 import { ProductService } from '@stockeer/services';
-import { IProduct, Unit } from '@stockeer/types';
+import { Unit } from '@stockeer/types';
+import { ProductDto } from '@stockeer/dtos';
 
-const mockList: IProduct[] = [
+const mockList: ProductDto[] = [
   {
     id: 'test-product-id-1',
     name: 'test-product-name-1',

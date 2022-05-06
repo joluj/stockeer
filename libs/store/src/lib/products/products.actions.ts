@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IProduct } from '@stockeer/types';
+import { Product } from '../types';
 
 function prefix(name: string) {
   return `[Products] ${name}`;
@@ -12,7 +12,7 @@ export const ensureProductsLoaded = createAction(prefix('Ensure Loaded'));
  */
 export const loadProductsSuccess = createAction(
   prefix('Load Products Success'),
-  props<{ products: IProduct[] }>()
+  props<{ products: Product[] }>()
 );
 
 export const selectProduct = createAction(
@@ -30,7 +30,7 @@ export const addProduct = createAction(
  */
 export const addProductSuccess = createAction(
   prefix('Add Product Success'),
-  props<{ product: IProduct }>()
+  props<{ product: Product }>()
 );
 
 export const removeProduct = createAction(

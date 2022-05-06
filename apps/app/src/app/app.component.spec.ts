@@ -3,12 +3,13 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { AppStoreModule } from '@stockeer/store';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [AppStoreModule],
+      imports: [AppStoreModule, HttpClientModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));

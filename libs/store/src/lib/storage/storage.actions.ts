@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IStorage } from '@stockeer/types';
+import { StorageDto } from '@stockeer/dtos';
 
 function prefix(name: string) {
   return `[Storages] ${name}`;
@@ -9,7 +9,7 @@ export const ensureStoragesLoaded = createAction(prefix('Ensure Storages'));
 
 export const loadStoragesSuccess = createAction(
   prefix('Load Storages Success'),
-  props<{ storages: IStorage[] }>()
+  props<{ storages: StorageDto[] }>()
 );
 
 export const selectStorage = createAction(
@@ -27,7 +27,7 @@ export const addStorage = createAction(
  */
 export const setStorageSuccess = createAction(
   prefix('Set Storage Success'),
-  props<{ storage: IStorage }>()
+  props<{ storage: StorageDto }>()
 );
 
 export const removeStorage = createAction(

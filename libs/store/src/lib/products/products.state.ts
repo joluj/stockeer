@@ -1,6 +1,8 @@
 import { EntityState } from '@ngrx/entity';
-import { IProduct } from '@stockeer/types';
+import { ProductDto } from '@stockeer/dtos';
 
-export interface ProductState extends EntityState<IProduct> {
+export type ProductStateEntity = Omit<ProductDto, 'storageId'>;
+
+export interface ProductState extends EntityState<ProductStateEntity> {
   selected: string | null;
 }

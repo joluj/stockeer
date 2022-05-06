@@ -5,10 +5,13 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { IProduct, IQuantity, Unit } from '@stockeer/types';
 import { Type } from 'class-transformer';
+import { Unit } from '@stockeer/types';
 
-export class QuantityDto implements IQuantity {
+/**
+ * Defines an amount given in the specified unit.
+ */
+export class QuantityDto {
   @IsNumber()
   amount!: number;
   @IsEnum(Unit)
@@ -18,11 +21,19 @@ export class QuantityDto implements IQuantity {
 /**
  * Concrete Class that implements the Product Interface. Is required to make use of decorators for Backend Validation.
  */
-export class ProductDto implements IProduct {
+export class ProductDto {
   @IsInt()
   readonly id!: string;
   @IsString()
   readonly name!: string;
+
+  /**
+   * Expiry date as ISO string representation of a Date.
+   *
+   * @example:
+   *  myProduct.date = new Date().toISOString();
+   * "2022-04-16T11:07:55.879Z"
+   */
   @IsString()
   expiryDate!: string;
   @ValidateNested()

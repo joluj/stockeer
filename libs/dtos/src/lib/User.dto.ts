@@ -1,8 +1,8 @@
-import { IUser, UserRole } from '@stockeer/types';
 import { IsDate, IsEnum, IsInt, IsString, ValidateIf } from 'class-validator';
 import { Type } from 'class-transformer';
+import { UserRole } from '@stockeer/types';
 
-export class UserDto implements IUser {
+export class UserDto {
   @IsInt()
   id!: number;
   @IsString()

@@ -2,15 +2,15 @@ import { Action } from '@ngrx/store';
 
 import { loadProductsSuccess, selectProduct } from './products.actions';
 import { initialState, productsReducer } from './products.reducer';
-import { IProduct, Unit } from '@stockeer/types';
+import { Unit } from '@stockeer/types';
+import { Product } from '../types';
 
 describe('Products Reducer', () => {
-  const createProductsEntity = (id: string, name = ''): IProduct => ({
+  const createProductsEntity = (id: string, name = ''): Product => ({
     id,
     name: name || `name-${id}`,
     expiryDate: '01-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
-    storageId: 'test-storage-id-1',
   });
 
   describe('valid Products actions', () => {

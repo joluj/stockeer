@@ -6,8 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
-import { IUser, UserRole } from '@stockeer/types';
 import { UserDto } from '@stockeer/dtos';
+import { UserRole } from '@stockeer/types';
 
 @Entity()
 export class UserEntity {
@@ -33,7 +33,7 @@ export class UserEntity {
   @UpdateDateColumn()
   editedTime: Date;
 
-  constructor(dto: IUser) {
+  constructor(dto: UserDto) {
     if (dto) {
       this.id = dto.id;
       this.username = dto.username;

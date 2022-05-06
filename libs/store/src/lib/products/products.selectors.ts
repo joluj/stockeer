@@ -1,17 +1,16 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { productsAdapter } from './products.reducer';
 import { AppState } from '../app.state';
-import { ProductState } from './products.state';
-import { IProduct, Unit } from '@stockeer/types';
-import { ProductEntity } from '@stockeer/entities';
+import { ProductState, ProductStateEntity } from './products.state';
+import { Unit } from '@stockeer/types';
+import { Product } from '../types';
 
-export function toProductEntity(product: IProduct): ProductEntity {
+export function toProductEntity(product: ProductStateEntity): Product {
   return {
     id: product.id,
     name: product.name,
     expiryDate: '',
     quantity: { amount: 1, unit: Unit.PIECE },
-    storageId: product.storageId,
   };
 }
 
@@ -23,7 +22,7 @@ const { selectAll } = productsAdapter.getSelectors();
 
 export const getProducts = createSelector(
   getProductsState,
-  (state): ProductEntity[] => selectAll(state).map(toProductEntity)
+  (state): Product[] => selectAll(state).map(toProductEntity)
 );
 /**
  * @internal
