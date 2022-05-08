@@ -1,7 +1,6 @@
 import { IsInt, IsString } from 'class-validator';
-import { IStorage } from '@stockeer/types';
 
-export class StorageDto implements IStorage {
+export class StorageDto {
   @IsInt()
   readonly id!: string;
   @IsString()

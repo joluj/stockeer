@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IProduct } from '@stockeer/types';
+import { Product } from '@stockeer/store';
 
 @Component({
   selector: 'stockeer-item-overview',
@@ -7,14 +7,14 @@ import { IProduct } from '@stockeer/types';
   styleUrls: ['./product-overview.component.scss'],
 })
 export class ProductOverviewComponent {
-  private productsInstance?: IProduct[];
+  private productsInstance?: Product[];
 
   @Input()
-  set products(value: IProduct[]) {
+  set products(value: Product[]) {
     this.productsInstance = value;
   }
 
-  get products(): IProduct[] {
+  get products(): Product[] {
     return this.productsInstance ?? [];
   }
 

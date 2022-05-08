@@ -1,7 +1,7 @@
 import { IsEnum, IsInt, IsString } from 'class-validator';
-import { IJwtPayload, UserRole } from '@stockeer/types';
+import { UserRole } from '@stockeer/types';
 
-export class JwtPayloadDto implements IJwtPayload {
+export class JwtPayloadDto {
   @IsInt()
   sub!: number;
   @IsEnum(UserRole)

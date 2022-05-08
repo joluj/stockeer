@@ -1,4 +1,3 @@
-import { Unit } from '@stockeer/types';
 import {
   Column,
   Entity,
@@ -8,6 +7,7 @@ import {
 } from 'typeorm';
 import { ProductDto, QuantityDto } from '@stockeer/dtos';
 import { StorageEntity } from './Storage.entity';
+import { Unit } from '@stockeer/types';
 
 export class QuantityEntity {
   @Column()

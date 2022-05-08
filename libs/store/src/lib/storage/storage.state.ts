@@ -1,6 +1,9 @@
 import { EntityState } from '@ngrx/entity';
-import { IStorage } from '@stockeer/types';
+import { StorageDto } from '@stockeer/dtos';
+import { Serialized } from '@stockeer/types';
 
-export interface StorageState extends EntityState<IStorage> {
+export type StorageStateEntity = Serialized<StorageDto>;
+
+export interface StorageState extends EntityState<StorageStateEntity> {
   selected: string | null;
 }

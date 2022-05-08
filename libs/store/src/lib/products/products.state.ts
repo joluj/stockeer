@@ -1,6 +1,9 @@
 import { EntityState } from '@ngrx/entity';
-import { IProduct } from '@stockeer/types';
+import { ProductDto } from '@stockeer/dtos';
+import { Serialized } from '@stockeer/types';
 
-export interface ProductState extends EntityState<IProduct> {
+export type ProductStateEntity = Serialized<Omit<ProductDto, 'storageId'>>;
+
+export interface ProductState extends EntityState<ProductStateEntity> {
   selected: string | null;
 }

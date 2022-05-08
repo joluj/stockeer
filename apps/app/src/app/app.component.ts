@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  addProduct,
+  addStorage,
   AppState,
   ensureStoragesLoaded,
-  removeStorage,
-  addProduct,
+  getStorages,
   removeProduct,
+  removeStorage,
 } from '@stockeer/store';
-import { getStorages } from '@stockeer/store';
-import { addStorage } from '@stockeer/store';
 
 @Component({
   selector: 'stockeer-root',

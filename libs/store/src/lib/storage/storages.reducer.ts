@@ -9,9 +9,9 @@ import {
   setStorageSuccess,
 } from './storage.actions';
 import { createImmerReducer } from 'ngrx-immer/store';
-import { IStorage } from '@stockeer/types';
+import { StorageDto } from '@stockeer/dtos';
 
-export const storageAdapter = createEntityAdapter<IStorage>();
+export const storageAdapter = createEntityAdapter<StorageDto>();
 
 export const initialState: StorageState = storageAdapter.getInitialState({
   selected: null,

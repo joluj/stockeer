@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IProduct, Unit } from '@stockeer/types';
+import { Unit } from '@stockeer/types';
+import { Product } from '@stockeer/store';
 
 @Component({
   selector: 'stockeer-product-item',
@@ -7,21 +8,20 @@ import { IProduct, Unit } from '@stockeer/types';
   styleUrls: ['./product-item.component.scss'],
 })
 export class ProductItemComponent {
-  private productInstance?: IProduct;
+  private productInstance?: Product;
 
   @Input()
-  set product(value: IProduct) {
+  set product(value: Product) {
     this.productInstance = value;
   }
 
-  get product(): IProduct {
+  get product(): Product {
     return (
       this.productInstance ?? {
         id: '0',
         name: 'Product',
         expiryDate: '2022-04-16',
         quantity: { amount: 1, unit: Unit.PIECE },
-        storageId: '0',
       }
     );
   }

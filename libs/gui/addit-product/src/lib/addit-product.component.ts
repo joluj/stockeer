@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
-import { IProduct, Unit } from '@stockeer/types';
+import { Unit } from '@stockeer/types';
+import { Product } from '@stockeer/store';
 
-export type ProductOptionalId = Omit<IProduct, 'id' | 'storageId'> & {
+export type ProductOptionalId = Omit<Product, 'id' | 'storageId'> & {
   id?: string;
   storageId?: string;
 };

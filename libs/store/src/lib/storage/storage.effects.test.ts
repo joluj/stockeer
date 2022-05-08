@@ -16,9 +16,10 @@ import { ensureStoragesLoaded, getStorages } from '.';
 import { ProductService, StorageService } from '@stockeer/services';
 
 import { getStoragesDict } from './storages.selectors';
-import { IProduct, IStorage, Unit } from '@stockeer/types';
+import { Unit } from '@stockeer/types';
+import { ProductDto, StorageDto } from '@stockeer/dtos';
 
-const mockList: IStorage[] = [
+const mockList: StorageDto[] = [
   {
     id: 'test-storage-id-1',
     name: 'test-storage-name-1',
@@ -31,7 +32,7 @@ const mockList: IStorage[] = [
   },
 ];
 
-const mockListProducts: IProduct[] = [
+const mockListProducts: ProductDto[] = [
   {
     id: 'test-product-id-1',
     name: 'test-product-name-1',
