@@ -1,0 +1,22 @@
+<div style="height: 100%">
+  <ng-container *ngIf="products$ | async; let products">
+    <stockeer-product-overview
+      [products]="products"
+      (delete)="triggerRemoveProduct($event)"
+    ></stockeer-product-overview>
+  </ng-container>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="triggerAddFridge()">
+        <ion-icon name="cube-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="triggerAddProduct()">
+        <ion-icon name="fast-food-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</div>
