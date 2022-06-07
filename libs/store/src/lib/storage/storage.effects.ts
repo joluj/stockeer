@@ -10,8 +10,16 @@ import {
   removeStorageSuccess,
   setStorageSuccess,
 } from './storage.actions';
-import { catchError, EMPTY, exhaustMap, map, mergeMap, of } from 'rxjs';
-import { StorageService } from '@stockeer/services';
+import {
+  catchError,
+  EMPTY,
+  exhaustMap,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+} from 'rxjs';
+import { ProductService, StorageService } from '@stockeer/services';
 import { addProduct, AppState, removeProduct } from '..';
 import { Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
@@ -43,10 +51,14 @@ export class StorageEffects {
     this.actions$.pipe(
       ofType(addStorage),
       mergeMap((action) => {
-        return of(
-          setStorageSuccess({
-            storage: { id: uuid(), name: action.name, products: [] },
-          })
+        const stockeer = { id: uuid(), name: action.name, products: [] };
+
+        return this.service.setStockeer(stockeer).pipe(
+          map(() =>
+            setStorageSuccess({
+              storage: stockeer,
+            })
+          )
         );
       })
     )
@@ -77,7 +89,7 @@ export class StorageEffects {
         const storage = entities[action.storageId];
         if (!storage) return EMPTY;
 
-        //TODO: Expiry und Quantity korrekt setzen
+        // TODO: Expiry und Quantity korrekt setzen
         const newProduct: ProductDto = {
           id: uuid(),
           name: action.name,
@@ -91,10 +103,14 @@ export class StorageEffects {
           products: storage.products.concat(newProduct.id),
         };
 
-        return of(
-          setStorageSuccess({ storage: newStorage }),
-          addProductSuccess({ product: newProduct })
-        );
+        return this.productService
+          .setProduct(newProduct)
+          .pipe(
+            switchMap(() => [
+              setStorageSuccess({ storage: newStorage }),
+              addProductSuccess({ product: newProduct }),
+            ])
+          );
       })
     )
   );
@@ -112,10 +128,14 @@ export class StorageEffects {
           products: storage.products.filter((id) => id !== action.productId),
         };
 
-        return of(
-          setStorageSuccess({ storage: newStorage }),
-          removeProductSuccess({ productId: action.productId })
-        );
+        return this.productService
+          .removeProduct(action.productId)
+          .pipe(
+            switchMap(() => [
+              setStorageSuccess({ storage: newStorage }),
+              removeProductSuccess({ productId: action.productId }),
+            ])
+          );
       })
     )
   );
@@ -123,6 +143,7 @@ export class StorageEffects {
   constructor(
     protected readonly actions$: Actions,
     protected readonly store: Store<AppState>,
-    protected readonly service: StorageService
+    protected readonly service: StorageService,
+    protected readonly productService: ProductService
   ) {}
 }

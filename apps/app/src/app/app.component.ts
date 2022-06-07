@@ -4,11 +4,13 @@ import {
   addProduct,
   addStorage,
   AppState,
+  ensureProductsLoaded,
   ensureStoragesLoaded,
   getStorages,
   removeProduct,
   removeStorage,
 } from '@stockeer/store';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'stockeer-root',
@@ -18,10 +20,17 @@ import {
 export class AppComponent implements OnInit {
   readonly storages$ = this.store.select(getStorages);
 
-  constructor(protected store: Store<AppState>) {}
+  constructor(
+    protected store: Store<AppState>,
+    private readonly storage: Storage
+  ) {}
 
   ngOnInit() {
-    this.store.dispatch(ensureStoragesLoaded());
+    // TODO Move this into service module
+    this.storage.create().then(() => {
+      this.store.dispatch(ensureProductsLoaded());
+      this.store.dispatch(ensureStoragesLoaded());
+    });
   }
 
   triggerAddStorage() {
