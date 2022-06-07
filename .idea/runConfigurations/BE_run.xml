@@ -3,9 +3,9 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="start" />
+      <script value="nx" />
     </scripts>
-    <arguments value="backend" />
+    <arguments value="serve backend" />
     <node-interpreter value="project" />
     <envs />
     <method v="2" />
