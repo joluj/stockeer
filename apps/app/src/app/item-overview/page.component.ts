@@ -58,7 +58,12 @@ export class PageComponent implements OnInit, OnDestroy {
     this.store.dispatch(addProduct({ name, storageId }));
   }
 
-  triggerAddFridge() {
+  triggerAddStockeer() {
+    if (this.currentStorageId != null) {
+      window.alert('Only one storage is allowed in alpha');
+      return;
+    }
+
     const name = window.prompt('New Stockeer');
     if (!name) return;
 
