@@ -1,6 +1,16 @@
 {
   "version": 2,
   "projects": {
-    "app": "apps/app"
+    "app": "apps/app",
+    "backend": "apps/backend",
+    "dtos": "libs/dtos",
+    "entities": "libs/entities",
+    "gui-addit-product": "libs/gui/addit-product",
+    "gui-product-item": "libs/gui/product-item",
+    "gui-product-overview": "libs/gui/product-overview",
+    "gui-titlebar": "libs/gui/titlebar",
+    "services": "libs/services",
+    "store": "libs/store",
+    "types": "libs/types"
   }
 }
