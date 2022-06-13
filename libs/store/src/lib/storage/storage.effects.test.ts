@@ -1,6 +1,7 @@
 import { Store } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of } from 'rxjs';
+import { Storage } from '@ionic/storage-angular';
 
 import {
   addProduct,
@@ -63,11 +64,13 @@ describe('Storage Effects', () => {
     return firstValueFrom(store.select(selector));
   }
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [...StoreModuleImports],
     });
     store = TestBed.inject(Store);
+    const storage = TestBed.inject(Storage);
+    await storage.create();
   });
 
   it('should initialize', async () => {
@@ -86,6 +89,12 @@ describe('Storage Effects', () => {
       const productService = TestBed.inject(ProductService);
       jest.spyOn(storageService, 'load').mockReturnValue(of(mockList));
       jest.spyOn(productService, 'load').mockReturnValue(of(mockListProducts));
+
+      // mock local storage connections
+      jest.spyOn(storageService, 'removeStockeer').mockReturnValue(of(void 0));
+      jest.spyOn(storageService, 'setStockeer').mockReturnValue(of(void 0));
+      jest.spyOn(productService, 'setProduct').mockReturnValue(of(void 0));
+      jest.spyOn(productService, 'removeProduct').mockReturnValue(of(void 0));
 
       store.dispatch(ensureStoragesLoaded());
       store.dispatch(ensureProductsLoaded());
