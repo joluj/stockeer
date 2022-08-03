@@ -1,6 +1,11 @@
 <ion-item>
-  <ion-icon slot="start" name="fast-food-outline"></ion-icon>
-  <ion-label>
+  <ion-icon
+    slot="start"
+    name="fast-food-outline"
+    [routerLink]="['/', 'products', product.id]"
+  ></ion-icon>
+  <!--  TODO Move routerLink definition somewhere reasonable -->
+  <ion-label [routerLink]="['/', 'products', product.id]">
     <h2>{{ product.name }}</h2>
     <h3>{{ product.expiryDate }}</h3>
   </ion-label>

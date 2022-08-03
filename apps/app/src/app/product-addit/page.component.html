@@ -1,0 +1,6 @@
+<ng-container *ngIf="product$ | async; let product">
+  <stockeer-add-product
+    [product]="product"
+    (save)="save()"
+  ></stockeer-add-product>
+</ng-container>
