@@ -25,9 +25,9 @@ interface ProductForm {
 export class AdditProductComponent {
   @Input()
   set product(value: ProductOptionalId | undefined) {
-    this.productForm.controls.name.setValue(value?.name);
-    this.productForm.controls.expiryDate.setValue(value?.expiryDate);
-    this.productForm.controls.amount.setValue(value?.quantity.amount);
+    this.productForm.controls.name.setValue(value?.name ?? '');
+    this.productForm.controls.expiryDate.setValue(value?.expiryDate ?? '');
+    this.productForm.controls.amount.setValue(value?.quantity.amount ?? 0);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
 
     this.isAdd = value == null;
@@ -56,14 +56,14 @@ export class AdditProductComponent {
    * Specifies if this component acts as an add-component,
    * or as an edit-component.
    */
-  isAdd: boolean;
+  isAdd = false;
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.save = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
-      name: [null, Validators.required],
-      expiryDate: null,
-      amount: null,
+      name: ['', Validators.required],
+      expiryDate: new Date().toISOString(),
+      amount: 0,
       unit: Unit.PIECE,
     });
     this.Unit = Unit;
