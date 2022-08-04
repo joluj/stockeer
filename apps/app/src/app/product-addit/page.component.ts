@@ -5,9 +5,11 @@ import {
   getSelectedProduct,
   Product,
   selectProduct,
+  updateProduct,
 } from '@stockeer/store';
 import { filter, map, Observable, pluck, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ProductOptionalId } from '@stockeer/gui-addit-product';
 
 @Component({
   selector: 'stockeer-page-product-overview',
@@ -34,8 +36,13 @@ export class PageComponent implements OnInit {
     );
   }
 
-  save() {
-    // TODO implement
-    window.alert('WIP');
+  save(product: ProductOptionalId) {
+    if (!product.id) {
+      window.alert('Creating new products is not yet supported');
+      return;
+    }
+    this.store.dispatch(
+      updateProduct({ productId: product.id, updates: product })
+    );
   }
 }
