@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Product } from '../types';
+import { Required } from 'utility-types';
 
 function prefix(name: string) {
   return `[Products] ${name}`;
@@ -44,4 +45,17 @@ export const removeProduct = createAction(
 export const removeProductSuccess = createAction(
   prefix('Remove Product Success'),
   props<{ productId: string }>()
+);
+
+export const updateProduct = createAction(
+  prefix('Update Product'),
+  props<{ productId: string; updates: Partial<Product> }>()
+);
+
+/**
+ * @internal
+ */
+export const updateProductSuccess = createAction(
+  prefix('Update Product Success'),
+  props<{ product: Required<Partial<Product>, 'id'> }>()
 );

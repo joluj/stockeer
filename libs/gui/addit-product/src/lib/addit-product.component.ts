@@ -4,13 +4,12 @@ import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builde
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
+import { Optional } from 'utility-types';
 
-export type ProductOptionalId = Omit<Product, 'id' | 'storageId'> & {
-  id?: string;
-  storageId?: string;
-};
+export type ProductOptionalId = Optional<Product, 'id'>;
 
 interface ProductForm {
+  id: string | undefined;
   name: (string | ((control: AbstractControl) => ValidationErrors))[];
   expiryDate: string;
   amount: number;
@@ -24,13 +23,14 @@ interface ProductForm {
 })
 export class AdditProductComponent {
   @Input()
-  set product(value: ProductOptionalId | undefined) {
-    this.productForm.controls.name.setValue(value?.name);
-    this.productForm.controls.expiryDate.setValue(value?.expiryDate);
-    this.productForm.controls.amount.setValue(value?.quantity.amount);
+  set product(value: ProductOptionalId | Product | undefined) {
+    this.productForm.controls.id.setValue(value?.id);
+    this.productForm.controls.name.setValue(value?.name ?? '');
+    this.productForm.controls.expiryDate.setValue(value?.expiryDate ?? '');
+    this.productForm.controls.amount.setValue(value?.quantity.amount ?? 0);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
 
-    this.isAdd = value == null;
+    this.isAdd = !!(value && value.id);
   }
 
   /**
@@ -56,14 +56,15 @@ export class AdditProductComponent {
    * Specifies if this component acts as an add-component,
    * or as an edit-component.
    */
-  isAdd: boolean;
+  isAdd = false;
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.save = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
-      name: [null, Validators.required],
-      expiryDate: null,
-      amount: null,
+      id: undefined,
+      name: ['', Validators.required],
+      expiryDate: new Date().toISOString(),
+      amount: 0,
       unit: Unit.PIECE,
     });
     this.Unit = Unit;
@@ -77,20 +78,16 @@ export class AdditProductComponent {
 
     const form = this.productForm.value;
 
-    const productWithoutId = {
+    const formResult: ProductOptionalId = {
+      id: form.id, // might be undefined, but doesn't matter
       name: form.name,
       expiryDate: form.expiryDate,
       quantity: {
-        amount: form.amount ?? 1,
+        amount: form.amount,
         unit: form.unit,
       },
     };
 
-    // In the edit case, also emit the id.
-    this.save.emit(
-      this.product
-        ? { id: this.product.id, ...productWithoutId }
-        : productWithoutId
-    );
+    this.save.emit(formResult);
   }
 }
