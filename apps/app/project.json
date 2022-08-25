@@ -71,7 +71,9 @@
         },
         "development": {
           "browserTarget": "app:build:development",
-          "port": 4498
+          "port": 4498,
+          "host": "0.0.0.0",
+          "disableHostCheck": true
         }
       },
       "defaultConfiguration": "development"
@@ -184,6 +186,18 @@
         "android": {
           "cmd": "update android"
         }
+      }
+    },
+    "apk": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nx run app:build",
+          "nx run app:sync:android",
+          "./gradlew assemble"
+        ],
+        "cwd": "apps/app/android",
+        "parallel": false
       }
     }
   },
