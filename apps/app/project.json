@@ -187,6 +187,18 @@
           "cmd": "update android"
         }
       }
+    },
+    "apk": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nx run app:build",
+          "nx run app:sync:android",
+          "./gradlew assemble"
+        ],
+        "cwd": "apps/app/android",
+        "parallel": false
+      }
     }
   },
   "tags": [],
