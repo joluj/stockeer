@@ -1,8 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ensureProductsLoaded, loadProductsSuccess } from './products.actions';
-import { catchError, EMPTY, exhaustMap, map } from 'rxjs';
+import {
+  ensureProductsLoaded,
+  loadProductsSuccess,
+  updateProduct,
+  updateProductSuccess,
+} from './products.actions';
+import {
+  catchError,
+  EMPTY,
+  exhaustMap,
+  map,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs';
 import { ProductService } from '@stockeer/services';
+import { Store } from '@ngrx/store';
+import { AppState, getProductsDict } from '..';
 
 @Injectable()
 export class ProductsEffects {
@@ -20,8 +34,26 @@ export class ProductsEffects {
     )
   );
 
+  readonly updateProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateProduct),
+      withLatestFrom(this.store.select(getProductsDict)),
+      switchMap(([action, products]) => {
+        const p = products[action.productId];
+        if (!p) return EMPTY;
+
+        const newP = { ...p, ...action.updates };
+
+        return this.service
+          .setProduct(newP)
+          .pipe(map(() => updateProductSuccess({ product: newP })));
+      })
+    )
+  );
+
   constructor(
     private readonly actions$: Actions,
+    private readonly store: Store<AppState>,
     protected readonly service: ProductService
   ) {}
 }
