@@ -30,6 +30,20 @@
         </li>
       </ion-select>
     </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="barcode"></ion-icon>
+      <ion-icon
+        slot="end"
+        name="camera"
+        (click)="triggerBarcodeScan()"
+      ></ion-icon>
+      <ion-input
+        placeholder="Barcode"
+        type="text"
+        [formControl]="productForm.controls.barcode"
+      ></ion-input>
+    </ion-item>
   </ion-list>
 
   <div>
@@ -37,10 +51,4 @@
       {{ isAdd ? 'Add' : 'Apply' }}
     </ion-button>
   </div>
-
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="triggerBarcodeScan()">
-      <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </div>

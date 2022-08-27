@@ -17,6 +17,7 @@ interface ProductForm {
   expiryDate: string;
   amount: number;
   unit: Unit;
+  barcode: string;
 }
 
 @Component({
@@ -32,8 +33,9 @@ export class AdditProductComponent {
     this.productForm.controls.expiryDate.setValue(value?.expiryDate ?? '');
     this.productForm.controls.amount.setValue(value?.quantity.amount ?? 0);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
+    this.productForm.controls.barcode.setValue(value?.barcode ?? '');
 
-    this.isAdd = !!(value && value.id);
+    this.isAdd = value == undefined || value.id == undefined;
   }
 
   /**
@@ -74,6 +76,7 @@ export class AdditProductComponent {
       expiryDate: new Date().toISOString(),
       amount: 0,
       unit: Unit.PIECE,
+      barcode: '',
     });
     this.Unit = Unit;
   }
@@ -94,6 +97,7 @@ export class AdditProductComponent {
         amount: form.amount,
         unit: form.unit,
       },
+      barcode: form.barcode,
     };
 
     this.save.emit(formResult);
@@ -102,12 +106,14 @@ export class AdditProductComponent {
   async triggerBarcodeScan() {
     if (!this.platform.is('android')) {
       const { isPresent } = await this.alertService.ok({
-        message: 'The barcode scanner is only available on android',
+        message: 'The barcode scanner is only available on Android.',
       });
       await isPresent;
       return;
     }
     const barcode = await this.barcodeScannerService.scan();
-    console.log(barcode); // TODO
+    if (barcode) {
+      this.productForm.controls.barcode.setValue(barcode);
+    }
   }
 }

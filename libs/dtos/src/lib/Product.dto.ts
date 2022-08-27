@@ -41,4 +41,7 @@ export class ProductDto {
   quantity!: QuantityDto;
   @IsString()
   storageId!: string;
+
+  @IsString()
+  barcode!: string;
 }
