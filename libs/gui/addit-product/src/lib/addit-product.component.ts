@@ -6,6 +6,8 @@ import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 import { Optional } from 'utility-types';
 import { BarcodeScannerService } from '@stockeer/services';
+import { Platform } from '@ionic/angular';
+import { AlertService } from '@stockeer/services';
 
 export type ProductOptionalId = Optional<Product, 'id'>;
 
@@ -61,7 +63,9 @@ export class AdditProductComponent {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly barcodeScannerService: BarcodeScannerService
+    private readonly barcodeScannerService: BarcodeScannerService,
+    private readonly platform: Platform,
+    private readonly alertService: AlertService
   ) {
     this.save = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
@@ -96,7 +100,13 @@ export class AdditProductComponent {
   }
 
   async triggerBarcodeScan() {
-    // TODO disallow on web
+    if (!this.platform.is('android')) {
+      const { isPresent } = await this.alertService.ok({
+        message: 'The barcode scanner is only available on android',
+      });
+      await isPresent;
+      return;
+    }
     const barcode = await this.barcodeScannerService.scan();
     console.log(barcode); // TODO
   }
