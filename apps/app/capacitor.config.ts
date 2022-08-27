@@ -30,7 +30,9 @@ const config: CapacitorConfig = {
     '@capacitor/keyboard',
     '@capacitor/status-bar',
   ],
-  android: {},
+  android: {
+    path: '../android',
+  },
 };
 
 // '@capacitor-community/barcode-scanner',
