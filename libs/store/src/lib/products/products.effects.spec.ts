@@ -18,6 +18,7 @@ const mockList: ProductDto[] = [
     expiryDate: '01-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
     storageId: 'test-storage-id-1',
+    barcode: '',
   },
   {
     id: 'test-product-id-2',
@@ -25,6 +26,7 @@ const mockList: ProductDto[] = [
     expiryDate: '02-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
     storageId: 'test-storage-id-1',
+    barcode: '',
   },
 ];
 

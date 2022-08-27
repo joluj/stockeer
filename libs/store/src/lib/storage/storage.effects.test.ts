@@ -40,6 +40,7 @@ const mockListProducts: ProductDto[] = [
     expiryDate: '01-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
     storageId: 'test-storage-id-1',
+    barcode: '',
   },
   {
     id: 'test-product-id-2',
@@ -47,6 +48,7 @@ const mockListProducts: ProductDto[] = [
     expiryDate: '01-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
     storageId: 'test-storage-id-1',
+    barcode: '',
   },
   {
     id: 'test-product-id-3',
@@ -54,6 +56,7 @@ const mockListProducts: ProductDto[] = [
     expiryDate: '01-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
     storageId: 'test-storage-id-2',
+    barcode: '',
   },
 ];
 
