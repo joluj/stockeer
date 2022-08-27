@@ -5,7 +5,7 @@ import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 import { Optional } from 'utility-types';
-import { BarcodeScannerService } from '../../../../services/src/lib/barcode-scanner.service';
+import { BarcodeScannerService } from '@stockeer/services';
 
 export type ProductOptionalId = Optional<Product, 'id'>;
 
