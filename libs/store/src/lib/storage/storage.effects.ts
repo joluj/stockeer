@@ -96,6 +96,7 @@ export class StorageEffects {
           storageId: action.storageId,
           quantity: { amount: 1, unit: Unit.PIECE },
           expiryDate: '01-01-2022',
+          barcode: '',
         };
 
         const newStorage: StorageDto = {

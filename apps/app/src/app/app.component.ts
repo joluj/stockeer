@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     private readonly storage: Storage
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     // TODO Move this into service module
     this.storage.create().then(() => {
       this.store.dispatch(ensureProductsLoaded());

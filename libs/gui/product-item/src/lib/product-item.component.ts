@@ -22,6 +22,7 @@ export class ProductItemComponent {
         name: 'Product',
         expiryDate: '2022-04-16',
         quantity: { amount: 1, unit: Unit.PIECE },
+        barcode: '',
       }
     );
   }

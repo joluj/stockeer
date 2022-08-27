@@ -3,6 +3,7 @@ import { AdditProductComponent } from './addit-product.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Unit } from '@stockeer/types';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 export default {
   title: 'AdditProductComponent',
@@ -10,6 +11,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [IonicModule.forRoot(), FormsModule, ReactiveFormsModule],
+      providers: [AndroidPermissions],
     }),
   ],
 } as Meta<AdditProductComponent>;
