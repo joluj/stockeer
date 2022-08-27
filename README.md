@@ -42,3 +42,10 @@ For example:
 - Entity folder contains User AND Product
 -> Migration will see that the Database differs from the specified entities and generate sql commands that will create the Product relation.
 - The migrations that have to be run will be specified in the DatabaseModule!
+
+# Workflow
+
+1. Start angular: `nx run app:serve`
+2. Start backend: `nx run backend:serve` # Backend integration is still WIP.
+3. Open Android Studio with `nx run app:open:android` and run the app from there.
+4. (Optional) Debugging: Go to chrome://inspect and select your connected device to see the logs.
