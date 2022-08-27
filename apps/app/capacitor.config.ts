@@ -30,6 +30,7 @@ const config: CapacitorConfig = {
     '@capacitor/keyboard',
     '@capacitor/status-bar',
     '@capacitor-community/barcode-scanner',
+    'cordova-plugin-android-permissions', // only cordova plugin added
   ],
   android: {
     path: '../android',

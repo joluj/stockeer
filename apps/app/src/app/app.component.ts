@@ -11,7 +11,6 @@ import {
   removeStorage,
 } from '@stockeer/store';
 import { Storage } from '@ionic/storage-angular';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 @Component({
   selector: 'stockeer-root',
@@ -32,15 +31,6 @@ export class AppComponent implements OnInit {
       this.store.dispatch(ensureProductsLoaded());
       this.store.dispatch(ensureStoragesLoaded());
     });
-
-    await BarcodeScanner.hideBackground(); // make background of WebView transparent
-
-    const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
-
-    // if the result has content
-    if (result.hasContent) {
-      console.log(result.content); // log the raw scanned content
-    }
   }
 
   triggerAddStorage() {

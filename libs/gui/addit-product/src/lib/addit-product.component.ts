@@ -5,6 +5,7 @@ import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 import { Optional } from 'utility-types';
+import { BarcodeScannerService } from '../../../../services/src/lib/barcode-scanner.service';
 
 export type ProductOptionalId = Optional<Product, 'id'>;
 
@@ -58,7 +59,10 @@ export class AdditProductComponent {
    */
   isAdd = false;
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly barcodeScannerService: BarcodeScannerService
+  ) {
     this.save = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
       id: undefined,
@@ -89,5 +93,11 @@ export class AdditProductComponent {
     };
 
     this.save.emit(formResult);
+  }
+
+  async triggerBarcodeScan() {
+    // TODO disallow on web
+    const barcode = await this.barcodeScannerService.scan();
+    console.log(barcode); // TODO
   }
 }

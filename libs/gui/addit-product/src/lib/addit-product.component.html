@@ -32,9 +32,15 @@
     </ion-item>
   </ion-list>
 
-  <div class="bottom-right">
+  <div>
     <ion-button color="primary" (click)="validateAndEmitProduct()">
       {{ isAdd ? 'Add' : 'Apply' }}
     </ion-button>
   </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="triggerBarcodeScan()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>
