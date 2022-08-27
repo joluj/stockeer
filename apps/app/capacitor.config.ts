@@ -29,6 +29,7 @@ const config: CapacitorConfig = {
     '@capacitor/haptics',
     '@capacitor/keyboard',
     '@capacitor/status-bar',
+    '@capacitor-community/barcode-scanner',
   ],
   android: {
     path: '../android',
