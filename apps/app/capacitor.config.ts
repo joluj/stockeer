@@ -24,7 +24,18 @@ const config: CapacitorConfig = {
     url,
     cleartext: true,
   },
+  includePlugins: [
+    '@capacitor/app',
+    '@capacitor/haptics',
+    '@capacitor/keyboard',
+    '@capacitor/status-bar',
+  ],
+  android: {
+    path: '../android',
+  },
 };
+
+// '@capacitor-community/barcode-scanner',
 
 if (process.env['BUILD_PRODUCTION']) {
   delete config.server;

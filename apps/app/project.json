@@ -196,7 +196,7 @@
           "nx run app:sync:android",
           "./gradlew assemble"
         ],
-        "cwd": "apps/app/android",
+        "cwd": "apps/android",
         "parallel": false
       }
     }

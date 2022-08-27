@@ -43,6 +43,15 @@ jobs:
       - name: Run Builds
         run: yarn build
 
+      - name: Build APK
+        run: yarn nx run apk
+      - name: 'Upload APK'
+        uses: actions/upload-artifact@v3
+        with:
+          name: APK
+          path: apps/android/app/build/outputs/apk/release/app-release-unsigned.apk
+          retention-days: 5
+
   PR:
     name: Pull Request
     runs-on: ubuntu-latest
@@ -84,49 +93,3 @@ jobs:
         run: yarn nx affected --target=test --base=origin/main --head=HEAD
       - name: Run Builds
         run: yarn nx affected --target=build --base=origin/main --head=HEAD
-
-  APK:
-    name: Build APK
-    runs-on: ubuntu-latest
-    needs:
-      - All
-    steps:
-      # == Preparation ==
-      - name: Install NodeJS 14
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - name: Install yarn
-        run: npm i -g yarn
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('yarn.lock') }}
-      ## load cypress cache
-      - name: Get Cypress Version
-        id: cypress-version
-        run: echo "::set-output name=version::$(cat yarn.lock | sed -n -e '/^cypress@/,/^$/ p' | grep -P '  version' | grep -oP \\d+\\.\\d+\\.\\d+)"
-      - name: Cache Cypress
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/Cypress/${{ steps.cypress-version.outputs.version }}
-          key: cypress-${{ steps.cypress-version.outputs.version }}
-      ##
-      - name: Install dependencies
-        run: yarn install
-      # == END Preparation ==
-
-      # Actual Steps
-      - name: Build APK
-        run: yarn nx run apk
-
-      - name: 'Upload APK'
-        uses: actions/upload-artifact@v3
-        with:
-          name: APK
-          path: apps/app/android/app/build/outputs/apk/release/app-release-unsigned.apk
-          retention-days: 5
