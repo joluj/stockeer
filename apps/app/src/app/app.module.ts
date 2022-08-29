@@ -18,7 +18,7 @@ import { GuiTitlebarModule } from '@stockeer/gui/titlebar';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    AppStoreModule,
+    AppStoreModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -27,5 +27,6 @@ import { GuiTitlebarModule } from '@stockeer/gui/titlebar';
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
+  exports: [AppStoreModule],
 })
 export class AppModule {}

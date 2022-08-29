@@ -9,3 +9,5 @@ export {
   ensureStoragesLoaded,
   removeStorage,
 } from './storage.actions';
+
+export * from './storage.service';

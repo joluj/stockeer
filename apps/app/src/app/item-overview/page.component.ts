@@ -8,6 +8,7 @@ import {
   getStorages,
   Product,
   removeProduct,
+  StorageService,
 } from '@stockeer/store';
 import { Observable, Subscription } from 'rxjs';
 
@@ -17,6 +18,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class PageComponent implements OnInit, OnDestroy {
   products$?: Observable<Product[]>;
+
+  stockeer$ = this.storageService.get$('hello').data;
+  stockeerjkbkhhjkhjk = this.storageService.get$('hello').data;
 
   /**
    * TODO Remove. It's just there for a mvp example
@@ -30,7 +34,10 @@ export class PageComponent implements OnInit, OnDestroy {
    */
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly store: Store<AppState>) {}
+  constructor(
+    private readonly store: Store<AppState>,
+    private readonly storageService: StorageService
+  ) {}
 
   ngOnInit(): void {
     this.products$ = this.store.select(getProducts);

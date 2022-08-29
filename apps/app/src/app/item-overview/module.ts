@@ -5,6 +5,7 @@ import { PageComponent } from './page.component';
 import { ProductOverviewModule } from '@stockeer/gui/product-overview';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule, Routes } from '@angular/router';
+import { AppStoreModule } from '@stockeer/store';
 
 const routes: Routes = [{ path: '', component: PageComponent }];
 
@@ -15,6 +16,7 @@ const routes: Routes = [{ path: '', component: PageComponent }];
     RouterModule.forChild(routes),
     ProductOverviewModule,
     IonicModule,
+    AppStoreModule,
   ],
 })
 export class Module {}
