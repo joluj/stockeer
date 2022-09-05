@@ -1,5 +1,5 @@
 import { catchError, defer, EMPTY, Observable, switchMap, tap } from 'rxjs';
-import { Optional } from 'utility-types';
+import { Optional, SetDifference } from 'utility-types';
 import {
   ActionReducer,
   createAction,
@@ -9,6 +9,55 @@ import {
   Store,
 } from '@ngrx/store';
 import { memoize } from './memoize';
+import { ActionCreator } from '@ngrx/store/src/models';
+import { ReducerTypes } from '@ngrx/store/src/reducer_creator';
+
+export function setToLoading<State extends FetchState<E>, E>(
+  state: State,
+  ids: string[]
+): State {
+  const newState: Pick<State, 'loading' | 'errors'> = {
+    loading: state.loading.concat(ids),
+    errors: state.errors.filter((e) => !ids.includes(e)),
+  };
+
+  return {
+    ...state,
+    ...newState,
+  };
+}
+
+export function setToSuccess<State extends FetchState<E>, E>(
+  state: State,
+  ids: string[]
+): State {
+  const newState: Pick<State, 'loading' | 'errors' | 'success'> = {
+    loading: state.loading.filter((e) => !ids.includes(e)),
+    errors: state.errors.filter((e) => !ids.includes(e)),
+    success: state.success.concat(ids),
+  };
+
+  return {
+    ...state,
+    ...newState,
+  };
+}
+
+export function setToError<State extends FetchState<E>, E>(
+  state: State,
+  ids: string[]
+): State {
+  const newState: Pick<State, 'loading' | 'errors' | 'success'> = {
+    loading: state.loading.filter((e) => !ids.includes(e)),
+    errors: state.errors.concat(ids),
+    success: state.success.filter((e) => !ids.includes(e)),
+  };
+
+  return {
+    ...state,
+    ...newState,
+  };
+}
 
 export type FetchError = Error;
 
@@ -65,17 +114,22 @@ type AbstractConstructor<
 };
 
 export function FetchServiceClass<
-  Entity,
   State extends FetchState<Entity>,
-  ReducerPath extends string
+  ReducerPath extends string,
+  Entity = State extends FetchState<infer E> ? E : never
+  // AppStore = { [key in ReducerPath]: State }
 >(config: {
   reducerPath: ReducerPath;
   initialState: Optional<State, keyof FetchState<Entity>>;
   getId: (entity: Entity) => string;
+  actions?: Record<
+    SetDifference<string, keyof FetchActions>,
+    ReturnType<typeof createAction>
+  >;
+  reducer?: ReducerTypes<State, readonly ActionCreator[]>[];
 }): {
-  actions: FetchActions;
+  actions: FetchActions & typeof config['actions'];
   reducer: ActionReducer<State>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
   Service: AbstractConstructor<Entity, State, ReducerPath>;
 } {
   function prefix(actionName: string) {
@@ -83,6 +137,7 @@ export function FetchServiceClass<
   }
 
   const actions = {
+    ...config.actions,
     loading: createAction(
       prefix('Loading single entities'),
       props<{ ids: string[] }>()
@@ -112,41 +167,25 @@ export function FetchServiceClass<
   const reducer: ActionReducer<State> = createReducer<State>(
     init,
     on(actions.loading, (state, { ids }) => {
-      // TODO find out why the typing is so strange here (twice "...state")
-      const newState: Partial<State> = {
-        ...(state as State),
-        loading: state.loading.concat(ids),
-      };
-      return { ...state, ...newState };
+      return setToLoading(state, ids);
     }),
     on(actions.success, (state, { entities }) => {
-      const newState: Partial<State> = {
-        ...(state as State),
-        loading: state.loading.filter(
-          (id) => !entities.some((e) => config.getId(e) === id)
+      const newEntities: Pick<State, 'entities'> = {
+        entities: entities.reduce(
+          (prev, entity) => ({
+            ...prev,
+            [config.getId(entity)]: entity,
+          }),
+          { ...state.entities }
         ),
-        errors: state.errors.filter(
-          (id) => !entities.some((e) => config.getId(e) === id)
-        ),
-        ids: state.ids.concat(entities.map((e) => config.getId(e))),
-        entities: {
-          ...state.entities,
-          ...entities.reduce(
-            (prev, entity) => ({
-              ...prev,
-              [config.getId(entity)]: entity,
-            }),
-            {}
-          ),
-        },
       };
-
-      return { ...state, ...newState };
+      return {
+        ...setToSuccess(state, entities.map(config.getId)),
+        ...newEntities,
+      };
     }),
-    on(actions.error, (state, { ids }) => ({
-      ...state,
-      errors: state.errors.concat(ids),
-    }))
+    on(actions.error, (state, { ids }) => setToError(state, ids)),
+    ...(config.reducer ?? [])
   );
 
   abstract class Service extends FetchService<Entity, ReducerPath, State> {
@@ -174,12 +213,13 @@ export function FetchServiceClass<
 export abstract class FetchService<
   Entity,
   ReducerPath extends string,
-  State extends FetchState<Entity> = FetchState<Entity>
+  State extends FetchState<Entity> = FetchState<Entity>,
+  GlobalState extends Record<ReducerPath, State> = Record<ReducerPath, State>
 > {
   protected constructor(
     private readonly reducerPath: ReducerPath,
     private readonly initialState: Optional<State, keyof FetchState<Entity>>,
-    private readonly store: Store<Record<ReducerPath, State>>
+    private readonly store: Store<GlobalState>
   ) {}
 
   abstract get actions(): FetchActions;
@@ -196,17 +236,21 @@ export abstract class FetchService<
 
   /**
    * Returns the state object but mapped to the {@link FetchInfo}.
-   * @param id Id of the entity
+   * @param id Id of the request
+   * @param getData Method to extract the data from the state
    * @private
    */
-  protected getWrapper$(id: string): FetchInfo$<Entity> {
+  protected convertToFetchInfo$<T>(
+    id: string,
+    getData: (state: GlobalState, id: string) => T
+  ): FetchInfo$<T> {
     // TODO avoid unnecessary emits
     return this.store.select((globalState) => {
       const state = globalState[this.reducerPath];
       if (state.loading.includes(id)) {
         return {
           state: 'fetching',
-          data: state.entities[id],
+          data: getData(globalState, id),
         };
       }
       if (state.errors.includes(id)) {
@@ -219,7 +263,7 @@ export abstract class FetchService<
       if (state.ids.includes(id)) {
         return {
           state: 'success',
-          data: state.entities[id],
+          data: getData(globalState, id),
         };
       }
 
@@ -227,12 +271,40 @@ export abstract class FetchService<
     });
   }
 
-  @memoize()
-  get$(id: string): { data: FetchInfo$<Entity>; retry: () => void } {
+  /**
+   * Converts an entity request to a {@link FetchInfo$} object
+   * @param id entity id
+   * @protected
+   */
+  protected getEntityFetchInfoConverter$(id: string): FetchInfo$<Entity> {
+    return this.convertToFetchInfo$(
+      id,
+      (state, id) => state[this.reducerPath].entities[id]
+    );
+  }
+
+  /**
+   * Wrapper to load data from the service.
+   * Should only be used internally by extending services.
+   */
+  protected fetch$<In, Out>(config: {
+    // ID of the fetch request
+    id: string;
+    // Gets called to fetch the data from the server
+    fetch: () => Observable<In>;
+    // Gets called when the data was successfully loaded
+    markAsSuccess: (entities: In) => void;
+    // Gets called to wrap the data to a fetch info object
+    onSuccess: (e: In) => FetchInfo$<Out>;
+  }): {
+    data: FetchInfo$<Out>;
+    retry: () => void;
+  } {
+    const { id, fetch, onSuccess, markAsSuccess } = config;
     return {
       data: defer(() => {
         this.markAsLoading(id);
-        return this.load$(id).pipe(
+        return fetch().pipe(
           catchError((err) => {
             // TODO Error handling
             console.error(err);
@@ -240,10 +312,10 @@ export abstract class FetchService<
             return EMPTY;
           }),
           tap((entity) => {
-            this.markAsSuccess(entity);
+            markAsSuccess(entity);
           }),
           switchMap((entity) => {
-            return this.getWrapper$(this.getId(entity));
+            return onSuccess(entity);
           })
         );
       }),
@@ -253,17 +325,30 @@ export abstract class FetchService<
     };
   }
 
-  protected markAsSuccess(entity: Entity, ...entities: Entity[]) {
-    this.store.dispatch(
-      this.actions.success({ entities: [entity, ...entities] })
-    );
+  /**
+   * Can be called to get a single object
+   * @param id
+   */
+  @memoize()
+  get$(id: string): { data: FetchInfo$<Entity>; retry: () => void } {
+    return this.fetch$({
+      id,
+      fetch: () => this.load$(id),
+      onSuccess: (entity) =>
+        this.getEntityFetchInfoConverter$(this.getId(entity)),
+      markAsSuccess: (entity) => this.markAsSuccess(entity),
+    });
   }
 
-  protected markAsError(id: string, ...ids: string[]) {
-    this.store.dispatch(this.actions.error({ ids: [id, ...ids] }));
+  protected markAsSuccess(...entities: Entity[]) {
+    this.store.dispatch(this.actions.success({ entities }));
   }
 
-  protected markAsLoading(id: string, ...ids: string[]) {
-    this.store.dispatch(this.actions.loading({ ids: [id, ...ids] }));
+  protected markAsError(...ids: string[]) {
+    this.store.dispatch(this.actions.error({ ids }));
+  }
+
+  protected markAsLoading(...ids: string[]) {
+    this.store.dispatch(this.actions.loading({ ids }));
   }
 }

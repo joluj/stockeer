@@ -10,7 +10,7 @@ import {
   removeProduct,
   StorageService,
 } from '@stockeer/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'stockeer-page-product-overview',
@@ -19,8 +19,10 @@ import { Observable, Subscription } from 'rxjs';
 export class PageComponent implements OnInit, OnDestroy {
   products$?: Observable<Product[]>;
 
-  stockeer$ = this.storageService.get$('hello').data;
-  stockeerjkbkhhjkhjk = this.storageService.get$('hello').data;
+  stockeer$ = this.storageService
+    .get$('hello')
+    .pipe(tap((result) => console.log(result)));
+  stockeers$ = this.storageService.getAll$();
 
   /**
    * TODO Remove. It's just there for a mvp example

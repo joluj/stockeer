@@ -24,4 +24,10 @@ export class AppController {
     };
     return s;
   }
+
+  @PublicJWT()
+  @Get('/stockeers')
+  getAll(): Stockeer[] {
+    return [this.get()];
+  }
 }

@@ -1,30 +1,64 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ReducerManager, Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { FetchServiceClass } from '../fetch.service';
 import { Stockeer } from '../types';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
-export const {
-  Service,
-  reducer: StockeerReducer,
-  actions: StockeerActions,
-} = FetchServiceClass({
-  getId: (e: Stockeer) => e.id,
-  initialState: {},
-  reducerPath: 'stockeers',
-});
+import { FetchPipelineBuilder } from '../FetchService/FetchPipelineBuilder';
+import { map } from 'rxjs';
+import { FetchReducerManager } from '../FetchService/FetchReducerManager';
+import { FetchInfo$ } from '../fetch.service';
 
 @Injectable({ providedIn: 'root' })
-export class StorageService extends Service {
-  constructor(store: Store<AppState>, private readonly http: HttpClient) {
-    super(store);
+export class StorageService {
+  readonly getSinglePipeline = FetchPipelineBuilder.Create(
+    'Stockeers | Get',
+    'stockeers',
+    this.store,
+    new FetchReducerManager(this.reducerManager)
+  )
+    .addLoadingBlock()
+    .addEntitiesSuccessBlock((e) => e.id)
+    .addErrorBlock()
+    .addFetchMethod(({ ids }) => {
+      return this.http
+        .get<Stockeer>(`http://localhost:3333/api/stockeers/${ids[0]}`)
+        .pipe(map((s) => ({ entities: [s] })));
+    });
+
+  readonly getAllPipeline = FetchPipelineBuilder.Create(
+    'Stockeers | All',
+    'stockeers',
+    this.store,
+    new FetchReducerManager(this.reducerManager)
+  )
+    .addLoadingBlock()
+    .addEntitiesSuccessBlock(() => 'all')
+    .addErrorBlock()
+    .addFetchMethod(() => {
+      return this.http
+        .get<Stockeer[]>(`http://localhost:3333/api/stockeers`)
+        .pipe(map((s) => ({ entities: s })));
+    });
+
+  constructor(
+    private readonly store: Store<AppState>,
+    private readonly reducerManager: ReducerManager,
+    private readonly http: HttpClient
+  ) {}
+
+  get$(id: string): FetchInfo$<Stockeer> {
+    return this.getSinglePipeline.triggerAndConvert$(
+      { ids: [id] },
+      id,
+      (state) => state.stockeers.entities[id]
+    );
   }
 
-  load$(entity: string): Observable<Stockeer> {
-    return this.http.get<Stockeer>(
-      `http://localhost:3333/api/stockeers/${entity}`
+  getAll$(): FetchInfo$<string[]> {
+    return this.getAllPipeline.triggerAndConvert$(
+      { ids: ['all'] },
+      'all',
+      (state) => state.stockeers.all
     );
   }
 }
