@@ -2,20 +2,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 
+type ProductWithoutStorageInfo = Omit<Product, 'storageId'>;
+
 @Component({
   selector: 'stockeer-product-item',
   templateUrl: './product-item.component.html',
   styleUrls: ['./product-item.component.scss'],
 })
 export class ProductItemComponent {
-  private productInstance?: Product;
+  private productInstance?: ProductWithoutStorageInfo;
 
   @Input()
-  set product(value: Product) {
+  set product(value: ProductWithoutStorageInfo) {
     this.productInstance = value;
   }
 
-  get product(): Product {
+  get product(): ProductWithoutStorageInfo {
     return (
       this.productInstance ?? {
         id: '0',

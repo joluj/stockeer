@@ -11,6 +11,8 @@ import { JwtAuthGuard } from './authentication/guards/jwt-auth.guard';
 import { RolesGuard } from './authentication/guards/role.guard';
 import { ThrottlerBehindProxyGuard } from './authentication/shared/throttle-behind-proxy-guard';
 import { GlobalExceptionFilter } from './exceptions/global-exception-filter';
+import { StockeerModule } from './stockeer/stockeer.module';
+import { ProductModule } from './products/product.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { GlobalExceptionFilter } from './exceptions/global-exception-filter';
       ttl: environment.globalThrottleTtl,
       limit: environment.globalThrottleLimit,
     }),
+    StockeerModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [

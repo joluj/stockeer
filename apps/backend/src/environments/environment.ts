@@ -11,7 +11,7 @@ export const environment: IEnvironment = {
     user: process.env.DB_USER || 'user',
     password: process.env.DB_PASSWORD || 'test',
     database: process.env.DB_DATABASE || 'stockeer',
-    synchronize: false,
+    synchronize: Boolean(process.env.DB_SYNCHRONIZE) ?? false,
     runMigrations: Boolean(process.env.DB_RUN_MIGRATIONS ?? true),
   },
   cacheTime: Number(process.env.CACHE_TIME) || 3,

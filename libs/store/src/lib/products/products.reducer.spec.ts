@@ -12,6 +12,7 @@ describe('Products Reducer', () => {
     expiryDate: '01-01-2022',
     quantity: { amount: 1, unit: Unit.PIECE },
     barcode: '',
+    storageId: '',
   });
 
   describe('valid Products actions', () => {

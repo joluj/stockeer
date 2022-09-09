@@ -24,8 +24,8 @@ export class QuantityEntity {
 }
 
 @Entity()
-export class ProductEntity {
-  @PrimaryGeneratedColumn()
+export class ProductEntity implements ProductDto {
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
@@ -43,6 +43,9 @@ export class ProductEntity {
   @RelationId((product: ProductEntity) => product.storage)
   storageId!: string;
 
+  @Column()
+  barcode!: string;
+
   constructor(dto: ProductDto) {
     if (dto) {
       this.id = dto.id;
@@ -50,6 +53,18 @@ export class ProductEntity {
       this.name = dto.name;
       this.quantity = dto.quantity;
       this.storageId = dto.storageId;
+      this.barcode = dto.barcode;
     }
+  }
+
+  static toDto(entity: ProductEntity): ProductDto {
+    return {
+      id: entity.id,
+      name: entity.name,
+      expiryDate: entity.expiryDate,
+      quantity: entity.quantity,
+      storageId: entity.storageId,
+      barcode: entity.barcode,
+    };
   }
 }

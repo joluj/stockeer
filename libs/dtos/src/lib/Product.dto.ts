@@ -1,8 +1,9 @@
 import {
   IsEnum,
-  IsInt,
   IsNumber,
+  IsOptional,
   IsString,
+  IsUUID,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -21,9 +22,11 @@ export class QuantityDto {
 /**
  * Concrete Class that implements the Product Interface. Is required to make use of decorators for Backend Validation.
  */
-export class ProductDto {
-  @IsInt()
-  readonly id!: string;
+export class SetProductDto {
+  @IsUUID()
+  @IsOptional()
+  readonly id?: string;
+
   @IsString()
   readonly name!: string;
 
@@ -36,12 +39,19 @@ export class ProductDto {
    */
   @IsString()
   expiryDate!: string;
+
   @ValidateNested()
   @Type(() => QuantityDto)
   quantity!: QuantityDto;
+
   @IsString()
   storageId!: string;
 
   @IsString()
   barcode!: string;
+}
+
+export class ProductDto extends SetProductDto {
+  @IsUUID()
+  override id!: string;
 }

@@ -54,9 +54,9 @@ export class StorageEffects {
         const stockeer = { id: uuid(), name: action.name, products: [] };
 
         return this.service.setStockeer(stockeer).pipe(
-          map(() =>
+          map((dto) =>
             setStorageSuccess({
-              storage: stockeer,
+              storage: dto,
             })
           )
         );

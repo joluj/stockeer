@@ -95,8 +95,12 @@ describe('Storage Effects', () => {
 
       // mock local storage connections
       jest.spyOn(storageService, 'removeStockeer').mockReturnValue(of(void 0));
-      jest.spyOn(storageService, 'setStockeer').mockReturnValue(of(void 0));
-      jest.spyOn(productService, 'setProduct').mockReturnValue(of(void 0));
+      jest
+        .spyOn(storageService, 'setStockeer')
+        .mockImplementation((x) => of(x as StorageDto));
+      jest
+        .spyOn(productService, 'setProduct')
+        .mockImplementation((x) => of(x as ProductDto));
       jest.spyOn(productService, 'removeProduct').mockReturnValue(of(void 0));
 
       store.dispatch(ensureStoragesLoaded());

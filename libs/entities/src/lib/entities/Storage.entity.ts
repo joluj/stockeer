@@ -10,8 +10,9 @@ import { ProductEntity } from './Product.entity';
 
 @Entity()
 export class StorageEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
+
   @Column()
   name!: string;
 
@@ -27,5 +28,13 @@ export class StorageEntity {
       this.products = [];
       this.productIds = dto.products.slice();
     }
+  }
+
+  static toDto(entity: StorageEntity): StorageDto {
+    return {
+      name: entity.name,
+      products: entity.productIds,
+      id: entity.id,
+    };
   }
 }
