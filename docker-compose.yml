@@ -57,5 +57,5 @@ networks:
   stockeer-backend-db:
   stockeer-frontend-backend:
   nginx-pm:
-#    external: true
+    external: true
 
