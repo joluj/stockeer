@@ -1,4 +1,4 @@
-import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -6,7 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './authentication/auth.module';
 import { environment } from '../environments/environment';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './authentication/guards/jwt-auth.guard';
 import { RolesGuard } from './authentication/guards/role.guard';
 import { ThrottlerBehindProxyGuard } from './authentication/shared/throttle-behind-proxy-guard';
@@ -18,10 +18,6 @@ import { ProductModule } from './products/product.module';
   imports: [
     DatabaseModule,
     AuthModule,
-    CacheModule.register({
-      ttl: environment.cacheTime,
-      max: environment.maxCacheItems,
-    }),
     ThrottlerModule.forRoot({
       ttl: environment.globalThrottleTtl,
       limit: environment.globalThrottleLimit,
@@ -55,13 +51,6 @@ import { ProductModule } from './products/product.module';
 
       provide: APP_GUARD,
       useClass: ThrottlerBehindProxyGuard,
-    },
-    {
-      /**
-       * Provides cacheing functionality for every endpoint.
-       */
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
     },
     {
       /**
