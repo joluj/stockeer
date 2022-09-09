@@ -9,7 +9,7 @@ import {
   Product,
   removeProduct,
 } from '@stockeer/store';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'stockeer-page-product-overview',
@@ -33,7 +33,19 @@ export class PageComponent implements OnInit, OnDestroy {
   constructor(private readonly store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.products$ = this.store.select(getProducts);
+    this.products$ = this.store
+      .select(getProducts)
+      .pipe(
+        map((products) =>
+          products
+            .slice()
+            .sort(
+              (a, b) =>
+                new Date(a.expiryDate).getTime() -
+                new Date(b.expiryDate).getTime()
+            )
+        )
+      );
 
     this.subscriptions.push(
       this.store

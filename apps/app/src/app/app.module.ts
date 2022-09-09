@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,6 +12,11 @@ import { environment } from '../environments/environment';
 import { GuiTitlebarModule } from '@stockeer/gui/titlebar';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { registerLocaleData } from '@angular/common';
+import localeDeExtra from '@angular/common/locales/extra/de';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe, localeDeExtra);
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +39,7 @@ import { AuthInterceptor } from './auth.interceptor';
       useClass: AuthInterceptor,
       multi: true,
     },
+    { provide: LOCALE_ID, useValue: 'de-DE' },
   ],
   bootstrap: [AppComponent],
 })
