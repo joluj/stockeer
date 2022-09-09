@@ -7,9 +7,7 @@
     </scripts>
     <arguments value="serve backend" />
     <node-interpreter value="project" />
-    <envs>
-      <env name="DB_SYNCHRONIZE" value="true" />
-    </envs>
+    <envs />
     <method v="2" />
   </configuration>
 </component>
