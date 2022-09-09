@@ -15,7 +15,10 @@ export class StockeerService {
     return this.storageEntityRepository.find();
   }
 
-  set(obj: Optional<Omit<StorageEntity, 'products' | 'productIds'>, 'id'>) {
-    return this.storageEntityRepository.save(obj);
+  async set(
+    obj: Optional<Omit<StorageEntity, 'products' | 'productIds'>, 'id'>
+  ) {
+    const { id } = await this.storageEntityRepository.save(obj);
+    return this.storageEntityRepository.findOne({ id });
   }
 }

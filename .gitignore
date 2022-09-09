@@ -39,5 +39,7 @@ Thumbs.db
 
 .angular
 .env
+.env.docker
 .gradle
 /apps/android/.idea/deploymentTargetDropDown.xml
+data

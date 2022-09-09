@@ -10,6 +10,8 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { globalPipes } from './app/authentication/shared/pipes';
 
+export * from 'pg';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';

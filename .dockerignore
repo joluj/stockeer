@@ -1,0 +1,5 @@
+**/*
+!/dist
+!/devops
+!package.json
+!yarn.lock
