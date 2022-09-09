@@ -5,6 +5,8 @@ jobs:
     name: Main
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    env:
+      NX_BRANCH: $GITHUB_REF_NAME
     steps:
       # == Preparation ==
       - name: Install NodeJS 14
@@ -56,6 +58,8 @@ jobs:
     name: Pull Request
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
+    env:
+      NX_BRANCH: $GITHUB_REF_NAME
     steps:
       # == Preparation ==
       - name: Install NodeJS 14
