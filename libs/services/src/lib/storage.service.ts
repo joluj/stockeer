@@ -58,12 +58,12 @@ export class StorageService {
   public setStockeer(
     stockeer: Serialized<SetStorageDto>
   ): Observable<Serialized<StorageDto>> {
+    const body: SetStorageDto = { name: stockeer.name, id: stockeer.id };
+
     return defer(() =>
       from(
         this.storage.set(STORAGE_STOCKEER_PREFIX + stockeer.id, stockeer)
-      ).pipe(
-        switchMap(() => this.http.put<StorageDto>('/api/stockeers', stockeer))
-      )
+      ).pipe(switchMap(() => this.http.put<StorageDto>('/api/stockeers', body)))
     );
   }
 

@@ -1,19 +1,17 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class StockeerAndProductEntities1662750499394
-  implements MigrationInterface
-{
-  name = 'StockeerAndProductEntities1662750499394';
+export class Init1662751734633 implements MigrationInterface {
+  name = 'Init1662751734633';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `CREATE TABLE "storage_entity" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, CONSTRAINT "PK_38fdf515dd0e12034143873eeab" PRIMARY KEY ("id"))`
+    );
     await queryRunner.query(
       `CREATE TYPE "public"."product_entity_quantityunit_enum" AS ENUM('PIECE', 'KG', 'ML')`
     );
     await queryRunner.query(
       `CREATE TABLE "product_entity" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "expiryDate" character varying NOT NULL, "name" character varying NOT NULL, "storageId" uuid NOT NULL, "barcode" character varying NOT NULL, "quantityAmount" integer NOT NULL, "quantityUnit" "public"."product_entity_quantityunit_enum" NOT NULL DEFAULT 'PIECE', CONSTRAINT "PK_6e8f75045ddcd1c389c765c896e" PRIMARY KEY ("id"))`
-    );
-    await queryRunner.query(
-      `CREATE TABLE "storage_entity" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, CONSTRAINT "PK_38fdf515dd0e12034143873eeab" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
       `CREATE TYPE "public"."user_entity_role_enum" AS ENUM('USER', 'ADMIN')`
@@ -32,10 +30,10 @@ export class StockeerAndProductEntities1662750499394
     );
     await queryRunner.query(`DROP TABLE "user_entity"`);
     await queryRunner.query(`DROP TYPE "public"."user_entity_role_enum"`);
-    await queryRunner.query(`DROP TABLE "storage_entity"`);
     await queryRunner.query(`DROP TABLE "product_entity"`);
     await queryRunner.query(
       `DROP TYPE "public"."product_entity_quantityunit_enum"`
     );
+    await queryRunner.query(`DROP TABLE "storage_entity"`);
   }
 }
