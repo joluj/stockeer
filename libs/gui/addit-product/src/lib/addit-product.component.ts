@@ -9,7 +9,7 @@ import { BarcodeScannerService } from '@stockeer/services';
 import { Platform } from '@ionic/angular';
 import { AlertService } from '@stockeer/services';
 
-export type ProductOptionalId = Optional<Product, 'id'>;
+export type ProductOptionalId = Omit<Optional<Product, 'id'>, 'storageId'>;
 
 interface ProductForm {
   id: string | undefined;

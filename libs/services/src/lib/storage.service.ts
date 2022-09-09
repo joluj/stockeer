@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError, defer, from, Observable } from 'rxjs';
-import { StorageDto } from '@stockeer/dtos';
+import { catchError, defer, from, Observable, switchMap } from 'rxjs';
+import { SetStorageDto, StorageDto } from '@stockeer/dtos';
 import { Serialized } from '@stockeer/types';
 import { Storage } from '@ionic/storage-angular';
 import { HttpClient } from '@angular/common/http';
@@ -55,9 +55,15 @@ export class StorageService {
     );
   }
 
-  public setStockeer(stockeer: Serialized<StorageDto>): Observable<void> {
+  public setStockeer(
+    stockeer: Serialized<SetStorageDto>
+  ): Observable<Serialized<StorageDto>> {
     return defer(() =>
-      from(this.storage.set(STORAGE_STOCKEER_PREFIX + stockeer.id, stockeer))
+      from(
+        this.storage.set(STORAGE_STOCKEER_PREFIX + stockeer.id, stockeer)
+      ).pipe(
+        switchMap(() => this.http.put<StorageDto>('/api/stockeers', stockeer))
+      )
     );
   }
 

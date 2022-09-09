@@ -46,7 +46,7 @@ export class ProductsEffects {
 
         return this.service
           .setProduct(newP)
-          .pipe(map(() => updateProductSuccess({ product: newP })));
+          .pipe(map((dto) => updateProductSuccess({ product: dto })));
       })
     )
   );

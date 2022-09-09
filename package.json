@@ -8,6 +8,7 @@
     "build": "nx run-many --target=build --all",
     "test": "nx run-many --target=test --all",
     "lint": "nx run-many --target=lint --all",
+    "mock-ci": "nx run-many --target=lint --all  --parallel=12 && nx run-many --target=test --all  --parallel=12 && nx run-many --target=build --all --parallel=12",
     "postinstall": "ngcc --properties es2015 browser module main",
     "typeorm:migration:generate": "ts-node -r tsconfig-paths/register --project tsconfig.typeorm.json ./node_modules/typeorm/cli.js migration:generate",
     "typeorm:migration:run": "ts-node -r tsconfig-paths/register --project tsconfig.typeorm.json ./node_modules/typeorm/cli.js migration:run",

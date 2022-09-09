@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError, defer, from, Observable } from 'rxjs';
-import { ProductDto } from '@stockeer/dtos';
+import { catchError, defer, from, Observable, switchMap } from 'rxjs';
+import { ProductDto, SetProductDto } from '@stockeer/dtos';
 import { Storage } from '@ionic/storage-angular';
 import { Serialized } from '@stockeer/types';
 import { HttpClient } from '@angular/common/http';
@@ -56,10 +56,14 @@ export class ProductService {
   }
 
   public setProduct(
-    product: Serialized<Omit<ProductDto, 'storageId'>>
-  ): Observable<void> {
+    product: Serialized<SetProductDto>
+  ): Observable<Serialized<ProductDto>> {
     return defer(() =>
-      from(this.storage.set(STORAGE_PRODUCT_PREFIX + product.id, product))
+      from(this.storage.set(STORAGE_PRODUCT_PREFIX + product.id, product)).pipe(
+        switchMap(() =>
+          this.http.put<Serialized<ProductDto>>('/api/products', product)
+        )
+      )
     );
   }
 

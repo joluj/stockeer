@@ -12,6 +12,7 @@ export function toProductEntity(product: ProductStateEntity): Product {
     expiryDate: '',
     quantity: { amount: 1, unit: Unit.PIECE },
     barcode: product.barcode,
+    storageId: '',
   };
 }
 
