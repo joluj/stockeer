@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { environment } from '../../environments/environment';
 import { ProductEntity, StorageEntity, UserEntity } from '@stockeer/entities';
-import { InitDB1650362930944 } from './migrations/1650362930944-InitDB';
-import { StockeerAndProductEntities1662750499394 } from './migrations/1662750499394-StockeerAndProductEntities';
+import { Init1662751734633 } from './migrations/1662751734633-Init';
 
 @Module({
   imports: [
@@ -18,10 +17,7 @@ import { StockeerAndProductEntities1662750499394 } from './migrations/1662750499
         database: environment.database.database,
         entities: [UserEntity, StorageEntity, ProductEntity],
         synchronize: environment.database.synchronize,
-        migrations: [
-          InitDB1650362930944,
-          StockeerAndProductEntities1662750499394,
-        ],
+        migrations: [Init1662751734633],
         migrationsRun: environment.database.runMigrations,
       }
     ),
