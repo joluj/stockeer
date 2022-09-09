@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { plainToInstance } from 'class-transformer';
+import { plainToClass } from 'class-transformer';
 import { UserDto } from '@stockeer/dtos';
 import { UserRole } from '@stockeer/types';
 
@@ -54,10 +54,10 @@ export class UserEntity {
   }
 
   static createEntity(dto: UserDto): UserEntity {
-    return plainToInstance(UserEntity, dto);
+    return plainToClass(UserEntity, dto);
   }
 
   static createDto(entity: UserEntity): UserDto {
-    return plainToInstance(UserDto, entity);
+    return plainToClass(UserDto, entity);
   }
 }
