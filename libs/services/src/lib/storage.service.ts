@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { defer, from, Observable } from 'rxjs';
+import { catchError, defer, from, Observable } from 'rxjs';
 import { StorageDto } from '@stockeer/dtos';
 import { Serialized } from '@stockeer/types';
 import { Storage } from '@ionic/storage-angular';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Prefix for stockeers
@@ -13,15 +14,22 @@ const STORAGE_STOCKEER_PREFIX = 'STOCKEER_';
   providedIn: 'root',
 })
 export class StorageService {
-  constructor(private readonly storage: Storage) {}
+  constructor(
+    private readonly storage: Storage,
+    private readonly http: HttpClient
+  ) {}
 
   /**
    * Loads data from storage and server.
    *
-   * TODO: Make it also load from the server.
+   * TODO: Use local storage first
    */
   load(): Observable<StorageDto[]> {
-    return this.loadFromStorage();
+    return this.http.get<Serialized<StorageDto>[]>('/api/stockeers').pipe(
+      catchError(() => {
+        return this.loadFromStorage();
+      })
+    );
   }
 
   /**

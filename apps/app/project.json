@@ -73,7 +73,8 @@
           "browserTarget": "app:build:development",
           "port": 4498,
           "host": "0.0.0.0",
-          "disableHostCheck": true
+          "disableHostCheck": true,
+          "proxyConfig": "apps/app/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"

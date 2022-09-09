@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto, SetProductDto } from '@stockeer/dtos';
+import { ProductEntity } from '@stockeer/entities';
 
 @Controller('products')
 export class ProductController {
@@ -17,18 +18,13 @@ export class ProductController {
       barcode: productDto.barcode,
     });
 
-    return {
-      id: savedProduct.id,
-      name: savedProduct.name,
-      expiryDate: savedProduct.expiryDate,
-      quantity: savedProduct.quantity,
-      storageId: savedProduct.storageId,
-      barcode: savedProduct.barcode,
-    };
+    return ProductEntity.toDto(savedProduct);
   }
 
   @Get()
-  getAll() {
-    return this.productService.getAll();
+  getAll(): Promise<ProductDto[]> {
+    return this.productService
+      .getAll()
+      .then((products) => products.map((p) => ProductEntity.toDto(p)));
   }
 }

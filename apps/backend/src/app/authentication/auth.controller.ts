@@ -1,4 +1,4 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
 import { PublicJWT } from './decorators';
@@ -21,5 +21,11 @@ export class AuthController {
     @Request() req: unknown & { user: UserEntity }
   ): Promise<JwtResponseDto> {
     return this.authService.createJwt(req.user);
+  }
+
+  @Throttle(10, 30)
+  @Get('validate')
+  async isAuthenticated() {
+    return { authenticated: true };
   }
 }

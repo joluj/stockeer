@@ -56,4 +56,15 @@ export class ProductEntity implements ProductDto {
       this.barcode = dto.barcode;
     }
   }
+
+  static toDto(entity: ProductEntity): ProductDto {
+    return {
+      id: entity.id,
+      name: entity.name,
+      expiryDate: entity.expiryDate,
+      quantity: entity.quantity,
+      storageId: entity.storageId,
+      barcode: entity.barcode,
+    };
+  }
 }

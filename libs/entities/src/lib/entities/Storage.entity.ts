@@ -29,4 +29,12 @@ export class StorageEntity {
       this.productIds = dto.products.slice();
     }
   }
+
+  static toDto(entity: StorageEntity): StorageDto {
+    return {
+      name: entity.name,
+      products: entity.productIds,
+      id: entity.id,
+    };
+  }
 }

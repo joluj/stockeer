@@ -11,6 +11,8 @@ import {
   removeStorage,
 } from '@stockeer/store';
 import { Storage } from '@ionic/storage-angular';
+import { AuthService } from '@stockeer/services';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'stockeer-root',
@@ -21,13 +23,18 @@ export class AppComponent implements OnInit {
   readonly storages$ = this.store.select(getStorages);
 
   constructor(
-    protected store: Store<AppState>,
-    private readonly storage: Storage
+    private readonly store: Store<AppState>,
+    private readonly storage: Storage,
+    private readonly authService: AuthService
   ) {}
 
   async ngOnInit() {
     // TODO Move this into service module
-    this.storage.create().then(() => {
+    this.storage.create().then(async () => {
+      await lastValueFrom(this.authService.authenticate(), {
+        defaultValue: null,
+      });
+
       this.store.dispatch(ensureProductsLoaded());
       this.store.dispatch(ensureStoragesLoaded());
     });

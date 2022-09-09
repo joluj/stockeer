@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import { StockeerService } from './stockeer.service';
 import { SetStorageDto, StorageDto } from '@stockeer/dtos';
+import { StorageEntity } from '@stockeer/entities';
 
 @Controller('stockeers')
 export class StockeerController {
@@ -13,15 +14,13 @@ export class StockeerController {
       name: stockeer.name,
     });
 
-    return {
-      name: savedStockeer.name,
-      id: savedStockeer.id,
-      products: savedStockeer.productIds,
-    };
+    return StorageEntity.toDto(savedStockeer);
   }
 
   @Get()
-  getAll() {
-    return this.stockeerService.getAll();
+  getAll(): Promise<StorageDto[]> {
+    return this.stockeerService
+      .getAll()
+      .then((stockeers) => stockeers.map((s) => StorageEntity.toDto(s)));
   }
 }
