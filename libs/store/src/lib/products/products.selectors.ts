@@ -9,10 +9,10 @@ export function toProductEntity(product: ProductStateEntity): Product {
   return {
     id: product.id,
     name: product.name,
-    expiryDate: '',
+    expiryDate: product.expiryDate,
     quantity: { amount: 1, unit: Unit.PIECE },
     barcode: product.barcode,
-    storageId: '',
+    storageId: product.storageId,
   };
 }
 
