@@ -31,6 +31,7 @@ export const PublicJWT = () => SetMetadata(IS_PUBLIC_KEY, true);
  */
 export const SessionUserPayload = createParamDecorator(
   async (data, req: ExecutionContextHost) => {
+    console.log(data);
     const user = req.getArgs().find((x) => x instanceof IncomingMessage).user;
     if (user) {
       return (await runtimeValidationPipe(

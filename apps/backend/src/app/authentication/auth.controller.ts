@@ -16,7 +16,7 @@ export class AuthController {
   @PublicJWT()
   @UseGuards(LocalAuthGuard)
   @Throttle(10, 30)
-  @Post('auth/login')
+  @Post('login')
   async login(
     @Request() req: unknown & { user: UserEntity }
   ): Promise<JwtResponseDto> {

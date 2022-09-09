@@ -21,6 +21,8 @@ export class GlobalExceptionFilter extends BaseExceptionFilter {
 
     this.logger.error('Caught error: ' + exception);
 
+    console.log(exception);
+
     let errorResponse: ErrorResponseDto;
     if (exception instanceof HttpException) {
       errorResponse = {

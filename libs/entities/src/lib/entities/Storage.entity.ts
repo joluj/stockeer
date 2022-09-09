@@ -10,8 +10,9 @@ import { ProductEntity } from './Product.entity';
 
 @Entity()
 export class StorageEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
+
   @Column()
   name!: string;
 
