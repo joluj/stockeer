@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Put,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto, SetProductDto } from '@stockeer/dtos';
 import { ProductEntity } from '@stockeer/entities';
@@ -26,5 +34,13 @@ export class ProductController {
     return this.productService
       .getAll()
       .then((products) => products.map((p) => ProductEntity.toDto(p)));
+  }
+
+  @Delete(':productId')
+  async delete(
+    @Param('productId', ParseUUIDPipe) productId: string
+  ): Promise<unknown> {
+    await this.productService.delete(productId);
+    return {};
   }
 }
