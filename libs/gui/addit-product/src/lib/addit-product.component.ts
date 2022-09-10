@@ -9,7 +9,7 @@ import { BarcodeScannerService } from '@stockeer/services';
 import { Platform } from '@ionic/angular';
 import { AlertService } from '@stockeer/services';
 
-export type ProductOptionalId = Omit<Optional<Product, 'id'>, 'storageId'>;
+export type ProductOptionalId = Optional<Product, 'id' | 'storageId'>;
 
 interface ProductForm {
   id: string | undefined;
@@ -18,6 +18,7 @@ interface ProductForm {
   amount: number;
   unit: Unit;
   barcode: string;
+  storageId: string | undefined;
 }
 
 @Component({
@@ -34,6 +35,7 @@ export class AdditProductComponent {
     this.productForm.controls.amount.setValue(value?.quantity.amount ?? 0);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
     this.productForm.controls.barcode.setValue(value?.barcode ?? '');
+    this.productForm.controls.storageId.setValue(value?.storageId);
 
     this.isAdd = value == undefined || value.id == undefined;
   }
@@ -77,6 +79,7 @@ export class AdditProductComponent {
       amount: 0,
       unit: Unit.PIECE,
       barcode: '',
+      storageId: undefined,
     });
     this.Unit = Unit;
   }
@@ -98,6 +101,7 @@ export class AdditProductComponent {
         unit: form.unit,
       },
       barcode: form.barcode,
+      storageId: form.storageId,
     };
 
     this.save.emit(formResult);
