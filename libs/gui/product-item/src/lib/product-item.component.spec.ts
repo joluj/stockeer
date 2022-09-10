@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductItemComponent } from './product-item.component';
+import { QuantityPipe } from './quantity.pipe';
 
 describe('ProductItemComponent', () => {
   let component: ProductItemComponent;
@@ -8,7 +9,7 @@ describe('ProductItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProductItemComponent],
+      declarations: [ProductItemComponent, QuantityPipe],
     }).compileComponents();
   });
 
