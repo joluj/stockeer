@@ -1,13 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 import { Optional } from 'utility-types';
-import { BarcodeScannerService } from '@stockeer/services';
-import { Platform } from '@ionic/angular';
-import { AlertService } from '@stockeer/services';
+import { AlertService, BarcodeScannerService } from '@stockeer/services';
+import { IonInput, Platform } from '@ionic/angular';
 
 export type ProductOptionalId = Optional<Product, 'id' | 'storageId'>;
 
@@ -65,6 +70,9 @@ export class AdditProductComponent {
    */
   isAdd = false;
 
+  @ViewChild('nameInput')
+  nameInput?: IonInput;
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly barcodeScannerService: BarcodeScannerService,
@@ -82,6 +90,10 @@ export class AdditProductComponent {
       storageId: undefined,
     });
     this.Unit = Unit;
+
+    setTimeout(async () => {
+      await this.nameInput?.setFocus();
+    }, 100);
   }
 
   validateAndEmitProduct() {

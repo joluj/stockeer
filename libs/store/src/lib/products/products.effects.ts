@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  addProductSuccess,
   ensureProductsLoaded,
   loadProductsSuccess,
   updateProduct,
@@ -17,6 +18,8 @@ import {
 import { ProductService } from '@stockeer/services';
 import { Store } from '@ngrx/store';
 import { AppState, getProductsDict } from '..';
+import { v4 } from 'uuid';
+import { Unit } from '@stockeer/types';
 
 @Injectable()
 export class ProductsEffects {
@@ -39,14 +42,27 @@ export class ProductsEffects {
       ofType(updateProduct),
       withLatestFrom(this.store.select(getProductsDict)),
       switchMap(([action, products]) => {
-        const p = products[action.productId];
-        if (!p) return EMPTY;
+        const isUpdate = !!products[action.productId];
+        const p = products[action.productId] ?? {
+          id: v4(),
+          name: '',
+          barcode: '',
+          storageId: '',
+          quantity: { amount: 1, unit: Unit.PIECE },
+          expiryDate: new Date().toISOString(),
+        };
 
         const newP = { ...p, ...action.updates };
 
         return this.service
           .setProduct(newP)
-          .pipe(map((dto) => updateProductSuccess({ product: dto })));
+          .pipe(
+            map((dto) =>
+              isUpdate
+                ? updateProductSuccess({ product: dto })
+                : addProductSuccess({ product: dto })
+            )
+          );
       })
     )
   );
