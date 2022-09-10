@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-  addProduct,
   addStorage,
   AppState,
   getProducts,
@@ -9,7 +8,9 @@ import {
   Product,
   removeProduct,
 } from '@stockeer/store';
-import { map, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, map, Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { selectStorage } from '@stockeer/store';
 
 @Component({
   selector: 'stockeer-page-product-overview',
@@ -20,9 +21,8 @@ export class PageComponent implements OnInit, OnDestroy {
 
   /**
    * TODO Remove. It's just there for a mvp example
-   * @private
    */
-  private currentStorageId?: string;
+  currentStorageId?: string;
 
   /**
    * TODO Remove. It's just there for a mvp example
@@ -30,7 +30,10 @@ export class PageComponent implements OnInit, OnDestroy {
    */
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly store: Store<AppState>) {}
+  constructor(
+    private readonly store: Store<AppState>,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.products$ = this.store
@@ -50,7 +53,16 @@ export class PageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.store
         .select(getStorages)
-        .subscribe((storages) => (this.currentStorageId = storages[0]?.id))
+        .pipe(
+          map((storages) => storages[0]?.id),
+          distinctUntilChanged()
+        )
+        .subscribe((storageId) => {
+          this.currentStorageId = storageId;
+          if (this.currentStorageId) {
+            this.store.dispatch(selectStorage({ storageId }));
+          }
+        })
     );
   }
 
@@ -58,16 +70,18 @@ export class PageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  triggerAddProduct() {
+  async triggerAddProduct() {
     const storageId = this.currentStorageId;
     if (!storageId) {
       window.alert('Please create a storage first');
       return;
     }
-    const name = window.prompt('New Product name');
-    if (!name) return;
+    // const name = window.prompt('New Product name');
+    // if (!name) return;
+    //
+    // this.store.dispatch(addProduct({ name, storageId }));
 
-    this.store.dispatch(addProduct({ name, storageId }));
+    await this.router.navigate(['products', 'new']);
   }
 
   triggerAddStockeer() {

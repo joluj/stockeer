@@ -8,4 +8,5 @@ export {
   addStorage,
   ensureStoragesLoaded,
   removeStorage,
+  selectStorage,
 } from './storage.actions';

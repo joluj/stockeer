@@ -1,15 +1,20 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 import { Optional } from 'utility-types';
-import { BarcodeScannerService } from '@stockeer/services';
-import { Platform } from '@ionic/angular';
-import { AlertService } from '@stockeer/services';
+import { AlertService, BarcodeScannerService } from '@stockeer/services';
+import { IonInput, Platform } from '@ionic/angular';
 
-export type ProductOptionalId = Omit<Optional<Product, 'id'>, 'storageId'>;
+export type ProductOptionalId = Optional<Product, 'id' | 'storageId'>;
 
 interface ProductForm {
   id: string | undefined;
@@ -18,6 +23,7 @@ interface ProductForm {
   amount: number;
   unit: Unit;
   barcode: string;
+  storageId: string | undefined;
 }
 
 @Component({
@@ -34,6 +40,7 @@ export class AdditProductComponent {
     this.productForm.controls.amount.setValue(value?.quantity.amount ?? 0);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
     this.productForm.controls.barcode.setValue(value?.barcode ?? '');
+    this.productForm.controls.storageId.setValue(value?.storageId);
 
     this.isAdd = value == undefined || value.id == undefined;
   }
@@ -63,6 +70,9 @@ export class AdditProductComponent {
    */
   isAdd = false;
 
+  @ViewChild('nameInput')
+  nameInput?: IonInput;
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly barcodeScannerService: BarcodeScannerService,
@@ -77,8 +87,13 @@ export class AdditProductComponent {
       amount: 0,
       unit: Unit.PIECE,
       barcode: '',
+      storageId: undefined,
     });
     this.Unit = Unit;
+
+    setTimeout(async () => {
+      await this.nameInput?.setFocus();
+    }, 100);
   }
 
   validateAndEmitProduct() {
@@ -98,6 +113,7 @@ export class AdditProductComponent {
         unit: form.unit,
       },
       barcode: form.barcode,
+      storageId: form.storageId,
     };
 
     this.save.emit(formResult);

@@ -18,4 +18,8 @@ export class ProductService {
   set(obj: Optional<Omit<ProductEntity, 'storage'>, 'id'>) {
     return this.productEntityRepository.save(obj);
   }
+
+  async delete(productId: string) {
+    return this.productEntityRepository.delete(productId);
+  }
 }

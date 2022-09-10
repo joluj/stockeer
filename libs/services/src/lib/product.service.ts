@@ -68,6 +68,10 @@ export class ProductService {
   }
 
   public removeProduct(id: ProductDto['id']): Observable<void> {
-    return defer(() => from(this.storage.remove(STORAGE_PRODUCT_PREFIX + id)));
+    return defer(() =>
+      from(this.storage.remove(STORAGE_PRODUCT_PREFIX + id)).pipe(
+        switchMap(() => this.http.delete<void>(`/api/products/${id}`))
+      )
+    );
   }
 }
