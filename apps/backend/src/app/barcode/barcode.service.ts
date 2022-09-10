@@ -15,4 +15,10 @@ export class BarcodeService {
   async set(entity: BarcodeEntity) {
     return await this.barcodeEntityRepository.save(entity);
   }
+
+  async find(barcode: string): Promise<string | undefined> {
+    const entity = await this.barcodeEntityRepository.findOne(barcode);
+
+    return entity ? entity.name : undefined;
+  }
 }
