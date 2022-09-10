@@ -3,8 +3,8 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity()
 export class BarcodeEntity {
   @PrimaryColumn()
-  barcode: string;
+  barcode!: string;
 
   @Column()
-  name: string;
+  name!: string;
 }

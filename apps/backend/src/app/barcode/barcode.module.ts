@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { BarcodeService } from './barcode.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BarcodeEntity } from './barcode.entity';
-import { ProductEntity } from '@stockeer/entities';
+import { BarcodeEntity, ProductEntity } from '@stockeer/entities';
 import { ProductChangedSubscriber } from './product-changed.subscriber';
 
 @Module({

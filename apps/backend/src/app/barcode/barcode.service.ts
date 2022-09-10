@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
-import { BarcodeEntity } from './barcode.entity';
+import { BarcodeEntity } from '@stockeer/entities';
 
 @Injectable()
 export class BarcodeService {
