@@ -13,6 +13,7 @@ import { ThrottlerBehindProxyGuard } from './authentication/shared/throttle-behi
 import { GlobalExceptionFilter } from './exceptions/global-exception-filter';
 import { StockeerModule } from './stockeer/stockeer.module';
 import { ProductModule } from './products/product.module';
+import { BarcodeModule } from './barcode/barcode.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ProductModule } from './products/product.module';
     }),
     StockeerModule,
     ProductModule,
+    BarcodeModule,
   ],
   controllers: [AppController],
   providers: [
