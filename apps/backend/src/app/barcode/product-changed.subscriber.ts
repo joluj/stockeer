@@ -30,11 +30,11 @@ export class ProductChangedSubscriber
 
   async afterUpdate(event: UpdateEvent<ProductEntity>) {
     const { barcode, name } = event.entity;
-    await this.barcodeService.set({ barcode, name });
+    if (barcode) await this.barcodeService.set({ barcode, name });
   }
 
   async afterInsert(event: InsertEvent<ProductEntity>) {
     const { barcode, name } = event.entity;
-    await this.barcodeService.set({ barcode, name });
+    if (barcode) await this.barcodeService.set({ barcode, name });
   }
 }

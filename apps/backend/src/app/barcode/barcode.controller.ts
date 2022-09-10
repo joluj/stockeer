@@ -6,7 +6,7 @@ export class BarcodeController {
   constructor(private readonly barcodeService: BarcodeService) {}
 
   @Get(':barcode')
-  async get(@Param('barcode') barcode: string): Promise<string | undefined> {
-    return this.barcodeService.find(barcode);
+  async get(@Param('barcode') barcode: string): Promise<{ name?: string }> {
+    return { name: await this.barcodeService.find(barcode) };
   }
 }
