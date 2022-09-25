@@ -18,6 +18,7 @@
       "@stockeer/dtos": ["libs/dtos/src/index.ts"],
       "@stockeer/entities": ["libs/entities/src/index.ts"],
       "@stockeer/gui-addit-product": ["libs/gui/addit-product/src/index.ts"],
+      "@stockeer/gui/auth": ["libs/gui/auth/src/index.ts"],
       "@stockeer/gui/product-item": ["libs/gui/product-item/src/index.ts"],
       "@stockeer/gui/product-overview": [
         "libs/gui/product-overview/src/index.ts"

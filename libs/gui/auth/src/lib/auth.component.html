@@ -1,0 +1,57 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title> Authentication </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form>
+      <ion-item class="ion-invalid">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input
+          enterkeyhint="'next'"
+          [formControl]="form.controls.username"
+        ></ion-input>
+        <ion-note slot="error">
+          Username must be at least 5 chars long
+        </ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+          type="password"
+          [enterkeyhint]="state === 'register' ? 'next' : 'send'"
+          [formControl]="form.controls.password"
+        ></ion-input>
+        <ion-note slot="error">
+          Passwords must be at least 8 chars long
+        </ion-note>
+      </ion-item>
+
+      <ion-item *ngIf="state === 'register'">
+        <ion-label position="floating">Repeat Password</ion-label>
+        <ion-input
+          type="password"
+          enterkeyhint="send"
+          [formControl]="form.controls.repeatPassword"
+        ></ion-input>
+        <ion-note slot="error"> Passwords must match </ion-note>
+      </ion-item>
+    </form>
+
+    <ion-button class="login-auth-button" expand="block">
+      {{ state === 'login' ? 'Login' : 'Register' }}
+    </ion-button>
+
+    <ng-container [ngSwitch]="state">
+      <ng-container *ngSwitchCase="'login'">
+        New to stockeer?
+        <a routerLink="#" (click)="state = 'register'">Create an account</a>.
+      </ng-container>
+      <ng-container *ngSwitchCase="'register'">
+        Already have an account?
+        <a routerLink="#" (click)="state = 'login'">Sign in</a>.
+      </ng-container>
+    </ng-container>
+  </ion-card-content>
+</ion-card>

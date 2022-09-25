@@ -6,6 +6,7 @@
     "dtos": "libs/dtos",
     "entities": "libs/entities",
     "gui-addit-product": "libs/gui/addit-product",
+    "gui-auth": "libs/gui/auth",
     "gui-product-item": "libs/gui/product-item",
     "gui-product-overview": "libs/gui/product-overview",
     "gui-titlebar": "libs/gui/titlebar",
