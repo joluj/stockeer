@@ -10,7 +10,7 @@ export const environment = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     synchronize: false,
-    runMigrations: Boolean(process.env.DB_RUN_MIGRATIONS),
+    runMigrations: process.env.DB_RUN_MIGRATIONS === 'true',
   },
   cacheTime: Number(process.env.CACHE_TIME),
   maxCacheItems: Number(process.env.MAX_CACHE_ITEMS),

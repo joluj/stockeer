@@ -11,8 +11,13 @@ import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { Product } from '@stockeer/store';
 import { Optional } from 'utility-types';
-import { AlertService, BarcodeScannerService } from '@stockeer/services';
+import {
+  AlertService,
+  BarcodeScannerService,
+  BarcodeService,
+} from '@stockeer/services';
 import { IonInput, Platform } from '@ionic/angular';
+import { catchError, of, timeout, TimeoutError } from 'rxjs';
 
 export type ProductOptionalId = Optional<Product, 'id' | 'storageId'>;
 
@@ -77,7 +82,8 @@ export class AdditProductComponent {
     private readonly formBuilder: FormBuilder,
     private readonly barcodeScannerService: BarcodeScannerService,
     private readonly platform: Platform,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly barcodeService: BarcodeService
   ) {
     this.save = new EventEmitter();
     this.productForm = this.formBuilder.group<ProductForm>({
@@ -130,6 +136,25 @@ export class AdditProductComponent {
     const barcode = await this.barcodeScannerService.scan();
     if (barcode) {
       this.productForm.controls.barcode.setValue(barcode);
+
+      if (!this.productForm.controls.name.value) {
+        this.barcodeService
+          .loadBarcode$(barcode)
+          .pipe(
+            timeout(2500),
+            catchError((e) => {
+              if (!(e instanceof TimeoutError)) {
+                console.error(e);
+              }
+              return of(undefined);
+            })
+          )
+          .subscribe((name) => {
+            if (name) {
+              this.productForm.controls.name.setValue(name);
+            }
+          });
+      }
     }
   }
 }
