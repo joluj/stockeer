@@ -20,7 +20,7 @@
         <ion-label position="floating">Password</ion-label>
         <ion-input
           type="password"
-          [enterkeyhint]="state === 'register' ? 'next' : 'send'"
+          [enterkeyhint]="isLogin() ? 'send' : 'next'"
           [formControl]="form.controls.password"
         ></ion-input>
         <ion-note *ngIf="form.controls.password.touched" slot="error">
@@ -28,38 +28,43 @@
         </ion-note>
       </ion-item>
 
-      <stockeer-smooth-height [trigger]="state">
-        <ion-item [hidden]="state === 'login'">
+      <stockeer-smooth-height [trigger]="isLogin()">
+        <ion-item [hidden]="isLogin()">
           <ion-label position="floating">Repeat Password</ion-label>
           <ion-input
             type="password"
             enterkeyhint="send"
             [formControl]="form.controls.repeatPassword"
-            [class.ion-invalid]="form.errors"
           ></ion-input>
-          <ion-note slot="error"> Passwords must match </ion-note>
+          <ion-note *ngIf="form.controls.repeatPassword.touched" slot="error">
+            Passwords must match
+          </ion-note>
         </ion-item>
       </stockeer-smooth-height>
 
       <ion-button class="login-auth-button" expand="block" type="submit">
-        <div style="position: absolute" *ngIf="state === 'login'" @fadeInOut>
-          Login
-        </div>
-        <div style="position: absolute" *ngIf="state === 'register'" @fadeInOut>
+        <div style="position: absolute" *ngIf="isLogin()" @fadeInOut>Login</div>
+        <div style="position: absolute" *ngIf="!isLogin()" @fadeInOut>
           Register
         </div>
       </ion-button>
     </form>
 
-    <ng-container [ngSwitch]="state">
-      <ng-container *ngSwitchCase="'login'">
+    <ng-container>
+      <ng-container *ngIf="isLogin(); else registerText">
         New to stockeer?
-        <a routerLink="#" (click)="state = 'register'">Create an account</a>.
+        <a
+          routerLink="#"
+          (click)="this.form.controls.action.setValue('register')"
+          >Create an account</a
+        >.
       </ng-container>
-      <ng-container *ngSwitchCase="'register'">
+      <ng-template #registerText>
         Already have an account?
-        <a routerLink="#" (click)="state = 'login'">Sign in</a>.
-      </ng-container>
+        <a routerLink="#" (click)="this.form.controls.action.setValue('login')"
+          >Sign in</a
+        >.
+      </ng-template>
     </ng-container>
   </ion-card-content>
 </ion-card>

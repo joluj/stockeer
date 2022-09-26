@@ -7,6 +7,7 @@ type AuthForm = {
   username: string;
   password: string;
   repeatPassword: string;
+  action: 'register' | 'login';
 };
 
 @Component({
@@ -16,41 +17,53 @@ type AuthForm = {
   animations: [fadeInOut],
 })
 export class AuthComponent implements OnInit {
-  state: 'register' | 'login' = 'login';
-
   form?: FormGroup<ControlsOf<AuthForm>>;
 
   ngOnInit(): void {
-    this.form = new FormGroup<ControlsOf<AuthForm>>({
-      username: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-      repeatPassword: new FormControl('', [
-        () => this.#repeatPasswordValidator(),
-      ]),
-    });
+    this.form = new FormGroup<ControlsOf<AuthForm>>(
+      {
+        username: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5),
+        ]),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        repeatPassword: new FormControl('', []),
+        action: new FormControl('login'),
+      },
+      [() => this.#repeatPasswordValidator()]
+    );
   }
 
   #repeatPasswordValidator(): ValidationErrors | null {
     if (!this.form) return null;
-    const { password, repeatPassword } = this.form.controls;
-    if (this.state === 'login') return null;
+    const { password, repeatPassword, action } = this.form.controls;
 
-    return password.value === repeatPassword.value
-      ? null
-      : {
-          passwordsMatch: true,
-        };
+    let error = null;
+    if (
+      action.value === 'register' &&
+      (!repeatPassword.value || password.value !== repeatPassword.value)
+    ) {
+      error = {
+        repeatPassword: true,
+      };
+    }
+
+    repeatPassword.setErrors(error);
+
+    return null;
+  }
+
+  isLogin() {
+    return this.form?.controls.action.value === 'login';
   }
 
   submit() {
     if (!this.form) return;
     this.form.markAllAsTouched();
+    this.form.markAllAsDirty();
     if (!this.form.valid) {
       return;
     }
