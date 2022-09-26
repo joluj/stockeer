@@ -28,15 +28,17 @@
         </ion-note>
       </ion-item>
 
-      <ion-item *ngIf="state === 'register'">
-        <ion-label position="floating">Repeat Password</ion-label>
-        <ion-input
-          type="password"
-          enterkeyhint="send"
-          [formControl]="form.controls.repeatPassword"
-        ></ion-input>
-        <ion-note slot="error"> Passwords must match </ion-note>
-      </ion-item>
+      <stockeer-smooth-height [trigger]="state">
+        <ion-item [hidden]="state === 'login'">
+          <ion-label position="floating">Repeat Password</ion-label>
+          <ion-input
+            type="password"
+            enterkeyhint="send"
+            [formControl]="form.controls.repeatPassword"
+          ></ion-input>
+          <ion-note slot="error"> Passwords must match </ion-note>
+        </ion-item>
+      </stockeer-smooth-height>
     </form>
 
     <ion-button class="login-auth-button" expand="block">

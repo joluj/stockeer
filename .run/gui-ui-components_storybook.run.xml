@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="gui-ui-components:storybook" type="js.build_tools.npm" folderName="gui-ui-components">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="nx" />
+    </scripts>
+    <arguments value="run gui-ui-components:storybook" />
+    <node-interpreter value="project" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

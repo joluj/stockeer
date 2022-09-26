@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UiComponentsModule } from '@stockeer/gui/ui-components';
 
 export default {
   title: 'AuthComponent',
@@ -20,6 +21,7 @@ export default {
           },
         ]),
         ReactiveFormsModule,
+        UiComponentsModule,
       ],
     }),
   ],
