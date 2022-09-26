@@ -8,10 +8,10 @@
       <ion-item class="ion-invalid">
         <ion-label position="floating">Username</ion-label>
         <ion-input
-          enterkeyhint="'next'"
+          enterkeyhint="next"
           [formControl]="form.controls.username"
         ></ion-input>
-        <ion-note slot="error">
+        <ion-note *ngIf="form.controls.username.touched" slot="error">
           Username must be at least 5 chars long
         </ion-note>
       </ion-item>
@@ -23,7 +23,7 @@
           [enterkeyhint]="state === 'register' ? 'next' : 'send'"
           [formControl]="form.controls.password"
         ></ion-input>
-        <ion-note slot="error">
+        <ion-note *ngIf="form.controls.password.touched" slot="error">
           Passwords must be at least 8 chars long
         </ion-note>
       </ion-item>
@@ -35,6 +35,7 @@
             type="password"
             enterkeyhint="send"
             [formControl]="form.controls.repeatPassword"
+            [class.ion-invalid]="form.errors"
           ></ion-input>
           <ion-note slot="error"> Passwords must match </ion-note>
         </ion-item>
@@ -42,7 +43,12 @@
     </form>
 
     <ion-button class="login-auth-button" expand="block">
-      {{ state === 'login' ? 'Login' : 'Register' }}
+      <div style="position: absolute" *ngIf="state === 'login'" @fadeInOut>
+        Login
+      </div>
+      <div style="position: absolute" *ngIf="state === 'register'" @fadeInOut>
+        Register
+      </div>
     </ion-button>
 
     <ng-container [ngSwitch]="state">
