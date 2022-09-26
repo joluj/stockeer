@@ -47,4 +47,12 @@ export class AuthComponent implements OnInit {
           passwordsMatch: true,
         };
   }
+
+  submit() {
+    if (!this.form) return;
+    this.form.markAllAsTouched();
+    if (!this.form.valid) {
+      return;
+    }
+  }
 }

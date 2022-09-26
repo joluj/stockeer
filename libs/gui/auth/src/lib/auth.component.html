@@ -4,7 +4,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    <form>
+    <form [formGroup]="form" (ngSubmit)="submit()" (keyup.enter)="submit()">
       <ion-item class="ion-invalid">
         <ion-label position="floating">Username</ion-label>
         <ion-input
@@ -40,16 +40,16 @@
           <ion-note slot="error"> Passwords must match </ion-note>
         </ion-item>
       </stockeer-smooth-height>
-    </form>
 
-    <ion-button class="login-auth-button" expand="block">
-      <div style="position: absolute" *ngIf="state === 'login'" @fadeInOut>
-        Login
-      </div>
-      <div style="position: absolute" *ngIf="state === 'register'" @fadeInOut>
-        Register
-      </div>
-    </ion-button>
+      <ion-button class="login-auth-button" expand="block" type="submit">
+        <div style="position: absolute" *ngIf="state === 'login'" @fadeInOut>
+          Login
+        </div>
+        <div style="position: absolute" *ngIf="state === 'register'" @fadeInOut>
+          Register
+        </div>
+      </ion-button>
+    </form>
 
     <ng-container [ngSwitch]="state">
       <ng-container *ngSwitchCase="'login'">
