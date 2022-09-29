@@ -1,0 +1,82 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title> Authentication </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form [formGroup]="form" (ngSubmit)="submit()" (keyup.enter)="submit()">
+      <ion-item class="ion-invalid">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input
+          enterkeyhint="next"
+          [formControl]="form.controls.username"
+        ></ion-input>
+        <ion-note *ngIf="form.controls.username.touched" slot="error">
+          Username must be at least 5 chars long
+        </ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+          type="password"
+          [enterkeyhint]="isLogin() ? 'send' : 'next'"
+          [formControl]="form.controls.password"
+        ></ion-input>
+        <ion-note *ngIf="form.controls.password.touched" slot="error">
+          Passwords must be at least 8 chars long
+        </ion-note>
+      </ion-item>
+
+      <stockeer-smooth-height [trigger]="isLogin()">
+        <ion-item [hidden]="isLogin()">
+          <ion-label position="floating">Repeat Password</ion-label>
+          <ion-input
+            type="password"
+            enterkeyhint="send"
+            [formControl]="form.controls.repeatPassword"
+          ></ion-input>
+          <ion-note *ngIf="form.controls.repeatPassword.touched" slot="error">
+            Passwords must match
+          </ion-note>
+        </ion-item>
+      </stockeer-smooth-height>
+
+      <ion-button class="login-auth-button" expand="block" type="submit">
+        <ng-container
+          style="position: absolute"
+          *ngIf="isLoading; else notLoading"
+          @fadeInOut
+        >
+          <ion-spinner name="dots"></ion-spinner>
+        </ng-container>
+
+        <ng-template #notLoading>
+          <div style="position: absolute" *ngIf="isLogin()" @fadeInOut>
+            Login
+          </div>
+          <div style="position: absolute" *ngIf="!isLogin()" @fadeInOut>
+            Register
+          </div>
+        </ng-template>
+      </ion-button>
+    </form>
+
+    <ng-container>
+      <ng-container *ngIf="isLogin(); else registerText">
+        New to stockeer?
+        <a
+          routerLink="#"
+          (click)="this.form.controls.action.setValue('register')"
+          >Create an account</a
+        >.
+      </ng-container>
+      <ng-template #registerText>
+        Already have an account?
+        <a routerLink="#" (click)="this.form.controls.action.setValue('login')"
+          >Sign in</a
+        >.
+      </ng-template>
+    </ng-container>
+  </ion-card-content>
+</ion-card>

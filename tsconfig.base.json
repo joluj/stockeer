@@ -18,11 +18,13 @@
       "@stockeer/dtos": ["libs/dtos/src/index.ts"],
       "@stockeer/entities": ["libs/entities/src/index.ts"],
       "@stockeer/gui-addit-product": ["libs/gui/addit-product/src/index.ts"],
+      "@stockeer/gui/auth": ["libs/gui/auth/src/index.ts"],
       "@stockeer/gui/product-item": ["libs/gui/product-item/src/index.ts"],
       "@stockeer/gui/product-overview": [
         "libs/gui/product-overview/src/index.ts"
       ],
       "@stockeer/gui/titlebar": ["libs/gui/titlebar/src/index.ts"],
+      "@stockeer/gui/ui-components": ["libs/gui/ui-components/src/index.ts"],
       "@stockeer/services": ["libs/services/src/index.ts"],
       "@stockeer/store": ["libs/store/src/index.ts"],
       "@stockeer/types": ["libs/types/src/index.ts"]
