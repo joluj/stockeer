@@ -33,3 +33,8 @@ const Template: Story<AuthComponent> = (args: AuthComponent) => ({
 
 export const Primary = Template.bind({});
 Primary.args = {};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+} as Partial<AuthComponent>;

@@ -43,10 +43,22 @@
       </stockeer-smooth-height>
 
       <ion-button class="login-auth-button" expand="block" type="submit">
-        <div style="position: absolute" *ngIf="isLogin()" @fadeInOut>Login</div>
-        <div style="position: absolute" *ngIf="!isLogin()" @fadeInOut>
-          Register
-        </div>
+        <ng-container
+          style="position: absolute"
+          *ngIf="isLoading; else notLoading"
+          @fadeInOut
+        >
+          <ion-spinner name="dots"></ion-spinner>
+        </ng-container>
+
+        <ng-template #notLoading>
+          <div style="position: absolute" *ngIf="isLogin()" @fadeInOut>
+            Login
+          </div>
+          <div style="position: absolute" *ngIf="!isLogin()" @fadeInOut>
+            Register
+          </div>
+        </ng-template>
       </ion-button>
     </form>
 

@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { ValidationErrors, Validators } from '@angular/forms';
 import { fadeInOut } from '@stockeer/gui/ui-components';
 
-type AuthForm = {
+type AuthProps = {
   username: string;
   password: string;
-  repeatPassword: string;
   action: 'register' | 'login';
+};
+
+type AuthForm = AuthProps & {
+  repeatPassword: string;
 };
 
 @Component({
@@ -18,6 +21,16 @@ type AuthForm = {
 })
 export class AuthComponent implements OnInit {
   form?: FormGroup<ControlsOf<AuthForm>>;
+
+  @Input()
+  isLoading = false;
+
+  @Output()
+  authenticate: EventEmitter<AuthProps>;
+
+  constructor() {
+    this.authenticate = new EventEmitter();
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup<ControlsOf<AuthForm>>(
@@ -61,11 +74,14 @@ export class AuthComponent implements OnInit {
   }
 
   submit() {
-    if (!this.form) return;
+    if (!this.form || this.isLoading) return;
     this.form.markAllAsTouched();
     this.form.markAllAsDirty();
     if (!this.form.valid) {
       return;
     }
+
+    const { password, username, action } = this.form.value;
+    this.authenticate.emit({ username, action, password });
   }
 }
