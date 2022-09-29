@@ -28,6 +28,14 @@
             </DockerPortBindingImpl>
           </list>
         </option>
+        <option name="volumeBindings">
+          <list>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/var/lib/postgresql/data/pgdata" />
+              <option name="hostPath" value="./data/db" />
+            </DockerVolumeBindingImpl>
+          </list>
+        </option>
       </settings>
     </deployment>
     <method v="2" />

@@ -15,6 +15,7 @@ import { AuthInterceptor } from './auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import localeDe from '@angular/common/locales/de';
+import { AuthModule } from '@stockeer/gui/auth';
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -31,6 +32,7 @@ registerLocaleData(localeDe, localeDeExtra);
       logOnly: environment.production,
     }),
     GuiTitlebarModule,
+    AuthModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -6,12 +6,11 @@ import {
 } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
 import {
-  catchError,
-  EMPTY,
-  from,
+  BehaviorSubject,
+  firstValueFrom,
   ignoreElements,
+  map,
   Observable,
-  switchMap,
   tap,
 } from 'rxjs';
 import { JwtResponseDto } from '@stockeer/dtos';
@@ -26,52 +25,59 @@ export class AuthService {
     private readonly http: HttpClient,
     private readonly storage: Storage
   ) {}
-  private _authToken: string | null = null;
+
+  private _authToken$ = new BehaviorSubject<string | null>(null);
 
   public get authToken(): string | null {
-    return this._authToken;
+    return this._authToken$.value;
   }
 
-  public authenticate(): Observable<void> {
-    return from(
-      this.storage
-        .get(AUTH_TOKEN_KEY)
-        .then((token) => {
-          this._authToken = token;
-        })
-        .catch((e) => {
-          console.error(e);
-        })
-    ).pipe(
-      switchMap(() => {
-        return this.http.get<void>('/api/auth/validate').pipe(
-          catchError((err) => {
-            if (
-              err instanceof HttpErrorResponse &&
-              err.status === HttpStatusCode.Unauthorized
-            ) {
-              const username = prompt('Username');
-              const password = prompt('Password');
+  public get authenticated(): Observable<boolean> {
+    return this._authToken$.pipe(map((token) => !!token));
+  }
 
-              return this.http
-                .post<JwtResponseDto>('/api/auth/login', {
-                  username,
-                  password,
-                })
-                .pipe(
-                  tap((request) => {
-                    this._authToken = request.accessToken;
-                    this.storage.set(AUTH_TOKEN_KEY, this.authToken);
-                  })
-                );
-            }
-            console.log(err);
-            alert('Auth failed');
-            return EMPTY;
-          }),
-          ignoreElements()
-        );
-      })
+  public async logout() {
+    await this.storage.remove(AUTH_TOKEN_KEY);
+    this._authToken$.next(null);
+  }
+
+  public async validateAuthentication(): Promise<boolean> {
+    try {
+      const token = await this.storage.get(AUTH_TOKEN_KEY);
+      if (!token) return false;
+
+      await firstValueFrom(
+        this.http.get<void>('/api/auth/validate', {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      );
+
+      this._authToken$.next(token);
+      return true;
+    } catch (e) {
+      if (
+        e instanceof HttpErrorResponse &&
+        e.status === HttpStatusCode.Unauthorized
+      ) {
+        // Ignore this
+        return false;
+      }
+
+      console.error(e);
+      return false;
+    }
+  }
+
+  public authenticate(args: {
+    username: string;
+    password: string;
+  }): Observable<void> {
+    return this.http.post<JwtResponseDto>('/api/auth/login', args).pipe(
+      tap((request) => {
+        this._authToken$.next(request.accessToken);
+        this.storage.set(AUTH_TOKEN_KEY, this.authToken);
+      }),
+      ignoreElements()
     );
   }
 }
