@@ -16,7 +16,13 @@ import {
   BarcodeScannerService,
   BarcodeService,
 } from '@stockeer/services';
-import { IonInput, Platform } from '@ionic/angular';
+import {
+  IonDatetime,
+  IonInput,
+  Platform,
+  DatetimeCustomEvent,
+  IonModal,
+} from '@ionic/angular';
 import { catchError, of, timeout, TimeoutError } from 'rxjs';
 
 export type ProductOptionalId = Optional<Product, 'id' | 'storageId'>;
@@ -156,5 +162,25 @@ export class AdditProductComponent {
           });
       }
     }
+  }
+
+  updateExpiryDate(event: Event, modal: IonModal) {
+    function isDatetimeCustomEvent(event: Event): event is DatetimeCustomEvent {
+      return event.type === 'ionChange';
+    }
+
+    if (!isDatetimeCustomEvent(event)) {
+      console.error('Event is not a DateTime event', event);
+      return;
+    }
+
+    const newDate = event.detail.value;
+    if (typeof newDate !== 'string') {
+      console.error('Event value must be a string', event);
+      return;
+    }
+
+    this.productForm.controls.expiryDate.setValue(newDate);
+    modal.dismiss();
   }
 }
