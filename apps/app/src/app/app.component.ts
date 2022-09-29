@@ -8,7 +8,7 @@ import {
 } from '@stockeer/store';
 import { Storage } from '@ionic/storage-angular';
 import { AuthService } from '@stockeer/services';
-import { BehaviorSubject, first, Observable } from 'rxjs';
+import { BehaviorSubject, finalize, first, Observable } from 'rxjs';
 import { AuthProps } from '@stockeer/gui/auth';
 import { fadeInOut } from '@stockeer/gui/ui-components';
 
@@ -57,10 +57,13 @@ export class AppComponent implements OnInit {
     }
 
     this.authenticationInProgress$.next(true);
-    this.authService.authenticate({ username, password }).subscribe({
-      complete: () => {
-        this.authenticationInProgress$.next(false);
-      },
-    });
+    this.authService
+      .authenticate({ username, password })
+      .pipe(
+        finalize(() => {
+          this.authenticationInProgress$.next(false);
+        })
+      )
+      .subscribe();
   }
 }
