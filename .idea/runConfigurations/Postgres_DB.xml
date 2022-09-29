@@ -7,6 +7,10 @@
         <option name="envVars">
           <list>
             <DockerEnvVarImpl>
+              <option name="name" value="POSTGRES_DB" />
+              <option name="value" value="stockeer" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
               <option name="name" value="POSTGRES_PASSWORD" />
               <option name="value" value="test" />
             </DockerEnvVarImpl>
@@ -15,8 +19,8 @@
               <option name="value" value="user" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
-              <option name="name" value="POSTGRES_DB" />
-              <option name="value" value="stockeer" />
+              <option name="name" value="PGDATA" />
+              <option name="value" value="/var/lib/postgresql/data/pgdata" />
             </DockerEnvVarImpl>
           </list>
         </option>
@@ -32,7 +36,7 @@
           <list>
             <DockerVolumeBindingImpl>
               <option name="containerPath" value="/var/lib/postgresql/data/pgdata" />
-              <option name="hostPath" value="./data/db" />
+              <option name="hostPath" value="$PROJECT_DIR$/data/db" />
             </DockerVolumeBindingImpl>
           </list>
         </option>

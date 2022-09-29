@@ -12,10 +12,30 @@
     </ion-item>
     <ion-item>
       <ion-icon slot="start" name="time-outline"></ion-icon>
-      <ion-datetime
+
+      <ion-input
+        id="expiryDate"
         placeholder="Expiry Date"
-        [formControl]="productForm.controls.expiryDate"
-      ></ion-datetime>
+        [value]="productForm.controls.expiryDate.value | date"
+        [readonly]="true"
+      ></ion-input>
+
+      <ion-modal
+        #expiryDateModal
+        trigger="expiryDate"
+        [keepContentsMounted]="true"
+        cssClass="expiryDateModal"
+      >
+        <ng-template>
+          <ion-item>
+            <ion-datetime
+              presentation="date"
+              [formControl]="productForm.controls.expiryDate"
+              (ionChange)="updateExpiryDate($event, expiryDateModal)"
+            ></ion-datetime>
+          </ion-item>
+        </ng-template>
+      </ion-modal>
     </ion-item>
     <ion-item>
       <ion-icon slot="start" name="scale-outline"></ion-icon>
