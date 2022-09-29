@@ -2,13 +2,12 @@
   <ion-buttons slot="start">
     <ion-button>
       <ion-icon name="basket-outline"></ion-icon>
-      <ion-title [routerLink]="['/']">{{ title }}</ion-title>
+      <ion-title [routerLink]="['/']">Stockeer</ion-title>
     </ion-button>
   </ion-buttons>
   <ion-buttons slot="end">
-    <ion-menu-button
-      auto-hide="false"
-      (click)="triggerTitlebarClick()"
-    ></ion-menu-button>
+    <ion-button (click)="triggerLogout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </ion-button>
   </ion-buttons>
 </ion-toolbar>

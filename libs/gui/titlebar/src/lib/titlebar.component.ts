@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'stockeer-titlebar',
@@ -6,21 +6,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./titlebar.component.scss'],
 })
 export class TitlebarComponent {
-  @Input()
-  title: string;
-
   @Output()
-  myClick: EventEmitter<string>;
+  logout: EventEmitter<void>;
 
   constructor() {
     // Make sure to initialize the variables in the constructor
     // Reason: https://github.com/storybookjs/storybook/issues/17004
     // TLDR: storybook bug
-    this.title = 'Stockeer';
-    this.myClick = new EventEmitter();
+    this.logout = new EventEmitter();
   }
 
-  triggerTitlebarClick() {
-    this.myClick.emit('Hello from dumb component');
+  triggerLogout() {
+    this.logout.emit();
   }
 }

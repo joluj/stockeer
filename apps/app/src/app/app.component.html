@@ -1,7 +1,20 @@
 <ion-app>
-  <stockeer-titlebar></stockeer-titlebar>
+  <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+    <stockeer-titlebar (logout)="triggerLogout()"></stockeer-titlebar>
 
-  <ion-content>
-    <ion-router-outlet></ion-router-outlet>
-  </ion-content>
+    <ion-content>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-content>
+  </ng-container>
+
+  <ng-template #notLoggedIn>
+    <ion-content>
+      <div class="login-content" @fadeInOut>
+        <stockeer-auth
+          [isLoading]="(authenticationInProgress$ | async) ?? false"
+          (authenticate)="triggerLogin($event)"
+        ></stockeer-auth>
+      </div>
+    </ion-content>
+  </ng-template>
 </ion-app>

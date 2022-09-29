@@ -1,15 +1,16 @@
-<ion-card>
+<ion-card *ngIf="form">
   <ion-card-header>
     <ion-card-title> Authentication </ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    <form [formGroup]="form" (ngSubmit)="submit()" (keyup.enter)="submit()">
+    <form [formGroup]="form" (ngSubmit)="submit()">
       <ion-item class="ion-invalid">
         <ion-label position="floating">Username</ion-label>
         <ion-input
           enterkeyhint="next"
           [formControl]="form.controls.username"
+          (keyup.enter)="submit()"
         ></ion-input>
         <ion-note *ngIf="form.controls.username.touched" slot="error">
           Username must be at least 5 chars long
@@ -22,9 +23,10 @@
           type="password"
           [enterkeyhint]="isLogin() ? 'send' : 'next'"
           [formControl]="form.controls.password"
+          (keyup.enter)="submit()"
         ></ion-input>
         <ion-note *ngIf="form.controls.password.touched" slot="error">
-          Passwords must be at least 8 chars long
+          Passwords must be at least 5 chars long
         </ion-note>
       </ion-item>
 
@@ -35,6 +37,7 @@
             type="password"
             enterkeyhint="send"
             [formControl]="form.controls.repeatPassword"
+            (keyup.enter)="submit()"
           ></ion-input>
           <ion-note *ngIf="form.controls.repeatPassword.touched" slot="error">
             Passwords must match
@@ -46,9 +49,8 @@
         <ng-container
           style="position: absolute"
           *ngIf="isLoading; else notLoading"
-          @fadeInOut
         >
-          <ion-spinner name="dots"></ion-spinner>
+          <ion-spinner name="dots" @fadeInOut></ion-spinner>
         </ng-container>
 
         <ng-template #notLoading>
@@ -65,15 +67,13 @@
     <ng-container>
       <ng-container *ngIf="isLogin(); else registerText">
         New to stockeer?
-        <a
-          routerLink="#"
-          (click)="this.form.controls.action.setValue('register')"
+        <a routerLink="#" (click)="form.controls.action.setValue('register')"
           >Create an account</a
         >.
       </ng-container>
       <ng-template #registerText>
         Already have an account?
-        <a routerLink="#" (click)="this.form.controls.action.setValue('login')"
+        <a routerLink="#" (click)="form.controls.action.setValue('login')"
           >Sign in</a
         >.
       </ng-template>

@@ -3,7 +3,7 @@ import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { ValidationErrors, Validators } from '@angular/forms';
 import { fadeInOut } from '@stockeer/gui/ui-components';
 
-type AuthProps = {
+export type AuthProps = {
   username: string;
   password: string;
   action: 'register' | 'login';
@@ -41,7 +41,7 @@ export class AuthComponent implements OnInit {
         ]),
         password: new FormControl('', [
           Validators.required,
-          Validators.minLength(8),
+          Validators.minLength(5),
         ]),
         repeatPassword: new FormControl('', []),
         action: new FormControl('login'),
