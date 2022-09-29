@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn nx affected --target=lint --base=origin/main --head=HEAD --parallel=12
+yarn nx affected --target=lint --base=origin/main --head=HEAD --parallel=12 --max-warnings=0
