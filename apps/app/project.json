@@ -194,7 +194,7 @@
       "options": {
         "commands": [
           "nx run app:build",
-          "nx run app:sync:android",
+          "DEV_SERVER_URL=https://stockeer.ddnss.de/ nx run app:sync:android",
           "./gradlew assemble"
         ],
         "cwd": "apps/android",
