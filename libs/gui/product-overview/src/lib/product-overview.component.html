@@ -1,7 +1,7 @@
-<ion-list>
+<ion-list [@listAnimation]="products.length">
   <ion-list-header>Items</ion-list-header>
 
-  <li *ngFor="let product of products">
+  <li *ngFor="let product of products; trackBy: trackBy">
     <stockeer-product-item
       [product]="product"
       (delete)="delete.emit(product.id)"
