@@ -97,6 +97,7 @@
     "@nrwl/node": "13.10.2",
     "@nrwl/nx-cloud": "^14.5.4",
     "@nrwl/storybook": "13.10.2",
+    "@nrwl/web": "13.0.2",
     "@nrwl/workspace": "13.10.2",
     "@nxtend/capacitor": "13.0.0",
     "@nxtend/ionic-angular": "13.1.0",
