@@ -17,7 +17,6 @@ import {
   BarcodeService,
 } from '@stockeer/services';
 import {
-  IonDatetime,
   IonInput,
   Platform,
   DatetimeCustomEvent,
