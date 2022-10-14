@@ -44,7 +44,7 @@ jobs:
         run: yarn build
 
       - name: Build APK
-        run: yarn nx run apk
+        run: yarn nx run app:apk
       - name: 'Upload APK'
         uses: actions/upload-artifact@v3
         with:
