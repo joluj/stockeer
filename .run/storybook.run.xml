@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="storybook" type="js.build_tools.npm" folderName="gui/titlebar">
+  <configuration default="false" name="storybook" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
       <script value="nx" />
     </scripts>
-    <arguments value="run gui-titlebar:storybook" />
+    <arguments value="run storybook" />
     <node-interpreter value="project" />
     <envs />
     <method v="2" />

@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Dev" type="Multirun" separateTabs="false" reuseTabsWithFailures="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="0.0">
+    <runConfiguration name="Postgres-DB" type="Docker" />
+    <runConfiguration name="BE:run" type="npm" />
+    <runConfiguration name="Browser" type="npm" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Storybook" type="Multirun" separateTabs="false" reuseTabsWithFailures="false" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="0.0">
+    <runConfiguration name="compodoc" type="npm" />
+    <runConfiguration name="storybook" type="npm" />
+    <method v="2" />
+  </configuration>
+</component>
