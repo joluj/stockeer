@@ -27,6 +27,7 @@
   [value]="selection$ | async"
   [multiple]="true"
   [hidden]="true"
+  (ionChange)="changed($any($event))"
 >
   <ion-select-option
     *ngFor="let stockeer of stockeers$ | async"

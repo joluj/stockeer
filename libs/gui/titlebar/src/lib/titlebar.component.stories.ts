@@ -20,13 +20,13 @@ const Template: Story<TitlebarComponent> = (args: TitlebarComponent) => ({
 });
 
 const stockeer1: Stockeer = new Stockeer({
-  id: 'test-id-1',
+  id: 'test-id-kitchen',
   products: [],
   name: 'Kitchen',
 });
 
 const stockeer2: Stockeer = new Stockeer({
-  id: 'test-id-1',
+  id: 'test-id-wine',
   products: [],
   name: 'Wine Refrigerator',
 });
