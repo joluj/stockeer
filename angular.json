@@ -13,6 +13,7 @@
     "gui-ui-components": "libs/gui/ui-components",
     "services": "libs/services",
     "store": "libs/store",
-    "types": "libs/types"
+    "types": "libs/types",
+    "workspace": "libs/workspace"
   }
 }

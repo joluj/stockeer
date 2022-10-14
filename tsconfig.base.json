@@ -27,7 +27,8 @@
       "@stockeer/gui/ui-components": ["libs/gui/ui-components/src/index.ts"],
       "@stockeer/services": ["libs/services/src/index.ts"],
       "@stockeer/store": ["libs/store/src/index.ts"],
-      "@stockeer/types": ["libs/types/src/index.ts"]
+      "@stockeer/types": ["libs/types/src/index.ts"],
+      "@stockeer/workspace": ["libs/workspace/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

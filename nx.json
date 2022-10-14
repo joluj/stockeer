@@ -51,5 +51,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "app"
+  "defaultProject": "workspace"
 }

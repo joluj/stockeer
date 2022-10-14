@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProductItemModule } from '@stockeer/gui/product-item';
 import { Unit } from '@stockeer/types';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 export default {
   title: 'ProductOverviewComponent',
@@ -16,6 +17,7 @@ export default {
         RouterTestingModule.withRoutes([
           { path: '**', component: ProductOverviewComponent },
         ]),
+        NoopAnimationsModule,
       ],
     }),
   ],

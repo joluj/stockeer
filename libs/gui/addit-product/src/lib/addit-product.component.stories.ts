@@ -7,13 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Unit } from '@stockeer/types';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 export default {
   title: 'AdditProductComponent',
   component: AdditProductComponent,
   decorators: [
     moduleMetadata({
-      imports: [IonicModule.forRoot(), FormsModule, ReactiveFormsModule],
+      imports: [
+        IonicModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+      ],
       providers: [AndroidPermissions],
     }),
   ],
