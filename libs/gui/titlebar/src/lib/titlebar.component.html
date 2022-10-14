@@ -5,9 +5,33 @@
       <ion-title [routerLink]="['/']">Stockeer</ion-title>
     </ion-button>
   </ion-buttons>
+
   <ion-buttons slot="end">
+    <ion-button (click)="stockeers.open()">
+      <ion-icon name="cube-outline"></ion-icon>
+      <ion-badge slot="end">
+        {{ (selection$ | async)?.length ?? 0 }}
+      </ion-badge>
+    </ion-button>
+
     <ion-button (click)="triggerLogout()">
       <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
+
+<ion-select
+  #stockeers
+  [interfaceOptions]="{ header: 'Select Stockeers' }"
+  [compareWith]="compare"
+  [value]="selection$ | async"
+  [multiple]="true"
+  [hidden]="true"
+>
+  <ion-select-option
+    *ngFor="let stockeer of stockeers$ | async"
+    [value]="stockeer"
+  >
+    {{ stockeer.name }}
+  </ion-select-option>
+</ion-select>
