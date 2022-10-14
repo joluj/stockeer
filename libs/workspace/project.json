@@ -1,0 +1,27 @@
+{
+  "root": "libs/workspace",
+  "sourceRoot": "libs/workspace/src",
+  "projectType": "library",
+  "targets": {
+    "compodoc": {
+      "executor": "@twittwer/compodoc:compodoc",
+      "options": {
+        "tsConfig": "libs/workspace/tsconfig.compodoc.json",
+        "outputPath": "dist/compodoc/workspace",
+        "workspaceDocs": true
+      },
+      "defaultConfiguration": "json.watch",
+      "configurations": {
+        "html.watch": {
+          "exportFormat": "html",
+          "watch": true
+        },
+        "json.watch": {
+          "exportFormat": "json",
+          "watch": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
