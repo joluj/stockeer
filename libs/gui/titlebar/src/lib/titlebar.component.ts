@@ -39,9 +39,17 @@ export class TitlebarComponent {
     return a.id === b.id;
   }
 
-  changed(event: SelectCustomEvent) {
-    this.selectionChanged.emit(
-      (event.detail.value as Stockeer[]).map((s) => s.id)
-    );
+  changed(event: SelectCustomEvent, currentStockeers: Stockeer[]) {
+    const updatedSelection: string[] = (
+      (event.detail.value as Stockeer[]) ?? []
+    ).map((s) => s.id);
+    const currentSelection = currentStockeers.map((s) => s.id);
+
+    if (
+      updatedSelection.length !== currentSelection.length ||
+      updatedSelection.some((s) => !currentSelection.includes(s))
+    ) {
+      this.selectionChanged.emit(updatedSelection);
+    }
   }
 }

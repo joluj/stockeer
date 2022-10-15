@@ -5,7 +5,7 @@ import { StorageState } from './storage.state';
 import {
   loadStoragesSuccess,
   removeStorageSuccess,
-  selectStorage,
+  setStorageSelection,
   setStorageSuccess,
 } from './storage.actions';
 import { createImmerReducer } from 'ngrx-immer/store';
@@ -14,7 +14,7 @@ import { StorageDto } from '@stockeer/dtos';
 export const storageAdapter = createEntityAdapter<StorageDto>();
 
 export const initialState: StorageState = storageAdapter.getInitialState({
-  selected: null,
+  selected: [],
 });
 
 export const storagesReducer = createImmerReducer(
@@ -22,10 +22,10 @@ export const storagesReducer = createImmerReducer(
   on(loadStoragesSuccess, (state, { storages }) => {
     return storageAdapter.setAll(storages, state);
   }),
-  on(selectStorage, (state, { storageId }) => {
+  on(setStorageSelection, (state, { storageIds }) => {
     return {
       ...state,
-      selected: storageId,
+      selected: storageIds,
     };
   }),
   on(setStorageSuccess, (state, { storage }) => {

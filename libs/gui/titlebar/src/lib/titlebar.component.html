@@ -1,4 +1,4 @@
-<ion-toolbar color="tertiary">
+<ion-toolbar color="tertiary" *ngIf="selection$ | async; let selection">
   <ion-buttons slot="start">
     <ion-button>
       <ion-icon name="basket-outline"></ion-icon>
@@ -10,7 +10,7 @@
     <ion-button (click)="stockeers.open()">
       <ion-icon name="cube-outline"></ion-icon>
       <ion-badge slot="end">
-        {{ (selection$ | async)?.length ?? 0 }}
+        {{ selection?.length ?? 0 }}
       </ion-badge>
     </ion-button>
 
@@ -18,21 +18,21 @@
       <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
-</ion-toolbar>
 
-<ion-select
-  #stockeers
-  [interfaceOptions]="{ header: 'Select Stockeers' }"
-  [compareWith]="compare"
-  [value]="selection$ | async"
-  [multiple]="true"
-  [hidden]="true"
-  (ionChange)="changed($any($event))"
->
-  <ion-select-option
-    *ngFor="let stockeer of stockeers$ | async"
-    [value]="stockeer"
+  <ion-select
+    #stockeers
+    [interfaceOptions]="{ header: 'Select Stockeers' }"
+    [compareWith]="compare"
+    [value]="selection$ | async"
+    [multiple]="true"
+    [hidden]="true"
+    (ionChange)="changed($any($event), selection)"
   >
-    {{ stockeer.name }}
-  </ion-select-option>
-</ion-select>
+    <ion-select-option
+      *ngFor="let stockeer of stockeers$ | async"
+      [value]="stockeer"
+    >
+      {{ stockeer.name }}
+    </ion-select-option>
+  </ion-select>
+</ion-toolbar>

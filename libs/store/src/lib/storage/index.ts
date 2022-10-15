@@ -2,11 +2,11 @@ export * from './storage.state';
 export {
   getStorages,
   getStoragesState,
-  getSelectedStorage,
+  getSelectedStorages,
 } from './storages.selectors';
 export {
   addStorage,
   ensureStoragesLoaded,
   removeStorage,
-  selectStorage,
+  setStorageSelection,
 } from './storage.actions';

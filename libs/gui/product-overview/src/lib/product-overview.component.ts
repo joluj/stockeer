@@ -24,7 +24,7 @@ export class ProductOverviewComponent {
    * Emits the id of the product clicked on.
    */
   @Output()
-  delete: EventEmitter<string>;
+  delete: EventEmitter<Product>;
 
   constructor() {
     this.delete = new EventEmitter();

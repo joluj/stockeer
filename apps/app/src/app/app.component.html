@@ -1,6 +1,11 @@
 <ion-app>
   <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
-    <stockeer-titlebar (logout)="triggerLogout()"></stockeer-titlebar>
+    <stockeer-titlebar
+      (logout)="triggerLogout()"
+      [stockeers$]="stockeers$"
+      [selection$]="stockeerSelection$"
+      (selectionChanged)="triggerStockeerSelectionChanged($event)"
+    ></stockeer-titlebar>
 
     <ion-content>
       <ion-router-outlet></ion-router-outlet>

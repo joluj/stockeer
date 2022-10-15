@@ -4,7 +4,7 @@
   <li *ngFor="let product of products; trackBy: trackBy">
     <stockeer-product-item
       [product]="product"
-      (delete)="delete.emit(product.id)"
+      (delete)="delete.emit(product)"
     ></stockeer-product-item>
   </li>
 </ion-list>

@@ -11,7 +11,7 @@ export class Product implements DeepReadonly<Base> {
   readonly barcode: string;
   readonly storageId: string;
 
-  constructor(base: Optional<Base, 'barcode'>) {
+  constructor(base: Optional<Base, 'barcode' | 'storageId'>) {
     this.expiryDate = base.expiryDate;
     this.id = base.id;
     this.name = base.name;

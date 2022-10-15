@@ -1,16 +1,32 @@
 <div style="height: 100%">
-  <ng-container *ngIf="products$ | async; let products">
-    <stockeer-product-overview
-      [products]="products"
-      (delete)="triggerRemoveProduct($event)"
-    ></stockeer-product-overview>
+  <ng-container
+    *ngIf="
+      ((selectedStockeers$ | async)?.length ?? 0) > 0;
+      else noStockeersSelected
+    "
+  >
+    <ng-container *ngIf="products$ | async; let products">
+      <stockeer-product-overview
+        [products]="products"
+        (delete)="triggerRemoveProduct($event)"
+      ></stockeer-product-overview>
+    </ng-container>
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button>
+        <ion-icon name="add" (click)="triggerAddProduct()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </ng-container>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button
-      (click)="currentStorageId ? triggerAddProduct() : triggerAddStockeer()"
-    >
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <ng-template #noStockeersSelected>
+    <div class="no-stockeers">
+      <div><ion-icon name="trash-bin-outline"></ion-icon></div>
+      <div>You have no stockeers selected.</div>
+      <div>
+        Click on the stockeer icon in the top right to create or choose your
+        stockeers.
+      </div>
+    </div>
+  </ng-template>
 </div>
