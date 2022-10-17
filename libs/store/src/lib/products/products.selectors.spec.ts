@@ -3,12 +3,14 @@ import { getProducts, getSelectedProduct } from '.';
 import { AppState } from '../app.state';
 import { initialState, productsAdapter } from './products.reducer';
 import { Product } from '../types';
+import { DeepPartial } from 'utility-types';
 
 describe('Products Selectors', () => {
   const createProductsEntity = (id: string, name = '') =>
     ({
       id,
       name: name || `name-${id}`,
+      storageId: 'test-storage-id',
     } as Product);
 
   let state: AppState;
@@ -26,7 +28,10 @@ describe('Products Selectors', () => {
           selected: 'PRODUCT-BBB',
         }
       ),
-    } as never;
+      storages: {
+        selected: ['test-storage-id'],
+      },
+    } as DeepPartial<AppState> as AppState;
   });
 
   describe('Products Selectors', () => {

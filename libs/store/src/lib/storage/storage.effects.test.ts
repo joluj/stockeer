@@ -11,6 +11,7 @@ import {
   getProducts,
   removeProduct,
   removeStorage,
+  setStorageSelection,
   StoreModuleImports,
 } from '..';
 import { ensureStoragesLoaded, getStorages } from '.';
@@ -67,6 +68,12 @@ describe('Storage Effects', () => {
     return firstValueFrom(store.select(selector));
   }
 
+  function selectAllStockeers() {
+    store.dispatch(
+      setStorageSelection({ storageIds: mockList.map((s) => s.id) })
+    );
+  }
+
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [...StoreModuleImports],
@@ -107,12 +114,14 @@ describe('Storage Effects', () => {
       store.dispatch(ensureProductsLoaded());
     });
     it('should be set up correctly', async () => {
+      selectAllStockeers();
       // assert correct arrange
       expect(await select(getStorages)).toHaveLength(2);
       expect(await select(getProducts)).toHaveLength(3);
     });
 
     it('[addStorage] should work', async () => {
+      selectAllStockeers();
       // act
       store.dispatch(addStorage({ name: 'new-storage' }));
       // assert
@@ -121,6 +130,7 @@ describe('Storage Effects', () => {
     });
 
     it('[removeStorage] should also remove products', async () => {
+      selectAllStockeers();
       // act
       store.dispatch(removeStorage({ storageId: 'test-storage-id-1' }));
       // assert
@@ -129,6 +139,7 @@ describe('Storage Effects', () => {
     });
 
     it('[removeProduct] should also splice storage->products list', async () => {
+      selectAllStockeers();
       // assert correct arrange
       let storages = await select(getStoragesDict);
       expect(storages['test-storage-id-1']?.products).toHaveLength(2);
@@ -148,6 +159,7 @@ describe('Storage Effects', () => {
     });
 
     it('[addProduct] should also update storage->products list', async () => {
+      selectAllStockeers();
       // assert correct arrange
       let storages = await select(getStoragesDict);
       expect(storages['test-storage-id-1']?.products).toHaveLength(2);

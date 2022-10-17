@@ -5,6 +5,7 @@ import {
   AppState,
   ensureProductsLoaded,
   getProducts,
+  setStorageSelection,
   StoreModuleImports,
 } from '..';
 import { ProductService } from '@stockeer/services';
@@ -37,6 +38,10 @@ describe('ProductsEffects', () => {
     return firstValueFrom(store.select(selector));
   }
 
+  function selectAllStockeers() {
+    store.dispatch(setStorageSelection({ storageIds: ['test-storage-id-1'] }));
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [...StoreModuleImports],
@@ -47,9 +52,9 @@ describe('ProductsEffects', () => {
   it('should initialize', async () => {
     const service = TestBed.inject(ProductService);
     jest.spyOn(service, 'load').mockReturnValue(of(mockList));
-
     store.dispatch(ensureProductsLoaded());
 
+    selectAllStockeers();
     const actual = await select(getProducts);
     expect(actual).toHaveLength(2);
   });
