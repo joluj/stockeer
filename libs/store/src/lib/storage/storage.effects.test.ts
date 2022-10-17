@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, of, timer } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 
 import {
@@ -88,6 +88,8 @@ describe('Storage Effects', () => {
     jest.spyOn(service, 'load').mockReturnValue(of(mockList));
 
     store.dispatch(ensureStoragesLoaded());
+    selectAllStockeers();
+    await firstValueFrom(timer(1));
 
     const actual = await select(getStorages);
     expect(actual).toHaveLength(2);

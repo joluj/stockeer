@@ -72,7 +72,6 @@ export class StorageService {
       from(this.storage.get(STORAGE_STOCKEER_SELECTION_KEY)).pipe(
         catchError(() => EMPTY),
         map((ids) => {
-          console.log(ids);
           if (ids == null) {
             return [];
           }
