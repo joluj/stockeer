@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  addStorage,
   AppState,
   ensureProductsLoaded,
   ensureStoragesLoaded,
@@ -73,5 +74,12 @@ export class AppComponent implements OnInit {
 
   triggerStockeerSelectionChanged(storageIds: string[]) {
     this.store.dispatch(setStorageSelection({ storageIds }));
+  }
+
+  triggerNewStockeer() {
+    const name = window.prompt('New Stockeer');
+    if (!name) return;
+
+    this.store.dispatch(addStorage({ name }));
   }
 }

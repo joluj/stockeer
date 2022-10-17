@@ -5,6 +5,7 @@
       [stockeers$]="stockeers$"
       [selection$]="stockeerSelection$"
       (selectionChanged)="triggerStockeerSelectionChanged($event)"
+      (newStockeer)="triggerNewStockeer()"
     ></stockeer-titlebar>
 
     <ion-content>

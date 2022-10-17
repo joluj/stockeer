@@ -24,8 +24,13 @@ const { selectAll } = productsAdapter.getSelectors();
 
 export const getProducts = createSelector(
   getProductsState,
-  (state): Product[] => selectAll(state).map(toProductEntity)
+  (s: AppState) => s.storages.selected,
+  (state, selectedStorageIds): Product[] =>
+    selectAll(state)
+      .filter((p) => selectedStorageIds.includes(p.storageId))
+      .map(toProductEntity)
 );
+
 /**
  * @internal
  */

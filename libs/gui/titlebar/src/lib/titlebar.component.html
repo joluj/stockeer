@@ -19,14 +19,17 @@
     </ion-button>
   </ion-buttons>
 
+  <!-- HACK: Use cancel button as "Create New Stockeer"-Button -->
   <ion-select
     #stockeers
-    [interfaceOptions]="{ header: 'Select Stockeers' }"
+    [interfaceOptions]="alertOptions"
     [compareWith]="compare"
     [value]="selection$ | async"
     [multiple]="true"
     [hidden]="true"
     (ionChange)="changed($any($event), selection)"
+    cancelText="New"
+    (ionCancel)="triggerNewStockeer()"
   >
     <ion-select-option
       *ngFor="let stockeer of stockeers$ | async"

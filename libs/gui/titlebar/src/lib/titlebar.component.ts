@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { Stockeer } from '@stockeer/store';
-import { SelectCustomEvent } from '@ionic/angular';
+import { AlertOptions, SelectCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'stockeer-titlebar',
@@ -21,12 +21,21 @@ export class TitlebarComponent {
   @Output()
   selectionChanged: EventEmitter<string[]>;
 
+  @Output()
+  newStockeer: EventEmitter<void>;
+
+  readonly alertOptions: AlertOptions = {
+    header: 'Select Stockeers',
+    backdropDismiss: false,
+  };
+
   constructor() {
     // Make sure to initialize the variables in the constructor
     // Reason: https://github.com/storybookjs/storybook/issues/17004
     // TLDR: storybook bug
     this.logout = new EventEmitter();
     this.selectionChanged = new EventEmitter();
+    this.newStockeer = new EventEmitter();
     this.stockeers$ = EMPTY;
     this.selection$ = EMPTY;
   }
@@ -51,5 +60,9 @@ export class TitlebarComponent {
     ) {
       this.selectionChanged.emit(updatedSelection);
     }
+  }
+
+  triggerNewStockeer() {
+    this.newStockeer.emit();
   }
 }
