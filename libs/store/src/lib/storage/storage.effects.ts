@@ -8,15 +8,18 @@ import {
   loadStoragesSuccess,
   removeStorage,
   removeStorageSuccess,
+  setStorageSelection,
   setStorageSuccess,
 } from './storage.actions';
 import {
   catchError,
   EMPTY,
   exhaustMap,
+  from,
   map,
   mergeMap,
   of,
+  skip,
   switchMap,
 } from 'rxjs';
 import { ProductService, StorageService } from '@stockeer/services';
@@ -40,8 +43,16 @@ export class StorageEffects {
         return this.service.load().pipe(
           map((storages) => loadStoragesSuccess({ storages })),
           catchError(() => {
-            return EMPTY;
+            return [];
           })
+        );
+      }),
+      exhaustMap((prevActions) => {
+        return this.service.loadStockeerSelection().pipe(
+          switchMap((storageIds) =>
+            from([setStorageSelection({ storageIds }), prevActions])
+          ),
+          catchError(() => of(prevActions))
         );
       })
     )
@@ -139,6 +150,18 @@ export class StorageEffects {
           );
       })
     )
+  );
+
+  readonly test$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(setStorageSelection),
+        skip(1),
+        switchMap(({ storageIds }) =>
+          this.service.saveStockeerSelection(storageIds)
+        )
+      ),
+    { dispatch: false }
   );
 
   constructor(
