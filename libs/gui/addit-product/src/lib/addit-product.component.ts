@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup } from '@ngneat/reactive-forms';
 import { GroupResolverFormBuilder } from '@ngneat/reactive-forms/lib/form-builder';
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Unit } from '@stockeer/types';
-import { Product } from '@stockeer/store';
+import { Product, Stockeer } from '@stockeer/store';
 import { Optional } from 'utility-types';
 import {
   AlertService,
@@ -24,7 +25,7 @@ import {
 } from '@ionic/angular';
 import { catchError, of, timeout, TimeoutError } from 'rxjs';
 
-export type ProductOptionalId = Optional<Product, 'id' | 'storageId'>;
+export type ProductOptionalId = Optional<Product, 'id'>;
 
 interface ProductForm {
   id: string | undefined;
@@ -33,7 +34,7 @@ interface ProductForm {
   amount: number;
   unit: Unit;
   barcode: string;
-  storageId: string | undefined;
+  storageId: [string, (control: AbstractControl) => ValidationErrors];
 }
 
 @Component({
@@ -41,7 +42,7 @@ interface ProductForm {
   templateUrl: './addit-product.component.html',
   styleUrls: ['./addit-product.component.scss'],
 })
-export class AdditProductComponent {
+export class AdditProductComponent implements OnChanges {
   @Input()
   set product(value: ProductOptionalId | Product | undefined) {
     this.productForm.controls.id.setValue(value?.id);
@@ -50,10 +51,13 @@ export class AdditProductComponent {
     this.productForm.controls.amount.setValue(value?.quantity.amount ?? 0);
     this.productForm.controls.unit.setValue(value?.quantity.unit ?? Unit.PIECE);
     this.productForm.controls.barcode.setValue(value?.barcode ?? '');
-    this.productForm.controls.storageId.setValue(value?.storageId);
+    this.productForm.controls.storageId.setValue(value?.storageId ?? '');
 
     this.isAdd = value == undefined || value.id == undefined;
   }
+
+  @Input()
+  stockeers: Stockeer[];
 
   /**
    * Emits the product created from the input-values.
@@ -98,13 +102,24 @@ export class AdditProductComponent {
       amount: 0,
       unit: Unit.PIECE,
       barcode: '',
-      storageId: undefined,
+      storageId: ['', Validators.required],
     });
     this.Unit = Unit;
+    this.stockeers = [];
 
     setTimeout(async () => {
       await this.nameInput?.setFocus();
     }, 100);
+  }
+
+  ngOnChanges() {
+    if (
+      !this.productForm.controls.storageId.value &&
+      this.stockeers.length > 0
+    ) {
+      console.log('hi');
+      this.productForm.controls.storageId.setValue(this.stockeers[0].id);
+    }
   }
 
   validateAndEmitProduct() {
@@ -180,6 +195,6 @@ export class AdditProductComponent {
     }
 
     this.productForm.controls.expiryDate.setValue(newDate);
-    modal.dismiss();
+    void modal.dismiss();
   }
 }

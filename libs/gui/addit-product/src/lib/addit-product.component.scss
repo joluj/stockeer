@@ -1,5 +1,5 @@
 .content {
-  height: 95vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -7,4 +7,8 @@
 .expiryDateModal {
   --width: unset;
   --height: unset;
+}
+
+.storage-select {
+  width: 100%;
 }

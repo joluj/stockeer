@@ -1,5 +1,6 @@
 <ng-container *ngIf="product$ | async; let product">
   <stockeer-add-product
+    [stockeers]="(stockeers$ | async) ?? []"
     [product]="product"
     (save)="save($event)"
   ></stockeer-add-product>

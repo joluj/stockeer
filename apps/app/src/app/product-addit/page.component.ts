@@ -4,8 +4,10 @@ import {
   AppState,
   getSelectedProduct,
   getSelectedStorages,
+  getStorages,
   Product,
   selectProduct,
+  Stockeer,
   updateProduct,
 } from '@stockeer/store';
 import { map, Observable, of, pluck, switchMap } from 'rxjs';
@@ -20,6 +22,7 @@ import { Unit } from '@stockeer/types';
 })
 export class PageComponent implements OnInit {
   product$?: Observable<Product>;
+  stockeers$?: Observable<Stockeer[]>;
 
   constructor(
     private readonly store: Store<AppState>,
@@ -49,6 +52,8 @@ export class PageComponent implements OnInit {
         );
       })
     );
+
+    this.stockeers$ = this.store.select(getStorages);
   }
 
   async save(product: ProductOptionalId) {
