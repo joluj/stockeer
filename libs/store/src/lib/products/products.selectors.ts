@@ -2,18 +2,17 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { productsAdapter } from './products.reducer';
 import { AppState } from '../app.state';
 import { ProductState, ProductStateEntity } from './products.state';
-import { Unit } from '@stockeer/types';
 import { Product } from '../types';
 
 export function toProductEntity(product: ProductStateEntity): Product {
-  return {
+  return new Product({
     id: product.id,
     name: product.name,
     expiryDate: product.expiryDate,
-    quantity: { amount: 1, unit: Unit.PIECE },
+    quantity: product.quantity,
     barcode: product.barcode,
     storageId: product.storageId,
-  };
+  });
 }
 
 const PRODUCT_STORE_KEY: keyof AppState = 'products';
