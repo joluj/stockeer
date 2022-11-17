@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { catchError, defer, from, Observable, switchMap } from 'rxjs';
+import {
+  catchError,
+  defer,
+  EMPTY,
+  from,
+  map,
+  Observable,
+  switchMap,
+} from 'rxjs';
 import { SetStorageDto, StorageDto } from '@stockeer/dtos';
 import { Serialized } from '@stockeer/types';
 import { Storage } from '@ionic/storage-angular';
 import { HttpClient } from '@angular/common/http';
+import { validate as isUuid } from 'uuid';
 
 /**
  * Prefix for stockeers
  */
 const STORAGE_STOCKEER_PREFIX = 'STOCKEER_';
+const STORAGE_STOCKEER_SELECTION_KEY = STORAGE_STOCKEER_PREFIX + '_SELECTION_';
 
 @Injectable({
   providedIn: 'root',
@@ -40,8 +50,10 @@ export class StorageService {
       from(
         (async () => {
           // contains all keys containing a storage object
-          const keys = (await this.storage.keys()).filter((key) =>
-            key.startsWith(STORAGE_STOCKEER_PREFIX)
+          const keys = (await this.storage.keys()).filter(
+            (key) =>
+              key.startsWith(STORAGE_STOCKEER_PREFIX) &&
+              isUuid(key.substring(STORAGE_STOCKEER_PREFIX.length))
           );
 
           // noinspection UnnecessaryLocalVariableJS
@@ -51,6 +63,35 @@ export class StorageService {
 
           return stockeers;
         })()
+      )
+    );
+  }
+
+  public loadStockeerSelection(): Observable<string[]> {
+    return defer(() =>
+      from(this.storage.get(STORAGE_STOCKEER_SELECTION_KEY)).pipe(
+        catchError(() => EMPTY),
+        map((ids) => {
+          if (ids == null) {
+            return [];
+          }
+          if (Array.isArray(ids)) {
+            return ids;
+          }
+          console.error(`Cannot parse array of stockeers`, ids);
+          return [];
+        })
+      )
+    );
+  }
+
+  saveStockeerSelection(ids: string[]) {
+    return defer(() =>
+      from(this.storage.set(STORAGE_STOCKEER_SELECTION_KEY, ids)).pipe(
+        catchError((e) => {
+          console.error(e);
+          return EMPTY;
+        })
       )
     );
   }

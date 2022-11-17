@@ -1,13 +1,41 @@
-<ion-toolbar color="tertiary">
+<ion-toolbar color="tertiary" *ngIf="selection$ | async; let selection">
   <ion-buttons slot="start">
     <ion-button>
       <ion-icon name="basket-outline"></ion-icon>
       <ion-title [routerLink]="['/']">Stockeer</ion-title>
     </ion-button>
   </ion-buttons>
+
   <ion-buttons slot="end">
+    <ion-button (click)="stockeers.open()">
+      <ion-icon name="cube-outline"></ion-icon>
+      <ion-badge slot="end">
+        {{ selection?.length ?? 0 }}
+      </ion-badge>
+    </ion-button>
+
     <ion-button (click)="triggerLogout()">
       <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
+
+  <!-- HACK: Use cancel button as "Create New Stockeer"-Button -->
+  <ion-select
+    #stockeers
+    [interfaceOptions]="alertOptions"
+    [compareWith]="compare"
+    [value]="selection$ | async"
+    [multiple]="true"
+    [hidden]="true"
+    (ionChange)="changed($any($event), selection)"
+    cancelText="New"
+    (ionCancel)="triggerNewStockeer()"
+  >
+    <ion-select-option
+      *ngFor="let stockeer of stockeers$ | async"
+      [value]="stockeer"
+    >
+      {{ stockeer.name }}
+    </ion-select-option>
+  </ion-select>
 </ion-toolbar>

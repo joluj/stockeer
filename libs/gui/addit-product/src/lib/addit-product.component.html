@@ -10,6 +10,7 @@
         [formControl]="productForm.controls.name"
       ></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-icon slot="start" name="time-outline"></ion-icon>
 
@@ -37,6 +38,7 @@
         </ng-template>
       </ion-modal>
     </ion-item>
+
     <ion-item>
       <ion-icon slot="start" name="scale-outline"></ion-icon>
       <ion-input
@@ -50,6 +52,22 @@
             unit.value.toLowerCase()
           }}</ion-select-option>
         </li>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="cube-outline"></ion-icon>
+      <ion-select
+        interface="popover"
+        [formControl]="productForm.controls.storageId"
+        class="storage-select"
+      >
+        <ion-select-option
+          *ngFor="let stockeer of stockeers"
+          [value]="stockeer.id"
+        >
+          {{ stockeer.name }}
+        </ion-select-option>
       </ion-select>
     </ion-item>
 

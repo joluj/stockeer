@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  addStorage,
   AppState,
   ensureProductsLoaded,
   ensureStoragesLoaded,
+  getSelectedStorages,
   getStorages,
+  setStorageSelection,
 } from '@stockeer/store';
 import { Storage } from '@ionic/storage-angular';
 import { AuthService } from '@stockeer/services';
@@ -19,7 +22,9 @@ import { fadeInOut } from '@stockeer/gui/ui-components';
   animations: [fadeInOut],
 })
 export class AppComponent implements OnInit {
-  readonly storages$ = this.store.select(getStorages);
+  readonly stockeers$ = this.store.select(getStorages);
+  readonly stockeerSelection$ = this.store.select(getSelectedStorages);
+
   isLoggedIn$?: Observable<boolean>;
 
   authenticationInProgress$ = new BehaviorSubject(true);
@@ -65,5 +70,16 @@ export class AppComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  triggerStockeerSelectionChanged(storageIds: string[]) {
+    this.store.dispatch(setStorageSelection({ storageIds }));
+  }
+
+  triggerNewStockeer() {
+    const name = window.prompt('New Stockeer');
+    if (!name) return;
+
+    this.store.dispatch(addStorage({ name }));
   }
 }

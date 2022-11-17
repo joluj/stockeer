@@ -12,9 +12,9 @@ export const loadStoragesSuccess = createAction(
   props<{ storages: StorageStateEntity[] }>()
 );
 
-export const selectStorage = createAction(
-  prefix('Select Storage'),
-  props<{ storageId: string | null }>()
+export const setStorageSelection = createAction(
+  prefix('Select Storages'),
+  props<{ storageIds: string[] }>()
 );
 
 export const addStorage = createAction(

@@ -51,15 +51,13 @@ export const getStorages = createSelector(
   }
 );
 
-export const getSelectedStorage = createSelector(
+export const getSelectedStorages = createSelector(
   getStoragesState,
   getProductsDict,
-  (state, products): Stockeer | null => {
-    if (state.selected) {
-      const storage = state.entities[state.selected];
-      if (!storage) return null;
-      return toStorageEntity(storage, products);
-    }
-    return null;
+  (state, products): Stockeer[] => {
+    return state.selected
+      .map((id) => state.entities[id])
+      .filter(isNotNull)
+      .map((e) => toStorageEntity(e, products));
   }
 );

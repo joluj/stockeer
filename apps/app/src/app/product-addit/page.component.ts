@@ -3,12 +3,14 @@ import { Store } from '@ngrx/store';
 import {
   AppState,
   getSelectedProduct,
-  getSelectedStorage,
+  getSelectedStorages,
+  getStorages,
   Product,
   selectProduct,
+  Stockeer,
   updateProduct,
 } from '@stockeer/store';
-import { filter, map, Observable, of, pluck, switchMap } from 'rxjs';
+import { map, Observable, of, pluck, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductOptionalId } from '@stockeer/gui-addit-product';
 import { v4 } from 'uuid';
@@ -20,6 +22,7 @@ import { Unit } from '@stockeer/types';
 })
 export class PageComponent implements OnInit {
   product$?: Observable<Product>;
+  stockeers$?: Observable<Stockeer[]>;
 
   constructor(
     private readonly store: Store<AppState>,
@@ -28,11 +31,6 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO move that somewhere globally
-    function isNotUndefined<T>(p: T | undefined | null): p is T {
-      return !!p;
-    }
-
     // Uses product from product id or creates a new one if the id cannot be found
     this.product$ = this.route.params.pipe(
       pluck('productId'),
@@ -41,22 +39,21 @@ export class PageComponent implements OnInit {
       switchMap((p) => {
         if (p) return of(p);
 
-        return this.store.select(getSelectedStorage).pipe(
-          filter(isNotUndefined),
-          map((storage) => {
-            const product: Product = {
+        return this.store.select(getSelectedStorages).pipe(
+          map((storages) => {
+            return new Product({
               id: v4(),
-              storageId: storage.id,
+              storageId: storages[0]?.id,
               name: '',
-              barcode: '',
               expiryDate: new Date().toISOString(),
               quantity: { amount: 1, unit: Unit.PIECE },
-            };
-            return product;
+            });
           })
         );
       })
     );
+
+    this.stockeers$ = this.store.select(getStorages);
   }
 
   async save(product: ProductOptionalId) {
