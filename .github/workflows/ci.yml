@@ -86,11 +86,19 @@ jobs:
         run: yarn nx affected --target=build --base=origin/main --head=HEAD
 
       # TODO REMOVE AGAIN
+      - name: Export keystore file
+        run: |
+          echo "${{ secrets.ANDROID_KEY_FILE }}" > stockeer.jks.asc
+          base64 -d stockeer.jks.asc > apps/android/app/stockeer.jks
       - name: Build APK
         run: yarn nx run app:apk
+        env:
+          ANDROID_KEY_PATH: stockeer.jks
+          ANDROID_KEY_ALIAS: stockeer
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: 'Upload APK'
         uses: actions/upload-artifact@v3
         with:
           name: APK
-          path: apps/android/app/build/outputs/apk/release/app-release-unsigned.apk
+          path: apps/android/app/build/outputs/apk/release/app-release.apk
           retention-days: 5
