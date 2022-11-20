@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package app.stockeer;
 
 import com.getcapacitor.BridgeActivity;
 
