@@ -43,15 +43,6 @@ jobs:
       - name: Run Builds
         run: yarn build
 
-      - name: Build APK
-        run: yarn nx run app:apk
-      - name: 'Upload APK'
-        uses: actions/upload-artifact@v3
-        with:
-          name: APK
-          path: apps/android/app/build/outputs/apk/release/app-release-unsigned.apk
-          retention-days: 5
-
   PR:
     name: Pull Request
     runs-on: ubuntu-latest
@@ -93,3 +84,13 @@ jobs:
         run: yarn nx affected --target=test --base=origin/main --head=HEAD
       - name: Run Builds
         run: yarn nx affected --target=build --base=origin/main --head=HEAD
+
+      # TODO REMOVE AGAIN
+      - name: Build APK
+        run: yarn nx run app:apk
+      - name: 'Upload APK'
+        uses: actions/upload-artifact@v3
+        with:
+          name: APK
+          path: apps/android/app/build/outputs/apk/release/app-release-unsigned.apk
+          retention-days: 5
