@@ -16,7 +16,7 @@ const url =
   })();
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'app.stockeer',
   appName: 'app',
   webDir: '../../dist/apps/app',
   bundledWebRuntime: false,

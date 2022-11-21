@@ -43,3 +43,7 @@ Thumbs.db
 .gradle
 /apps/android/.idea/deploymentTargetDropDown.xml
 data
+
+# keys
+*.jks
+*.jks.asc
